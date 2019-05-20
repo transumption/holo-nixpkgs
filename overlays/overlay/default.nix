@@ -25,7 +25,7 @@ in
 
   holochain-conductor = callPackage ./holochain-conductor {};
 
-  n3h = callPackage ./n3h/default.nix {};
+  n3h = callPackage ./n3h {};
 
   pre-net-led = callPackage ./pre-net-led {};
 

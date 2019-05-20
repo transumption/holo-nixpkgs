@@ -11,7 +11,8 @@ in
     filter = (path: type: type != "symlink" || baseNameOf path != ".git");
   };
 
-  envoy = callPackage ./envoy/default.nix {};
+  # TODO: node2nix
+  envoy = callPackage ./envoy {};
 
   fluent-bit = callPackage ./fluent-bit {};
 

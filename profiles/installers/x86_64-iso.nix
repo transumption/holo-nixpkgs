@@ -1,4 +1,4 @@
-{ pkgs ? import ../../pkgs.nix {} }:
+{ pkgs ? import ../../nixpkgs {} }:
 
 let
   nixos = import "${pkgs.path}/nixos" {

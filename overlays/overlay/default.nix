@@ -16,7 +16,7 @@ in
 
   envoy = callPackage ./envoy/default.nix {};
 
-  fluentbit = callPackage ./fluentbit/default.nix {};
+  fluent-bit = callPackage ./fluent-bit {};
 
   holo-cli = callPackage ./holo-cli/default.nix {};
 

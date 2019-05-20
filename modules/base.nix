@@ -179,7 +179,7 @@ in
         binutils
         cmake
         envoy
-        fluentbit
+        fluent-bit
         gcc
         holochain-conductor
         holochain-cli

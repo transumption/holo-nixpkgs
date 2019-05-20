@@ -1,16 +1,11 @@
 { config, pkgs, lib, ... }:
 
 with lib;
+with pkgs;
+
 let
   cfg = config.holoport;
-  pre-net-led = pkgs.callPackage ../packages/pre-net-led/pre-net-led.nix {};
-  holo-led = pkgs.callPackage ../packages/holo-led/holo-led.nix {};
-  shutdown-led = pkgs.callPackage ../packages/shutdown-led/shutdown-led.nix {};
-  holo-health = pkgs.callPackage ../packages/holo-health/holo-health.nix {};
-  holo-cli = pkgs.callPackage ../packages/holo-cli/default.nix {};
-  envoy = pkgs.callPackage ../packages/envoy/default.nix {};
-  fluentbit = pkgs.callPackage ../packages/fluentbit/default.nix {};
-  n3h = pkgs.callPackage ../packages/n3h/default.nix {};
+
   hptest = pkgs.writeShellScriptBin "hptest" ''
     sudo lshw -C cpu >> hptest.txt
     sudo lshw -C memory >> hptest.txt

@@ -1,4 +1,4 @@
-self: super: with self;
+final: previous: with final;
 
 {
   holoportModules = builtins.path {

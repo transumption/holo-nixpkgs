@@ -11,9 +11,6 @@ in
     filter = (path: type: type != "symlink" || baseNameOf path != ".git");
   };
 
-  holochain-conductor = callPackage ./holoport-rust.nix {};
-  holochain-cli = callPackage ./holochain-cli {};
-
   envoy = callPackage ./envoy/default.nix {};
 
   fluent-bit = callPackage ./fluent-bit {};
@@ -23,6 +20,10 @@ in
   holo-health = callPackage ./holo-health {};
 
   holo-led = callPackage ./holo-led {};
+
+  holochain-cli = callPackage ./holochain-cli {};
+
+  holochain-conductor = callPackage ./holochain-conductor {};
 
   n3h = callPackage ./n3h/default.nix {};
 

@@ -1,12 +1,6 @@
 final: previous: with final;
 
 {
-  holoportModules = builtins.path {
-    name = "holoport-modules";
-    path = ./.;
-    filter = (path: type: type != "symlink" || baseNameOf path != ".git");
-  };
-
   # TODO: node2nix
   envoy = callPackage ./envoy {};
 

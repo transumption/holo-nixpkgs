@@ -18,7 +18,7 @@ in
 
   fluent-bit = callPackage ./fluent-bit {};
 
-  holo-cli = callPackage ./holo-cli/default.nix {};
+  holo-cli = callPackage ./holo-cli {};
 
   holo-health = callPackage ./holo-health/holo-health.nix {};
 

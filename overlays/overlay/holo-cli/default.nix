@@ -1,26 +1,21 @@
-{ stdenv, buildGoPackage, fetchgit, fetchhg, fetchbzr, fetchsvn }:
+{ stdenv, buildGoPackage, fetchFromGitHub }:
 
 buildGoPackage rec {
-  name = "holo-cli-unstable-${version}";
-  version = "2019-05-15";
-  rev = "6a8fd11370fff45fdb763198a67cb79c86e1efe3";
+  name = "holo-cli-${src.rev}";
 
-  goPackagePath = "github.com/Holo-Host/holo-cli";
-
-  src = fetchgit {
-    inherit rev;
-    url = "https://github.com/Holo-Host/holo-cli";
+  src = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "holo-cli";
+    rev = "6a8fd11370fff45fdb763198a67cb79c86e1efe3";
     sha256 = "12rck2d1gz56y69wycy2jf7dp9qaf47bdi6gfb15kr3rarigvy69";
   };
 
   goDeps = ./deps.nix;
+  goPackagePath = "github.com/Holo-Host/holo-cli";
 
   meta = with stdenv.lib; {
-    description = "holo-cli";
-    homepage    = https://github.com/Holo-Host/holo-cli;
-    license     = licenses.free;
-    platforms   = platforms.unix;
-    maintainers = [ maintainers.samrose ];
-
+    homepage = "https://github.com/Holo-Host/holo-cli";
+    license = licenses.asl20;
+    platforms = platforms.unix;
   };
 }

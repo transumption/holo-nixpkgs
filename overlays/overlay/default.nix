@@ -26,7 +26,7 @@ in
 
   n3h = callPackage ./n3h/default.nix {};
 
-  pre-net-led = callPackage ./pre-net-led/pre-net-led.nix {};
+  pre-net-led = callPackage ./pre-net-led {};
 
   shutdown-led = callPackage ./shutdown-led/shutdown-led.nix {};
 }

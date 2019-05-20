@@ -4,8 +4,7 @@ self: super:
 # in all of the modules. This is used to create our custom configuration.nix
 # that imports our modules into the NixOS modules
 let
-  callPackage = super.lib.callPackageWith super;
-
+  inherit (super) callPackage;
 in
 
 {

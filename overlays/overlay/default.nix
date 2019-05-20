@@ -22,7 +22,7 @@ in
 
   holo-health = callPackage ./holo-health {};
 
-  holo-led = callPackage ./holo-led/holo-led.nix {};
+  holo-led = callPackage ./holo-led {};
 
   n3h = callPackage ./n3h/default.nix {};
 

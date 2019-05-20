@@ -28,5 +28,5 @@ in
 
   pre-net-led = callPackage ./pre-net-led {};
 
-  shutdown-led = callPackage ./shutdown-led/shutdown-led.nix {};
+  shutdown-led = callPackage ./shutdown-led {};
 }

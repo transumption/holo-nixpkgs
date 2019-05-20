@@ -6,5 +6,6 @@
     ./user.nix
     ./util.nix
     ./version.nix
+    ./boot/generic-extlinux-compatible.nix
   ];
 }

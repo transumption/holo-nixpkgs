@@ -4,6 +4,8 @@ final: previous: with final;
   # TODO: node2nix
   envoy = callPackage ./envoy {};
 
+  extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
+
   fluent-bit = callPackage ./fluent-bit {};
 
   holo-cli = callPackage ./holo-cli {};

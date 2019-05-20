@@ -16,6 +16,10 @@ final: previous: with final;
 
   holochain-conductor = callPackage ./holochain-conductor {};
 
+  holoport-nano-dtb = callPackage ./holoport-nano-dtb {
+    linux = linux_latest;
+  };
+
   n3h = callPackage ./n3h {};
 
   pre-net-led = callPackage ./pre-net-led {};

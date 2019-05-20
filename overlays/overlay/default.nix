@@ -20,7 +20,7 @@ in
 
   holo-cli = callPackage ./holo-cli {};
 
-  holo-health = callPackage ./holo-health/holo-health.nix {};
+  holo-health = callPackage ./holo-health {};
 
   holo-led = callPackage ./holo-led/holo-led.nix {};
 

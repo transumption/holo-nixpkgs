@@ -1,8 +1,4 @@
-self: super:
-
-let
-  inherit (super) callPackage;
-in
+self: super: with self;
 
 {
   holoportModules = builtins.path {

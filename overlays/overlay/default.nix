@@ -1,6 +1,12 @@
 final: previous: with final;
 
 {
+  bananapi-m64-flash-uboot = callPackage ./bananapi-m64-flash-uboot {
+    ubootBananaPim64 = if stdenv.isAarch64
+      then ubootBananaPim64
+      else pkgsCross.aarch64-multiplatform.ubootBananaPim64;
+  };
+
   # TODO: node2nix
   envoy = callPackage ./envoy {};
 

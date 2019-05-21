@@ -16,6 +16,8 @@ final: previous: with final;
 
   holochain-conductor = callPackage ./holochain-conductor {};
 
+  holoport-hardware-test = callPackage ./holoport-hardware-test {};
+
   # TODO: move to Holo organization
   holoport-led = callPackage ./holoport-led {};
 

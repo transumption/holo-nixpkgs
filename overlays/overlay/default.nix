@@ -12,8 +12,6 @@ final: previous: with final;
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 
-  fluent-bit = callPackage ./fluent-bit {};
-
   holo-cli = callPackage ./holo-cli {};
 
   holo-health = callPackage ./holo-health {};

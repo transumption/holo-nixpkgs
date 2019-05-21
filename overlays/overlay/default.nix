@@ -12,19 +12,16 @@ final: previous: with final;
 
   holo-health = callPackage ./holo-health {};
 
-  holo-led = callPackage ./holo-led {};
-
   holochain-cli = callPackage ./holochain-cli {};
 
   holochain-conductor = callPackage ./holochain-conductor {};
+
+  # TODO: move to Holo organization
+  holoport-led = callPackage ./holoport-led {};
 
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {
     linux = linux_latest;
   };
 
   n3h = callPackage ./n3h {};
-
-  pre-net-led = callPackage ./pre-net-led {};
-
-  shutdown-led = callPackage ./shutdown-led {};
 }

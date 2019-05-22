@@ -1,12 +1,6 @@
 final: previous: with final;
 
 {
-  bananapi-m64-flash-uboot = callPackage ./bananapi-m64-flash-uboot {
-    ubootBananaPim64 = if stdenv.isAarch64
-      then ubootBananaPim64
-      else pkgsCross.aarch64-multiplatform.ubootBananaPim64;
-  };
-
   # TODO: node2nix
   envoy = callPackage ./envoy {};
 
@@ -27,6 +21,12 @@ final: previous: with final;
 
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {
     linux = linux_latest;
+  };
+
+  holoport-nano-install = callPackage ./holoport-nano-install {
+    ubootBananaPim64 = if stdenv.isAarch64
+      then ubootBananaPim64
+      else pkgsCross.aarch64-multiplatform.ubootBananaPim64;
   };
 
   n3h = callPackage ./n3h {};

@@ -18,6 +18,10 @@ in
     "console=tty0"
   ];
 
+  environment.systemPackages = [
+    pkgs.holoport-nano-install
+  ];
+
   sdImage.populateBootCommands = ''
     ${extlinux-conf-builder} -t 3 -c ${config.system.build.toplevel} -d ./boot
   '';

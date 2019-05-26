@@ -26,6 +26,4 @@ in
     ${extlinux-conf-builder} -t 3 -c ${config.system.build.toplevel} -d ./boot
     dd if=${pkgs.ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=$img count=1024 seek=8
   '';
-
-  services.mingetty.helpLine = "To install HoloPortOS, run: holoport-install";
 }

@@ -9,7 +9,10 @@
 
   security.polkit.enable = lib.mkDefault false;
 
-  services.mingetty.autologinUser = "root";
+  services.mingetty = {
+    autologinUser = "root";
+    helpLine = "To install HoloPortOS, run: holoport-install";
+  };
 
   services.udisks2.enable = lib.mkDefault false;
 

@@ -9,9 +9,7 @@ in
 
   boot.loader.grub = {
     memtest86.enable = lib.mkDefault true;
-
-    # TODO: should be PNG
-    splashImage = lib.mkDefault ./splash.jpg;
+    splashImage = ./splash.png;
   };
 
   nix.gc = {

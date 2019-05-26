@@ -1,6 +1,11 @@
 final: previous: with final;
 
 {
+  # TODO: remove with next repin (https://git.io/fj4DC)
+  e2fsprogs = callPackage ./e2fsprogs {
+    inherit (previous) e2fsprogs;
+  };
+
   # TODO: node2nix
   envoy = callPackage ./envoy {};
 

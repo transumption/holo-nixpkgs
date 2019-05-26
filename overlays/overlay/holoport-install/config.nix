@@ -1,6 +1,6 @@
 {
   imports = [
-    <holoportos/profiles/holoport-nano>
+    @profile@
     ./hardware-configuration.nix
   ];
 }

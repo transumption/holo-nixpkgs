@@ -18,8 +18,8 @@ in
     "console=tty0"
   ];
 
-  environment.systemPackages = [
-    pkgs.holoport-nano-install
+  environment.systemPackages = with pkgs; [
+    (holoport-install.override { device = "holoport-nano"; })
   ];
 
   sdImage.populateBootCommands = ''
@@ -27,5 +27,5 @@ in
     dd if=${pkgs.ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=$img count=1024 seek=8
   '';
 
-  services.mingetty.helpLine = "To install HoloPortOS, run: holoport-nano-install";
+  services.mingetty.helpLine = "To install HoloPortOS, run: holoport-install";
 }

@@ -10,7 +10,7 @@
   security.polkit.enable = lib.mkDefault false;
 
   services.mingetty = {
-    autologinUser = "root";
+    autologinUser = lib.mkForce "root";
     helpLine = "To install HoloPortOS, run: holoport-install";
   };
 

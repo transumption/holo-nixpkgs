@@ -8,7 +8,7 @@ let
 	./config.nix
       ];
 
-      isoImage.isoBaseName = "holoportos";
+      isoImage.isoBaseName = "holoport";
     };
   };
 in

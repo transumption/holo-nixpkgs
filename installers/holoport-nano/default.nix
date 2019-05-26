@@ -16,6 +16,8 @@ let
           config = "aarch64-unknown-linux-gnu";
           system = "aarch64-linux";
         };
+
+      sdImage.imageBaseName = "holoport-nano";
     };
   };
 in

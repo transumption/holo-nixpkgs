@@ -42,7 +42,7 @@ let
 
       prePhase = ''
         parted /dev/mmcblk2 --align optimal --script \
-          mklabel gpt \
+          mklabel msdos \
           mkpart primary 0% 100% \
           set 1 boot on
 

@@ -54,6 +54,20 @@ let
         dd if=${ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=/dev/mmcblk2 bs=1024 seek=8
       '';
     };
+
+    holoport-plus = mkDevice {
+      profile = "<holoportos/profiles/holoport-plus>";
+
+      prePhase = ''
+        parted /dev/sda --align optimal --script \
+          mklabel msdos \
+          mkpart primary 0% 100% \
+          set 1 boot on
+
+        mkfs.ext4 -F /dev/sda1
+        mount /dev/sda1 /mnt
+      '';
+    };
   };
 in
 

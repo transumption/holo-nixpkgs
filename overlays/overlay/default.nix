@@ -10,9 +10,9 @@ final: previous: with final;
 
   holo-health = callPackage ./holo-health {};
 
-  holochain-cli = callPackage ./holochain-cli {};
+  holochain = callPackage ./holochain {};
 
-  holochain-conductor = callPackage ./holochain-conductor {};
+  holochain-cli = callPackage ./holochain-cli {};
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 

@@ -5,6 +5,8 @@ with lib;
 let
   cfg = config.services.holochain;
 
+  inherit (config.users.users.holochain) home;
+
   defaults = {
     agents = [];
     dnas = [];
@@ -14,7 +16,7 @@ let
 
     logger.type = "debug";
 
-    persistence_dir = config.users.users.holochain.home;
+    persistence_dir = home;
   };
 
   config = defaults // cfg.config;
@@ -46,18 +48,24 @@ in
     ];
 
     systemd.services.holochain = {
-      after = [ "local-fs.target" "network.target" "systemd-activation.service" ];
+      after = [ "local-fs.target" "network.target" ];
       wantedBy = [ "multi-user.target" ];
-      requires = [ "systemd-activation.service" ];
-      path = [ n3h ];
-    
-      environment = {
-        NIX_STORE = "/nix/store";
-        USER = "holochain";
-      };
+
+      path = with pkgs; [ n3h ];
+
+      # TODO: This is extremely dangerous and should never be run by end user!
+      # This should be fixed upstream by separating state from config. If this
+      # warning is ignored, we will never, ever be able to change this config
+      # without resetting user's HoloPort to factory settings, which frankly
+      # would make running NixOS pointless.
+      preStart = ''
+        if [ ! -e ${home}/config.toml ]; then
+          cat ${toml} > ${home}/config.toml
+	fi
+      '';
     
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/holochain -c ${toml}";
+        ExecStart = "${cfg.package}/bin/holochain -c ${home}/config.toml";
         KillMode = "process";
         Restart = "always";
         User = "holochain";

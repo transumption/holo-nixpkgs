@@ -51,7 +51,7 @@ let
       '';
 
       postPhase = ''
-        dd if=${ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=/dev/mmcblk2 bs=1024 seek=8
+        dd if=${ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=/dev/mmcblk2 bs=8k seek=1
       '';
     };
 

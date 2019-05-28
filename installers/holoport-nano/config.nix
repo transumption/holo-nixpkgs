@@ -24,6 +24,6 @@ in
 
   sdImage.populateBootCommands = ''
     ${extlinux-conf-builder} -t 3 -c ${config.system.build.toplevel} -d ./boot
-    dd if=${pkgs.ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=$img count=1024 seek=8
+    dd if=${pkgs.ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=$img bs=8k seek=1
   '';
 }

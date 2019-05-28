@@ -19,7 +19,7 @@ in
   ];
 
   environment.systemPackages = with pkgs; [
-    (holoport-install.override { device = "holoport-nano"; })
+    (holoport-install.override { target = "holoport-nano"; })
   ];
 
   sdImage.populateBootCommands = ''

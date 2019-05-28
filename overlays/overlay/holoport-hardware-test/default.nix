@@ -1,5 +1,5 @@
 { lib, makeWrapper, runCommand, substituteAll, bash, coreutils, gawk
-, gnugrep, lshw, smartmontools, stress-ng, device ? "holoport" }:
+, gnugrep, lshw, smartmontools, stress-ng, target ? "holoport" }:
 
 let
   script = substituteAll {
@@ -19,5 +19,5 @@ let
 in
 
 runCommand "holoport-hardware-test" { nativeBuildInputs = [ makeWrapper ]; } ''
-  makeWrapper ${script} $out/bin/holoport-hardware-test --add-flags "${device}"
+  makeWrapper ${script} $out/bin/holoport-hardware-test --add-flags "${target}"
 ''

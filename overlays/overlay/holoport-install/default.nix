@@ -1,5 +1,5 @@
 { lib, runCommand, substituteAll, coreutils, e2fsprogs, parted
-, ubootBananaPim64, wget, device ? "holoport" }:
+, ubootBananaPim64, wget, target ? "holoport" }:
 
 let
   mkConfig = profile: substituteAll {
@@ -7,7 +7,7 @@ let
     inherit profile;
   };
 
-  mkDevice = { profile, prePhase, postPhase ? "" }: substituteAll {
+  mkTarget = { profile, prePhase, postPhase ? "" }: substituteAll {
     src = ./holoport-install.sh;
     isExecutable = true;
 
@@ -22,8 +22,8 @@ let
     inherit prePhase postPhase;
   };
 
-  devices = {
-    holoport = mkDevice {
+  targets = {
+    holoport = mkTarget {
       profile = "<holoportos/profiles/holoport>";
 
       prePhase = ''
@@ -37,7 +37,7 @@ let
       '';
     };
 
-    holoport-nano = mkDevice {
+    holoport-nano = mkTarget {
       profile = "<holoportos/profiles/holoport-nano>";
 
       prePhase = ''
@@ -55,7 +55,7 @@ let
       '';
     };
 
-    holoport-plus = mkDevice {
+    holoport-plus = mkTarget {
       profile = "<holoportos/profiles/holoport-plus>";
 
       prePhase = ''
@@ -72,5 +72,5 @@ let
 in
 
 runCommand "holoport-install" {} ''
-  install -D ${lib.getAttr device devices} $out/bin/holoport-install
+  install -D ${lib.getAttr target targets} $out/bin/holoport-install
 ''

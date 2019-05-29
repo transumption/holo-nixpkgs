@@ -1,10 +1,18 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }: with pkgs;
+
+let
+  inherit (config.services.holoport-led) device;
+  target = "holoport-plus";
+in
 
 {
-  imports = [ ../config.nix ];
+  imports = [
+    ../../profiles/targets/holoport-plus
+    ../config.nix
+  ];
 
-  environment.systemPackages = with pkgs; [
-    (holoport-hardware-test.override { target = "holoport-plus"; })
-    (holoport-install.override { target = "holoport-plus"; })
+  environment.systemPackages = [
+    (holoport-hardware-test.override { inherit device target; })
+    (holoport-install.override { inherit device target; })
   ];
 }

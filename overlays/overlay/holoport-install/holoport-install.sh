@@ -18,7 +18,9 @@ tar caf /mnt/etc/nixos/nixexprs.tar.xz -C @channel@ .
 cat /etc/resolv.conf > /mnt/etc/nixos/resolv.conf
 cat @config@ > /mnt/etc/nixos/configuration.nix
 
-nixos-install --no-channel-copy --no-root-passwd -I holoportos=@channel@/holoportos
+nixos-install --no-channel-copy --no-root-passwd \
+  -I holoportos=@channel@/holoportos
+
 nixos-enter --command '
   cp /etc/nixos/resolv.conf /etc/resolv.conf
   && nix-channel --add file:///etc/nixos holoportos

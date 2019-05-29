@@ -1,5 +1,5 @@
-{ lib, runCommand, substituteAll, bash, coreutils, e2fsprogs, parted
-, ubootBananaPim64, wget, device ? "/dev/ttyACM0", target ? "holoport"
+{ lib, runCommand, substituteAll, bash, coreutils, e2fsprogs, holoport-led
+, parted, ubootBananaPim64, wget, device ? "/dev/ttyACM0", target ? "holoport"
 , url ? "https://github.com/transumption/holoportos/archive/master.tar.gz" }:
 
 let
@@ -16,13 +16,13 @@ let
       mkdir $out && ln -s ${lib.cleanSource ../../../.} $out/holoportos;
     '';
     config = mkConfig profile;
-    path = lib.makeBinPath [ coreutils e2fsprogs parted wget ];
-    inherit bash prePhase postPhase url;
+    path = lib.makeBinPath [ coreutils e2fsprogs holoport-led parted wget ];
+    inherit bash device prePhase postPhase url;
   };
 
   targets = {
     holoport = mkTarget {
-      profile = "<holoportos/profiles/holoport>";
+      profile = "<holoportos/profiles/systems/holoport>";
 
       prePhase = ''
         parted /dev/sda --align optimal --script \
@@ -36,7 +36,7 @@ let
     };
 
     holoport-nano = mkTarget {
-      profile = "<holoportos/profiles/holoport-nano>";
+      profile = "<holoportos/profiles/systems/holoport-nano>";
 
       prePhase = ''
         parted /dev/mmcblk2 --align optimal --script \
@@ -54,7 +54,7 @@ let
     };
 
     holoport-plus = mkTarget {
-      profile = "<holoportos/profiles/holoport-plus>";
+      profile = "<holoportos/profiles/systems/holoport-plus>";
 
       prePhase = ''
         parted /dev/sda --align optimal --script \

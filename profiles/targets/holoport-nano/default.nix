@@ -1,12 +1,15 @@
 { pkgs, ... }:
 
 {
-  imports = [
-    ../.
-  ];
+  imports = [ ../../. ];
 
   # TODO: remove once Linux 5.1.4 becomes stable
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  boot.kernelParams = [
+    "console=ttyS0,115200n8"
+    "console=tty0"
+  ];
 
   boot.loader.generic-extlinux-compatible = {
     enable = true;
@@ -15,8 +18,5 @@
 
   boot.loader.grub.enable = false;
 
-  services.holoport-led = {
-    enable = true;
-    device = "/dev/ttyS2";
-  };
+  services.holoport-led.device = "/dev/ttyS2";
 }

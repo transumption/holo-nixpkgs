@@ -1,11 +1,11 @@
 { lib, ... }:
 
 {
+  imports = [ ../../profiles ];
+
   documentation.enable = lib.mkDefault false;
 
   environment.noXlibs = lib.mkDefault true;
-
-  nixpkgs.overlays = [ (import ../overlays/overlay) ];
 
   security.polkit.enable = lib.mkDefault false;
 

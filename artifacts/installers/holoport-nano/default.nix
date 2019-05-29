@@ -1,24 +1,40 @@
-{ pkgs ? import ../../nixpkgs {} }: with pkgs;
+{ pkgs ? import ../../nixpkgs {} }:
 
 let
-  nixos = import "${pkgs.path}/nixos" {
-    configuration = {
-      imports = [
-        "${pkgs.path}/nixos/modules/installer/cd-dvd/channel.nix"
-        "${pkgs.path}/nixos/modules/installer/cd-dvd/sd-image.nix"
-        "${pkgs.path}/nixos/modules/profiles/clone-config.nix"
-        ./config.nix
-      ];
+  pkgsLocal = pkgs;
 
-      nixpkgs.crossSystem = if stdenv.isAarch64
-        then null
-        else {
-          config = "aarch64-unknown-linux-gnu";
-          system = "aarch64-linux";
-        };
+  nixos = import "${pkgsLocal.path}/nixos" {
+    configuration = { config, pkgs, ... }: with pkgs;
+      let
+        inherit (config.services.holoport-led) device;
+	target = "holoport-nano";
+      in
+      {
+        imports = [
+          "${pkgsLocal.path}/nixos/modules/installer/cd-dvd/channel.nix"
+          "${pkgsLocal.path}/nixos/modules/installer/cd-dvd/sd-image.nix"
+          ../../../profiles/targets/holoport-nano
+          ../config.nix
+        ];
 
-      sdImage.imageBaseName = "holoport-nano";
-    };
+        nixpkgs.crossSystem = if pkgsLocal.stdenv.isAarch64
+          then null
+          else {
+            config = "aarch64-unknown-linux-gnu";
+            system = "aarch64-linux";
+          };
+
+        environment.systemPackages = [
+          (holoport-install.override { inherit device target; })
+        ];
+
+        sdImage.imageBaseName = "holoport-nano";
+
+        sdImage.populateBootCommands = ''
+          ${buildPackages.extlinux-conf-builder} -t 3 -c ${config.system.build.toplevel} -d ./boot
+          dd conv=notrunc if=${ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=$img bs=8k seek=1
+        '';
+      };
   };
 in
 

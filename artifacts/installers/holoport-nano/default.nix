@@ -31,7 +31,12 @@ let
         sdImage.imageBaseName = "holoport-nano";
 
         sdImage.populateBootCommands = ''
-          ${buildPackages.extlinux-conf-builder} -t 3 -c ${config.system.build.toplevel} -d ./boot
+          ${buildPackages.extlinux-conf-builder} \
+	    -b ${holoport-nano-dtb} \
+	    -c ${config.system.build.toplevel} \
+	    -d boot \
+	    -t -1
+
           dd conv=notrunc if=${ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=$img bs=8k seek=1
         '';
       };

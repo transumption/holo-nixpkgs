@@ -1,6 +1,7 @@
 { lib, runCommand, substituteAll, bash, coreutils, e2fsprogs, holoport-led
-, parted, ubootBananaPim64, wget, device ? "/dev/ttyACM0", target ? "holoport"
-, url ? "https://github.com/transumption/holoportos/archive/master.tar.gz" }:
+, parted, ubootBananaPim64, wget }:
+
+{ auroraLedDevice, channelUrl, target }:
 
 let
   mkConfig = profile: substituteAll {
@@ -9,7 +10,7 @@ let
   };
 
   mkTarget = { profile, prePhase, postPhase ? "" }: substituteAll {
-    src = ./holoport-install.sh;
+    src = ./holoportos-install.sh;
     isExecutable = true;
 
     channel = runCommand "channel" {} ''
@@ -17,7 +18,7 @@ let
     '';
     config = mkConfig profile;
     path = lib.makeBinPath [ coreutils e2fsprogs holoport-led parted wget ];
-    inherit bash device prePhase postPhase url;
+    inherit bash auroraLedDevice channelUrl prePhase postPhase;
   };
 
   targets = {
@@ -69,6 +70,6 @@ let
   };
 in
 
-runCommand "holoport-install" {} ''
-  install -D ${lib.getAttr target targets} $out/bin/holoport-install
+runCommand "holoportos-install" {} ''
+  install -D ${lib.getAttr target targets} $out/bin/holoportos-install
 ''

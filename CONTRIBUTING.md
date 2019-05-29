@@ -20,8 +20,14 @@ you normally would. To test if it builds, run `nix-build '<nixpkgs>' -A package-
 
 Run `nix-build -A artifacts.installers.holoport-nano`.
 
-Burn the resulting image to a microSD card with `sudo cp result/sd-image/*.img
+Burn the resulting image to a μSD card with `sudo cp result/sd-image/*.img
 /dev/mmcblkX` (see `lsblk` for the exact device name).
 
-Boot HoloPort Nano from the microSD card. Once you see shell prompt,
-run `holoport-nano-install`. Eject the microSD card and reboot.
+Connect Ethernet cable to HoloPort Nano, and boot from the μSD card.
+
+During installation, LED will blink with yellow color.
+
+Once LED turns green, installation is complete: eject the μSD card and reboot.
+
+If LED starts to blink with red, there was an error during installation.
+Connect over HDMI to see what's going on.

@@ -1,12 +1,24 @@
 { pkgs ? import ../../nixpkgs {} }:
 
 let
-  nixos = import "${pkgs.path}/nixos" {
-    configuration = {
+  pkgsLocal = pkgs;
+
+  nixos = import "${pkgsLocal.path}/nixos" {
+    configuration = { pkgs, ... }: with pkgs; {
       imports = [
-        "${pkgs.path}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-	./config.nix
+        "${pkgsLocal.path}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        ../../../profiles/installers
+        ../../../profiles/targets/holoport
       ];
+
+      environment.systemPackages = [
+        (holoport-hardware-test.override { target = "holoport"; })
+      ];
+
+      programs.holoportos-install = {
+        enable = true;
+	target = "holoport";
+      };
 
       isoImage.isoBaseName = "holoport";
     };

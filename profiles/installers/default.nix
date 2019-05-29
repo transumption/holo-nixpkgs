@@ -1,7 +1,7 @@
 { lib, ... }:
 
 {
-  imports = [ ../../profiles ];
+  imports = [ ../. ];
 
   documentation.enable = lib.mkDefault false;
 
@@ -12,6 +12,4 @@
   services.mingetty.autologinUser = lib.mkForce "root";
 
   services.udisks2.enable = lib.mkDefault false;
-
-  users.motd = "To install HoloPortOS, run: holoport-install";
 }

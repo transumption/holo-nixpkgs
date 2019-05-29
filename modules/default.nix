@@ -1,6 +1,7 @@
 {
   imports = [
     ./boot/generic-extlinux-compatible.nix
+    ./programs/holoportos-install.nix
     ./services/holoport-led.nix
 
     # TODO: switch to node2nix

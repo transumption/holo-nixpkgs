@@ -21,7 +21,7 @@ final: previous: with final;
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 
-  holoport-install = callPackage ./holoport-install {
+  holoportos-install = callPackage ./holoportos-install {
     ubootBananaPim64 = if stdenv.isAarch64
       then ubootBananaPim64
       else pkgsCross.aarch64-multiplatform.ubootBananaPim64;

@@ -27,7 +27,6 @@ final: previous: with final;
       else pkgsCross.aarch64-multiplatform.ubootBananaPim64;
   };
 
-  # TODO: move to Holo organization
   holoport-led = callPackage ./holoport-led {};
 
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {

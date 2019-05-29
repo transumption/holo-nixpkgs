@@ -5,11 +5,11 @@ PATH=@path@:$PATH
 
 if wget --quiet --spider https://cache.nixos.org; then
   echo "$0 requires internet connection"
-  holoport-led -device @device@ -mode flash -color purple
+  holoport-led --device @device@ --mode flash --color purple
 fi
 
-trap "holoport-led -device @device@ -mode flash -color red" EXIT
-holoport-led -device @device@ -mode flash -color yellow
+trap "holoport-led --device @device@ --mode flash --color red" EXIT
+holoport-led --device @device@ --mode flash --color yellow
 
 @prePhase@
 
@@ -32,4 +32,4 @@ rm /mnt/etc/nixos/resolv.conf
 
 @postPhase@
 
-holoport-led -device @device@ -mode static -color green
+holoport-led --device @device@ --mode static --color green

@@ -29,7 +29,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         User = "root";
-        ExecStop = "${cfg.package}/bin/holoport-led -mode flash -color blue";
+        ExecStop = "${cfg.package}/bin/holoport-led --mode flash --color blue";
         RemainAfterExit = "yes";
       };
     };
@@ -43,7 +43,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         User = "holoport-led";
-        ExecStart = "${cfg.package}/bin/holoport-led -device ${cfg.device} -mode flash -color purple";
+        ExecStart = "${cfg.package}/bin/holoport-led --device ${cfg.device} --mode flash --color purple";
       };
     };
 
@@ -55,7 +55,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         User = "holoport-led";
-        ExecStart = "${cfg.package}/bin/holoport-led -device ${cfg.device} -mode aurora";
+        ExecStart = "${cfg.package}/bin/holoport-led --device ${cfg.device} --mode aurora";
       };
     };
     

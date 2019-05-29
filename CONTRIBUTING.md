@@ -18,7 +18,7 @@ you normally would. To test if it builds, run `nix-build '<nixpkgs>' -A package-
 
 ### HoloPort Nano
 
-Run `nix-build -A installers.holoport-nano`.
+Run `nix-build -A artifacts.installers.holoport-nano`.
 
 Burn the resulting image to a microSD card with `sudo cp result/sd-image/*.img
 /dev/mmcblkX` (see `lsblk` for the exact device name).

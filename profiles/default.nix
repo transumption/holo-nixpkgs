@@ -12,6 +12,8 @@ in
     splashImage = ./splash.png;
   };
 
+  documentation.nixos.enable = false;
+
   nix.gc = {
     automatic = true;
     dates = "daily";

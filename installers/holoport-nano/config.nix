@@ -10,7 +10,7 @@ in
   boot.loader.generic-extlinux-compatible.enable = true;
   boot.loader.grub.enable = false;
 
-  # TODO: remove (this instance only) once Linux 5.1.4 becomes stable
+  # TODO: remove once Linux 5.1.4 becomes stable
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.kernelParams = [

@@ -1,5 +1,6 @@
-{ lib, runCommand, substituteAll, coreutils, e2fsprogs, parted
-, ubootBananaPim64, wget, target ? "holoport" }:
+{ lib, runCommand, substituteAll, bash, coreutils, e2fsprogs, parted
+, ubootBananaPim64, wget, device ? "/dev/ttyACM0", target ? "holoport"
+, url ? "https://github.com/transumption/holoportos/archive/master.tar.gz" }:
 
 let
   mkConfig = profile: substituteAll {
@@ -14,12 +15,9 @@ let
     channel = runCommand "channel" {} ''
       mkdir $out && ln -s ${lib.cleanSource ../../../.} $out/holoportos;
     '';
-
-    channelURL = "https://github.com/transumption/holoportos/archive/master.tar.gz";
-
     config = mkConfig profile;
     path = lib.makeBinPath [ coreutils e2fsprogs parted wget ];
-    inherit prePhase postPhase;
+    inherit bash prePhase postPhase url;
   };
 
   targets = {

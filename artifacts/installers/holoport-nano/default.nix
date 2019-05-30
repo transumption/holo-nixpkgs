@@ -31,7 +31,7 @@ let
           -b ${holoport-nano-dtb} \
           -c ${config.system.build.toplevel} \
           -d boot \
-          -t -1
+          -t 1
 
         dd conv=notrunc if=${ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=$img bs=8k seek=1
       '';

@@ -1,4 +1,4 @@
-{ lib, runCommand, substituteAll, bash, coreutils, e2fsprogs, holoport-led
+{ lib, runCommand, substituteAll, aurora-led, bash, coreutils, e2fsprogs
 , parted, ubootBananaPim64 }:
 
 { auroraLedDevice, channelUrl, target }:
@@ -17,7 +17,7 @@ let
       mkdir $out && ln -s ${lib.cleanSource ../../../.} $out/holoportos;
     '';
     config = mkConfig profile;
-    path = lib.makeBinPath [ coreutils e2fsprogs holoport-led parted ];
+    path = lib.makeBinPath [ aurora-led coreutils e2fsprogs parted ];
     inherit bash auroraLedDevice channelUrl prePhase postPhase;
   };
 

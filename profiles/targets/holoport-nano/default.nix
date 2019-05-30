@@ -18,5 +18,5 @@
 
   boot.loader.grub.enable = false;
 
-  services.holoport-led.device = "/dev/ttyS2";
+  services.aurora-led.device = "/dev/ttyS2";
 }

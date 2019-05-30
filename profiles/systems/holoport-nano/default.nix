@@ -4,5 +4,5 @@
     ../../targets/holoport-nano
   ];
 
-  services.holoport-led.enable = true;
+  services.aurora-led.enable = true;
 }

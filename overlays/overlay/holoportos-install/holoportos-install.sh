@@ -6,15 +6,15 @@ PATH=@path@:$PATH
 function on_exit {
   # shellcheck disable=SC2181
   if (($?)); then
-    holoport-led --device @auroraLedDevice@ --mode flash --color red
+    aurora-led --device @auroraLedDevice@ --mode flash --color red
   else
-    holoport-led --device @auroraLedDevice@ --mode static --color green
+    aurora-led --device @auroraLedDevice@ --mode static --color green
   fi
 }
 
 trap on_exit EXIT
 
-holoport-led --device @auroraLedDevice@ --mode flash --color orange
+aurora-led --device @auroraLedDevice@ --mode flash --color orange
 
 @prePhase@
 

@@ -1,17 +1,17 @@
 [[package]]
+name = "aurora-led"
+version = "0.0.0"
+dependencies = [
+ "getopts 0.2.19 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serial 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "getopts"
 version = "0.2.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "unicode-width 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "holoport-led"
-version = "0.0.0"
-dependencies = [
- "getopts 0.2.19 (registry+https://github.com/rust-lang/crates.io-index)",
- "serial 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

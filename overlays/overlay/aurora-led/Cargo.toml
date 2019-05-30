@@ -1,5 +1,5 @@
 [package]
-name = "holoport-led"
+name = "aurora-led"
 version = "0.0.0"
 
 [dependencies]

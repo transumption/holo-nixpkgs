@@ -3,11 +3,11 @@
 with lib;
 
 let
-  cfg = config.services.holoport-led;
+  cfg = config.services.aurora-led;
 in
 
 { 
-  options.services.holoport-led = {
+  options.services.aurora-led = {
     enable = mkEnableOption "HoloPort LED";
 
     device = mkOption {
@@ -15,13 +15,13 @@ in
     };
 
     package = mkOption {
-      default = pkgs.holoport-led;
+      default = pkgs.aurora-led;
       type = types.package;
     };
   };
 
   config = mkIf cfg.enable {
-    systemd.services.holoport-led-down = {
+    systemd.services.aurora-led-down = {
       enable = true;
       wantedBy = [ "multi-user.target" ];
 
@@ -29,12 +29,12 @@ in
       serviceConfig = {
         Type = "oneshot";
         User = "root";
-        ExecStop = "${cfg.package}/bin/holoport-led --mode flash --color blue";
+        ExecStop = "${cfg.package}/bin/aurora-led --mode flash --color blue";
         RemainAfterExit = "yes";
       };
     };
 
-    systemd.services.holoport-led-pre-net = {
+    systemd.services.aurora-led-pre-net = {
       enable = true;
       wantedBy = [ "default.target" ];
       before = [ "network.target" ];
@@ -42,24 +42,24 @@ in
       description = "Flash with purple until network is live";
       serviceConfig = {
         Type = "oneshot";
-        User = "holoport-led";
-        ExecStart = "${cfg.package}/bin/holoport-led --device ${cfg.device} --mode flash --color purple";
+        User = "aurora-led";
+        ExecStart = "${cfg.package}/bin/aurora-led --device ${cfg.device} --mode flash --color purple";
       };
     };
 
-    systemd.services.holoport-led-up = {
+    systemd.services.aurora-led-up = {
       enable = true;
       wantedBy = [ "default.target" ];
       after = [ "getty.target" ];
 
       serviceConfig = {
         Type = "oneshot";
-        User = "holoport-led";
-        ExecStart = "${cfg.package}/bin/holoport-led --device ${cfg.device} --mode aurora";
+        User = "aurora-led";
+        ExecStart = "${cfg.package}/bin/aurora-led --device ${cfg.device} --mode aurora";
       };
     };
     
-    users.users.holoport-led = {
+    users.users.aurora-led = {
       extraGroups = [ "dialout" ];
     };
   };

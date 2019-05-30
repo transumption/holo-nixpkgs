@@ -3,5 +3,5 @@
 
   boot.loader.grub.enable = true;
 
-  services.holoport-led.device = "/dev/ttyUSB0";
+  services.aurora-led.device = "/dev/ttyUSB0";
 }

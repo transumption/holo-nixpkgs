@@ -25,4 +25,6 @@ let
   };
 in
 
-nixos.config.system.build.isoImage
+nixos.config.system.build.isoImage.overrideAttrs (super: {
+  meta.platforms = [ "x86_64-linux" ];
+})

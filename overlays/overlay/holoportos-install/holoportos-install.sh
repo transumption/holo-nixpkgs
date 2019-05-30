@@ -14,7 +14,7 @@ function on_exit {
 
 trap on_exit EXIT
 
-holoport-led --device @auroraLedDevice@ --mode flash --color yellow
+holoport-led --device @auroraLedDevice@ --mode flash --color orange
 
 @prePhase@
 

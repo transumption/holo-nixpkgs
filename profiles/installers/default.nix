@@ -3,6 +3,10 @@
 {
   imports = [ ../. ];
 
+  boot.postBootCommands = ''
+    mkdir -p /mnt
+  '';
+
   documentation.enable = lib.mkDefault false;
 
   environment.noXlibs = lib.mkDefault true;

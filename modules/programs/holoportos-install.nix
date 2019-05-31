@@ -22,11 +22,6 @@ in
       type = types.package;
     };
 
-    retryDelay = mkOption {
-      default = 5;
-      type = types.int;
-    };
-
     target = mkOption {
       type = types.enum [
         "holoport"
@@ -44,9 +39,7 @@ in
   config = mkIf cfg.enable {
     environment.shellInit = ''
       if [ "$(tty)" = "${cfg.tty}" ]; then
-	while ! ${cfg.package}/bin/holoportos-install; do
-	  sleep ${toString cfg.retryDelay}
-	done
+	${cfg.package}/bin/holoportos-install
       fi
     '';
 

@@ -3,7 +3,20 @@
 let
   pkgsLocal = pkgs;
 
-  nixos = import "${pkgsLocal.path}/nixos" {
+  closure = import "${pkgsLocal.path}/nixos" {
+    configuration = {
+      imports = [
+        ../../../profiles/systems/holoport-nano
+      ];
+
+      fileSystems."/" = {
+        device = "/dev/disk/by-uuid/00000000-0000-0000-0000-000000000000";
+        fsType = "ext4";
+      };
+    };
+  };
+
+  installer = import "${pkgsLocal.path}/nixos" {
     configuration = { config, pkgs, ... }: with pkgs; {
       imports = [
         "${pkgsLocal.path}/nixos/modules/installer/cd-dvd/channel.nix"
@@ -35,8 +48,11 @@ let
 
         dd conv=notrunc if=${ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=$img bs=8k seek=1
       '';
+
+      system.extraDependencies =
+        lib.optionals pkgsLocal.stdenv.isAarch64 [ closure.system ];
     };
   };
 in
 
-nixos.config.system.build.sdImage
+installer.config.system.build.sdImage

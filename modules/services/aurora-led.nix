@@ -29,7 +29,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         User = "root";
-        ExecStop = "${cfg.package}/bin/aurora-led --mode flash --color blue";
+        ExecStop = "${cfg.package}/bin/aurora-led --device ${cfg.device} --mode flash --color blue";
         RemainAfterExit = "yes";
       };
     };

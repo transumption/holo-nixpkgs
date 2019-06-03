@@ -33,5 +33,9 @@ final: previous: with final;
       else pkgsCross.aarch64-multiplatform.ubootBananaPim64;
   };
 
+  hydra = previous.hydra.overrideAttrs (super: {
+    patches = [ ./hydra/no-restrict-eval.diff ];
+  });
+
   n3h = callPackage ./n3h {};
 }

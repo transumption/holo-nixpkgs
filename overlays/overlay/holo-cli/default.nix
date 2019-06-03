@@ -15,6 +15,6 @@ buildGoPackage rec {
 
   meta = with stdenv.lib; {
     license = licenses.asl20;
-    platforms = platforms.unix;
+    platforms = platforms.linux;
   };
 }

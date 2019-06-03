@@ -14,4 +14,6 @@ makeTest {
     $machine->waitForUnit("multi-user.target");
     $machine->shutdown;
   '';
+
+  meta.platforms = lib.platforms.linux;
 }

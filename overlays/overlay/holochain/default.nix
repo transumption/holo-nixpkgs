@@ -15,7 +15,5 @@ stdenv.mkDerivation rec {
     install -Dt $out/bin holochain
   '';
 
-  meta = with stdenv.lib; {
-    platforms = [ "x86_64-linux" ];
-  };
+  meta.platforms = [ "x86_64-linux" ];
 }

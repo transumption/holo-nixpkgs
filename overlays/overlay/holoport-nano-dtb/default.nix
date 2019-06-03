@@ -26,4 +26,6 @@ stdenv.mkDerivation {
       arch/arm64/boot/dts/allwinner/sun50i-a64-bananapi-m64.dts \
       | dtc > $out/allwinner/sun50i-a64-bananapi-m64.dtb
   '';
+
+  meta.platforms = [ "aarch64-linux" ];
 }

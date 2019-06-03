@@ -70,6 +70,6 @@ let
   };
 in
 
-runCommand "holoportos-install" {} ''
+runCommand "holoportos-install" { meta.platforms = lib.platforms.linux; } ''
   install -D ${lib.getAttr target targets} $out/bin/holoportos-install
 ''

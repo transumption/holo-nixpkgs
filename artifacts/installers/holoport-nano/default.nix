@@ -55,4 +55,6 @@ let
   };
 in
 
-installer.config.system.build.sdImage
+installer.config.system.build.sdImage.overrideAttrs (super: {
+  meta.platforms = [ "aarch64-linux" ];
+})

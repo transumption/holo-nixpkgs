@@ -18,6 +18,9 @@ let
   };
 in
 
-runCommand "holoport-hardware-test" { nativeBuildInputs = [ makeWrapper ]; } ''
+runCommand "holoport-hardware-test" {
+  nativeBuildInputs = [ makeWrapper ];
+  meta.platforms = lib.platforms.linux;
+} ''
   makeWrapper ${script} $out/bin/holoport-hardware-test --add-flags "${target}"
 ''

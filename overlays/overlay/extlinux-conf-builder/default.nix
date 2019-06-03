@@ -6,4 +6,8 @@ substituteAll {
 
   inherit bash;
   path = lib.makeBinPath [ coreutils gnused gnugrep ];
+
+  meta = with lib; {
+    platforms = platforms.linux;
+  };
 }

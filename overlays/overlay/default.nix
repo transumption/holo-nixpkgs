@@ -34,6 +34,7 @@ final: previous: with final;
   };
 
   hydra = previous.hydra.overrideAttrs (super: {
+    doCheck = false;
     patches = [ ./hydra/no-restrict-eval.diff ];
   });
 

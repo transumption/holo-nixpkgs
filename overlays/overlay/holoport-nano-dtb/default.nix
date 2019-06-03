@@ -13,10 +13,8 @@ stdenv.mkDerivation {
   nativeBuildInputs = [ dtc ];
 
   patches = [
-    (fetchpatch {
-      url = "https://lkml.org/lkml/diff/2019/5/26/40/1";
-      sha256 = "0bygvql24aj3y2n78f9vys2ikhkm31j3rymxazqxfldx1yk39paj";
-    })
+    ./enable-uart2.diff
+    ./enable-lradc.diff
   ];
 
   buildPhase = ":";

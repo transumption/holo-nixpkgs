@@ -1,4 +1,6 @@
-{ pkgs ? import ./nixpkgs {} }: with pkgs;
+{ pkgs ? import ./nixpkgs {} }:
+
+with pkgs;
 
 let
   root = toString ./.;

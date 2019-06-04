@@ -1,5 +1,6 @@
-{ pkgs ? import ../nixpkgs {}, system ? builtins.currentSystem }:
+{ pkgs ? import ../nixpkgs {} }:
 
+with pkgs;
 with import "${pkgs.path}/nixos/lib/testing.nix" { inherit pkgs system; };
 
 makeTest {

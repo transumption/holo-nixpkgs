@@ -4,6 +4,7 @@ extern crate serial;
 use std::env;
 use std::io::prelude::*;
 use std::process::exit;
+use std::time::Duration;
 
 use getopts::Options;
 use serial::prelude::*;
@@ -90,5 +91,8 @@ fn main() {
     };
 
     port.configure(&SETTINGS).unwrap();
+    port.set_timeout(Duration::new(1, 0)).unwrap();
     port.write(&[color_byte, mode_byte]).unwrap();
+
+    assert!(port.bytes().next().unwrap().unwrap() == b'Y');
 }

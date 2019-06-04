@@ -23,7 +23,10 @@ let
 in
 
 with import "${pkgs.path}/pkgs/top-level/release-lib.nix" {
-  nixpkgsArgs = { overlays = [ (override default) overlay ]; };
+  nixpkgsArgs = {
+    config.inHydra = true;
+    overlays = [ (override default) overlay ];
+  };
   supportedSystems = [ "aarch64-linux" "x86_64-linux" ];
 };
 

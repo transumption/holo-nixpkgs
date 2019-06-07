@@ -3,8 +3,6 @@ let
 in
 
 {
-  imports = [ ../. ];
-
   nix.nixPath = [
     "nixpkgs=${self}/nixpkgs"
     "nixpkgs-overlays=${self}/overlays"

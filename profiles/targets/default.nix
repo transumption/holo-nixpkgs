@@ -1,7 +1,10 @@
 { lib, pkgs, ... }:
 
 {
-  imports = [ ../. ];
+  imports = [
+    ../.
+    ../self-aware.nix
+  ];
 
   boot.loader.grub.splashImage = ./splash.png;
   boot.loader.timeout = 1;

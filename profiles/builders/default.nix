@@ -1,5 +1,8 @@
 {
-  imports = [ ../. ];
+  imports = [
+    ../.
+    ../self-aware.nix
+  ];
 
   nix.gc = {
     automatic = true;

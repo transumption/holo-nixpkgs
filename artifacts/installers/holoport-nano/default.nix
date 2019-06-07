@@ -21,8 +21,8 @@ let
       imports = [
         "${pkgsLocal.path}/nixos/modules/installer/cd-dvd/channel.nix"
         "${pkgsLocal.path}/nixos/modules/installer/cd-dvd/sd-image.nix"
+        ../../../profiles/hardware/holoport-nano
         ../../../profiles/installers
-        ../../../profiles/targets/holoport-nano
       ];
 
       nixpkgs.crossSystem = if pkgsLocal.stdenv.isAarch64

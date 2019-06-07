@@ -7,8 +7,8 @@ let
     configuration = { pkgs, ... }: with pkgs; {
       imports = [
         "${pkgsLocal.path}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        ../../../profiles/hardware/holoport
         ../../../profiles/installers
-        ../../../profiles/targets/holoport
       ];
 
       environment.systemPackages = [

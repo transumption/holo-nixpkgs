@@ -1,7 +1,7 @@
 {
   imports = [
+    ../../../hardware/holoport-nano
     ../.
-    ../../../targets/holoport-nano
   ];
 
   services.aurora-led.enable = true;

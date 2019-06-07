@@ -1,6 +1,6 @@
 {
   imports = [
-    ../../../hardware/holoport-nano
+    ../../hardware/holoport-nano
     ../.
   ];
 

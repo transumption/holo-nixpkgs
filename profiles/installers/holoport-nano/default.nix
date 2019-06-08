@@ -11,11 +11,6 @@ in
     ../.
   ];
 
-  nixpkgs.hostPlatform = {
-    config = "aarch64-unknown-linux-gnu";
-    system = "aarch64-linux";
-  };
-
   sdImage.populateBootCommands = with pkgs; ''
     ${buildPackages.extlinux-conf-builder} \
       -b ${holoport-nano-dtb} \

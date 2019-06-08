@@ -1,12 +1,12 @@
 { lib, runCommand, substituteAll, aurora-led, bash, coreutils, e2fsprogs
 , parted, ubootBananaPim64 }:
 
-{ auroraLedDevice, channelUrl, target }:
+{ auroraLedDevice, channelUrl, network, target }:
 
 let
   mkConfig = profile: substituteAll {
     src = ./config.nix;
-    inherit profile;
+    inherit network profile;
   };
 
   mkTarget = { profile, prePhase, postPhase ? "" }: substituteAll {

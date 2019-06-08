@@ -4,6 +4,8 @@ with lib;
 
 let
   cfg = config.programs.holoportos-install;
+
+  inherit (config.system.holoportos) network target;
 in
 
 {
@@ -20,14 +22,14 @@ in
     };
 
     channelUrl = mkOption {
-      default = "https://github.com/transumption/holoportos/archive/master.tar.gz";
+      default = "https://hydra.holo.host/channel/custom/holoportos/${network}/holoportos";
     };
 
     package = mkOption {
       default = pkgs.holoportos-install {
         auroraLedDevice = config.services.aurora-led.device;
-	channelUrl = cfg.channelUrl;
-	target = config.system.holoportos.target;
+	inherit (cfg) channelUrl;
+	inherit network target;
       };
 
       type = types.package;

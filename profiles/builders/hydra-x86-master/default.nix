@@ -33,6 +33,9 @@
 
   services.nginx = {
     enable = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
     virtualHosts.hydra = {
       enableACME = true;
       locations."/".proxyPass = "http://localhost:${toString config.services.hydra.port}";

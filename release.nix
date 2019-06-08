@@ -1,6 +1,5 @@
 {
   pkgs ? import ./nixpkgs {
-    config.allowUnsupportedSystem = true;
     overlays = [ (import ./overlays/overlay) ];
   }
 }:

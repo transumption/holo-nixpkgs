@@ -45,6 +45,7 @@ in
     extraConfig = ''
       max_output_size = 17179869184
     '';
+    logo = ./logo.png;
     hydraURL = "https://hydra.holo.host";
     notificationSender = "hydra@holo.host";
     useSubstitutes = true;

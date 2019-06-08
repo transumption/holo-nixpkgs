@@ -16,6 +16,10 @@ let
       boot.loader.grub.device = "nodev";
 
       fileSystems."/".fsType = "tmpfs";
+
+      nixpkgs = {
+        inherit (config.nixpkgs) crossSystem localSystem;
+      };
     };
   };
 in

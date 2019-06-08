@@ -18,6 +18,8 @@
 
   boot.loader.grub.enable = false;
 
+  nixpkgs.hostPlatform.system = "aarch64-linux";
+
   services.aurora-led.device = "/dev/ttyS2";
 
   system.holoportos.target = "holoport-nano";

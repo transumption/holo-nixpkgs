@@ -1,6 +1,7 @@
 {
   imports = [
     ./boot/generic-extlinux-compatible.nix
+    ./nixpkgs/host-platform.nix
     ./programs/holoportos-install.nix
     ./services/aurora-led.nix
     ./system/holoportos.nix

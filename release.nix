@@ -1,8 +1,4 @@
-{
-  pkgs ? import ./nixpkgs {
-    overlays = [ (import ./overlays/overlay) ];
-  }
-}:
+{ pkgs ? import ./nixpkgs { overlays = [ (import ./overlays/overlay) ]; } }:
 
 with pkgs;
 
@@ -23,7 +19,7 @@ in
 
 with import "${pkgs.path}/pkgs/top-level/release-lib.nix" {
   nixpkgsArgs = {
-    config.inHydra = true;
+    config.allowCross = false;
     overlays = [ (override default) overlay ];
   };
   supportedSystems = [ "aarch64-linux" "x86_64-linux" ];

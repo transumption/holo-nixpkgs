@@ -3,22 +3,32 @@
 with pkgs;
 
 let
-  mkImage = profile: system:
+  mkImage = profile:
     let
+      allowCross = config.allowCross or true;
+
       nixos = import "${pkgs.path}/nixos" {
-        configuration = {
+        configuration = { config, ... }: {
 	  imports = [ profile ];
-	  nixpkgs.localSystem = { inherit system; };
+
+	  nixpkgs.localSystem.system = if allowCross
+	    then builtins.currentSystem
+	    else config.nixpkgs.hostPlatform.system;
 	};
       };
-      
+
       inherit (nixos.config.system) build;
+      inherit (nixos.config.nixpkgs.hostPlatform) system;
 
       image = if build ? "isoImage"
         then build.isoImage
         else build.sdImage;
+
+      stopgap = drv: if allowCross
+        then drv
+	else runCommand drv.name {} "ln -s ${drv} $out";
     in
-    image.overrideAttrs (super: {
+    (stopgap image).overrideAttrs (super: {
       meta.platforms = [ system ];
     });
 in
@@ -26,9 +36,9 @@ in
 {
   artifacts = recurseIntoAttrs {
     installers = recurseIntoAttrs {
-      holoport = mkImage ./profiles/installers/holoport "x86_64-linux";
-      holoport-nano = mkImage ./profiles/installers/holoport-nano "aarch64-linux";
-      holoport-plus = mkImage ./profiles/installers/holoport-plus "x86_64-linux";
+      holoport = mkImage ./profiles/installers/holoport;
+      holoport-nano = mkImage ./profiles/installers/holoport-nano;
+      holoport-plus = mkImage ./profiles/installers/holoport-plus;
     };
   };
 

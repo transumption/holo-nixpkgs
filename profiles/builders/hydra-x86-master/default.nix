@@ -35,7 +35,7 @@
     enable = true;
     virtualHosts.hydra = {
       enableACME = true;
-      locations."/".proxyPass = "http://localhost:${config.services.hydra.port}";
+      locations."/".proxyPass = "http://localhost:${toString config.services.hydra.port}";
       serverName = "holoportbuild.holo.host";
     };
   };

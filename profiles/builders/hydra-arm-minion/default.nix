@@ -5,7 +5,7 @@ in
 {
   imports = [ ../. ];
 
-  users.users.hydra.openssh.authorizedKeys.keys = [
+  users.users.root.openssh.authorizedKeys.keys = [
     ''command="nix-store --serve --write" ${key}''
   ];
 }

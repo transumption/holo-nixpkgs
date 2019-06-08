@@ -27,5 +27,5 @@ stdenv.mkDerivation {
       | dtc > $out/allwinner/sun50i-a64-bananapi-m64.dtb
   '';
 
-  meta.platforms = [ "aarch64-linux" ];
+  meta.platforms = stdenv.lib.platforms.linux;
 }

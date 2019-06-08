@@ -13,7 +13,8 @@ final: previous: with final;
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 
-  holo-cli = callPackage ./holo-cli {};
+  # TODO: fix build failure on aarch64
+  # holo-cli = callPackage ./holo-cli {};
 
   holo-health = callPackage ./holo-health {};
 

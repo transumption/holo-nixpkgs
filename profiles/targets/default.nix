@@ -38,11 +38,11 @@
   users.mutableUsers = false;
 
   users.users.holoport = {
-    isNormalUser = true;
     extraGroups = [ "wheel" ];
+    isNormalUser = true;
   };
 
-  users.users.support = {
-    isNormalUser = true;
-  };
+  users.users.root.password = "";
+
+  users.users.support.isNormalUser = true;
 }

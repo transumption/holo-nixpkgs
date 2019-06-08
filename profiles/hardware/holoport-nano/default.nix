@@ -19,4 +19,6 @@
   boot.loader.grub.enable = false;
 
   services.aurora-led.device = "/dev/ttyS2";
+
+  system.holoportos.target = "holoport-nano";
 }

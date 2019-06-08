@@ -7,5 +7,5 @@
 
   services.aurora-led.device = "/dev/ttyUSB0";
 
-  system.holoportos.target = "holoport";
+  system.holoportos.target = "holoport-plus";
 }

@@ -1,4 +1,6 @@
-{ config, lib, pkgs, ... }: with lib;
+{ config, lib, pkgs, ... }:
+
+with lib;
 
 let
   cfg = config.programs.holoportos-install;
@@ -8,38 +10,34 @@ in
   options.programs.holoportos-install = {
     enable = mkEnableOption "HoloPortOS installer";
 
+    autorun = mkOption {
+      default = true;
+      type = types.bool;
+    };
+
+    autorunTty = mkOption {
+      default = "/dev/tty1";
+    };
+
     channelUrl = mkOption {
       default = "https://github.com/transumption/holoportos/archive/master.tar.gz";
-      type = types.string;
     };
 
     package = mkOption {
       default = pkgs.holoportos-install {
         auroraLedDevice = config.services.aurora-led.device;
-	inherit (cfg) channelUrl target;
+	channelUrl = cfg.channelUrl;
+	target = config.system.holoportos.target;
       };
 
       type = types.package;
     };
-
-    target = mkOption {
-      type = types.enum [
-        "holoport"
-	"holoport-nano"
-	"holoport-plus"
-      ];
-    };
-
-    tty = mkOption {
-      default = "/dev/tty1";
-      type = types.string;
-    };
   };
 
   config = mkIf cfg.enable {
-    environment.shellInit = ''
-      if [ "$(tty)" = "${cfg.tty}" ]; then
-	${cfg.package}/bin/holoportos-install
+    environment.shellInit = lib.optionalString cfg.autorun ''
+      if [ "$(tty)" = "${cfg.autorunTty}" ]; then
+        ${cfg.package}/bin/holoportos-install
       fi
     '';
 

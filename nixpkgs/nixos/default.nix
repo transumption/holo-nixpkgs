@@ -1,6 +1,5 @@
 let
-  pkgs = import ../. {};
+  nixpkgs = import ../../vendor/nixpkgs;
 in
 
-import "${pkgs.path}/nixos"
-
+import "${nixpkgs}/nixos"

@@ -42,6 +42,9 @@ in
 
   services.hydra = {
     enable = true;
+    extraConfig = ''
+      max_output_size = 17179869184
+    '';
     hydraURL = "https://hydra.holo.host";
     notificationSender = "hydra@holo.host";
     useSubstitutes = true;

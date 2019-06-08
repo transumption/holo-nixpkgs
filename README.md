@@ -11,7 +11,8 @@ consistent, verifiable, and auditable.
 
 ### HoloPort Nano
 
-[Download an installer image][holoportos-for-holoport-nano].
+Download an installer image:
+https://hydra.holo.host/job/holoportos/release/artifacts.installers.holoport-nano.aarch64-linux/latest/download-by-type/file/sd-image
 
 To build an installer yourself, checkout this repo, switch to `release` branch,
 install [Nix][nix] and run `nix-build -A artifacts.installers.holoport-nano`.
@@ -29,5 +30,4 @@ If LED starts to blink with red, there was an error during installation.
 Connect over HDMI to see what's going on. To retry, reboot or type
 `holoportos-install` in console.
 
-[holoportos-for-holoport-nano]: https://hydra.holo.host/job/holoportos/release/artifacts.installers.holoport-nano.aarch64-linux/latest/download-by-type/file/sd-image
 [nix]: https://nixos.org/nix/

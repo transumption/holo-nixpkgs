@@ -27,12 +27,13 @@ with import "${pkgs.path}/pkgs/top-level/release-lib.nix" {
 
 let
   self = {
-    channel = releaseTools.aggregate {
+    channel = releaseTools.channel {
       name = "holoportos";
+      src = ./.;
       constituents = constitute [
-	overlayPkgs
         self.artifacts.installers
-	self.tests
+        self.overlay
+        self.tests
       ];
     };
 

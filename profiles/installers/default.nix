@@ -53,5 +53,6 @@ in
   system.extraDependencies =
     lib.optionals (stdenv.buildPlatform == stdenv.hostPlatform) [
       closure.config.system.build.toplevel
+      stdenv
     ];
 }

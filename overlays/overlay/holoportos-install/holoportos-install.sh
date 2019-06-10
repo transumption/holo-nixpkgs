@@ -27,6 +27,6 @@ cat @config@ > /mnt/etc/nixos/configuration.nix
 
 nixos-install --channel @channel@ --no-root-passwd \
   -I holoportos=@channel@/holoportos
-nixos-enter --command 'nix-channel --add @channelUrl@ holoportos'
+echo '@channelUrl@ holoportos' > /mnt/root/.nix-channels
 
 @postPhase@

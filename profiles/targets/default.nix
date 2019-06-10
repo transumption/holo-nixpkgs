@@ -11,6 +11,8 @@
 
   documentation.enable = false;
 
+  environment.noXlibs = true;
+
   nix.gc = {
     automatic = true;
     dates = "daily";

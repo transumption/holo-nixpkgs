@@ -36,7 +36,7 @@ in
 
   documentation.enable = false;
 
-  environment.noXlibs = lib.mkDefault true;
+  environment.noXlibs = true;
 
   environment.systemPackages = [
     (holoport-hardware-test.override { inherit target; })

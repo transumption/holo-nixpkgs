@@ -69,7 +69,6 @@ fn main() {
 
     let color_byte = match matches.opt_str("color") {
         Some(x) => match x.as_ref() {
-            "aurora" => b'A',
             "blue" => b'B',
             "green" => b'G',
             "orange" => b'O',
@@ -79,6 +78,7 @@ fn main() {
             _ => fail(&format!("unsupported color: {}", x), &program, opts),
         },
         None => match mode.as_ref() {
+            "aurora" => b'A',
             "off" => b'X',
             "status" => b'S',
             _ => fail(&format!("missing color for mode: {}", mode), &program, opts),

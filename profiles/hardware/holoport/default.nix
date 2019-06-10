@@ -1,7 +1,7 @@
 { lib, ... }:
 
 {
-  imports = [ ../../. ];
+  imports = [ ../. ];
 
   boot.loader.grub.enable = lib.mkDefault true;
 

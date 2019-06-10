@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ ../../. ];
+  imports = [ ../. ];
 
   # TODO: remove once Linux 5.1.4 becomes stable
   boot.kernelPackages = pkgs.linuxPackages_latest;

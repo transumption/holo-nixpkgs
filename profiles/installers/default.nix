@@ -44,6 +44,11 @@ in
 
   programs.holoportos-install.enable = true;
 
+  services.openssh = {
+    enable = true;
+    permitRootLogin = "yes";
+  };
+
   security.polkit.enable = lib.mkDefault false;
 
   services.mingetty.autologinUser = lib.mkForce "root";

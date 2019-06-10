@@ -28,7 +28,7 @@
     joinNetworks = [ "e5cd7a9e1c3e8c42" ];
   };
 
-  system.autoUpgrade = {
+  system.holoportos.autoUpgrade = {
     enable = true;
     dates = "*:0/10";
   };

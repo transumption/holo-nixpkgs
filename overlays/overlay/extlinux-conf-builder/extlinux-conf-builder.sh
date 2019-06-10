@@ -1,6 +1,6 @@
 #!@bash@/bin/bash
 
-set -euo pipefail
+set -eo pipefail
 shopt -s nullglob
 
 export PATH=@path@

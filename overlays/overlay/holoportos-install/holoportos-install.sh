@@ -21,9 +21,7 @@ aurora-led --device @auroraLedDevice@ --mode flash --color orange
 @prePhase@
 
 nixos-generate-config --root /mnt
-
-hostName=$(cat /sys/class/net/en*/address | head -n1 | tr -d :)
-cat @config@ | sed "s/@hostName@/$hostName/" > /mnt/etc/nixos/configuration.nix
+cat @config@ > /mnt/etc/nixos/configuration.nix
 
 nixos-install --channel @channel@ --no-root-passwd \
   -I holoportos=@channel@/holoportos

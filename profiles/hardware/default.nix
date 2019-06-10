@@ -3,5 +3,5 @@
 {
   imports = [ ../. ];
 
-  hardware.enableRedistributableFirmware = lib.mkDefault false;
+  hardware.enableRedistributableFirmware = false;
 }

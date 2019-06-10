@@ -3,6 +3,8 @@
 with pkgs;
 
 let
+  revision = import ./lib/revision.nix { inherit lib; };
+
   default = import ./.;
   overlay = import ./overlays/overlay;
 
@@ -28,7 +30,7 @@ with import "${pkgs.path}/pkgs/top-level/release-lib.nix" {
 let
   self = {
     holoportos = releaseTools.channel {
-      name = "holoportos";
+      name = "holoportos-${revision}";
       src = ./.;
       constituents = constitute [
         self.artifacts.installers

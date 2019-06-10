@@ -5,6 +5,8 @@ with pkgs;
 let
   inherit (config.system.holoportos) target;
 
+  revision = import ../../lib/revision.nix { inherit lib; };
+
   nixpkgs = import ../../vendor/nixpkgs;
 
   closure = import "${nixpkgs}/nixos" {
@@ -22,13 +24,11 @@ let
       };
     };
   };
+
 in
 
 {
-  imports = [
-    "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-    ../.
-  ];
+  imports = [ "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix" ../. ];
 
   boot.postBootCommands = ''
     mkdir -p /mnt
@@ -49,6 +49,8 @@ in
   services.mingetty.autologinUser = lib.mkForce "root";
 
   services.udisks2.enable = lib.mkDefault false;
+
+  system.build.baseName = "holoportos-for-${target}-${revision}";
 
   system.extraDependencies =
     lib.optionals (stdenv.buildPlatform == stdenv.hostPlatform) [

@@ -1,3 +1,5 @@
+{ config, ... }:
+
 let
   nixpkgs = import ../../../vendor/nixpkgs;
 in
@@ -8,4 +10,6 @@ in
     ../../hardware/holoport-plus
     ../.
   ];
+
+  isoImage.isoBaseName = config.system.build.baseName;
 }

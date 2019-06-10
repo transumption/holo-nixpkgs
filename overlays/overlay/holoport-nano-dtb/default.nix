@@ -13,6 +13,7 @@ stdenv.mkDerivation {
   nativeBuildInputs = [ dtc ];
 
   patches = [
+    ./enable-thermal-sensor.diff
     ./enable-uart2.diff
   ];
 

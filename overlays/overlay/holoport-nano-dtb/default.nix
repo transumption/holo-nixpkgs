@@ -14,7 +14,6 @@ stdenv.mkDerivation {
 
   patches = [
     ./enable-uart2.diff
-    ./enable-lradc.diff
   ];
 
   buildPhase = ":";

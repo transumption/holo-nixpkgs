@@ -11,9 +11,7 @@ function on_exit {
     aurora-led --device @auroraLedDevice@ --mode static --color green
   fi
 
-  passwd=$(head -c12 /dev/urandom | base64)
-  echo "$passwd" | passwd
-  echo "installer root password: $passwd"
+  yes "$(head -c12 /dev/urandom | base64)" | passwd
 }
 
 trap on_exit EXIT

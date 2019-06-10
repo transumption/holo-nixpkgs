@@ -9,7 +9,7 @@
   boot.loader.grub.splashImage = ./splash.png;
   boot.loader.timeout = 1;
 
-  documentation.nixos.enable = false;
+  documentation.enable = false;
 
   nix.gc = {
     automatic = true;

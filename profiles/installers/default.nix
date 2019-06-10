@@ -34,7 +34,7 @@ in
     mkdir -p /mnt
   '';
 
-  documentation.enable = lib.mkDefault false;
+  documentation.enable = false;
 
   environment.noXlibs = lib.mkDefault true;
 

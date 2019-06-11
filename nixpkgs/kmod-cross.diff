@@ -1,0 +1,12 @@
+diff --git a/pkgs/top-level/all-packages.nix b/pkgs/top-level/all-packages.nix
+index df5b8b66cce..de0ebbd7b50 100644
+--- a/pkgs/top-level/all-packages.nix
++++ b/pkgs/top-level/all-packages.nix
+@@ -15609,6 +15609,7 @@ in
+ 
+   aggregateModules = modules:
+     callPackage ../os-specific/linux/kmod/aggregator.nix {
++      inherit (buildPackages) kmod;
+       inherit modules;
+     };
+ 

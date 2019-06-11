@@ -10,12 +10,18 @@ fi
 case "$1" in
   holoport)
     cpu=2
+    smart=true
+    ;;
+  holoport-nano)
+    cpu=2
+    mmc=true
     ;;
   holoport-plus)
     cpu=4
+    smart=true
     ;;
   *)
-    echo "Usage: $0 {holoport,holoport-plus}"
+    echo "Usage: $0 {holoport,holoport-nano,holoport-plus}"
     exit 1
     ;;
 esac
@@ -40,27 +46,35 @@ stress-ng \
 
 max_test_estimate=0
 
-for hd in /dev/disk/by-id/ata!(*-part*); do
-  smartctl -X "$hd" &>> /dev/null
-  smartctl -i "$hd" &>> "$log"
+if [ "$smart" = true ]; then
+  for hd in /dev/disk/by-id/ata!(*-part*); do
+    smartctl -X "$hd" &>> /dev/null
+    smartctl -i "$hd" &>> "$log"
 
-  test_estimate=$(smartctl -t short -d ata "$hd" | grep 'Please wait' | awk '{print $3}')
-  if [ "$test_estimate" -gt "$max_test_estimate" ]; then
-    max_test_estimate=$test_estimate
-  fi
-done
+    test_estimate=$(smartctl -t short -d ata "$hd" | grep 'Please wait' | awk '{print $3}')
+    if [ "$test_estimate" -gt "$max_test_estimate" ]; then
+      max_test_estimate=$test_estimate
+    fi
+  done
 
-echo "Waiting $max_test_estimate minutes for SMART tests to complete"
-sleep "${max_test_estimate}m"
+  echo "Waiting $max_test_estimate minutes for SMART tests to complete"
+  sleep "${max_test_estimate}m"
 
-for hd in /dev/disk/by-id/ata*; do
-  smartctl -d ata "$hd" &>> "$log"
-done
+  for hd in /dev/disk/by-id/ata*; do
+    smartctl -d ata "$hd" &>> "$log"
+  done
 
-for _ in {1..10}; do
-  sleep .01
-  echo -n -e \\a
-done
+  for _ in {1..10}; do
+    sleep .01
+    echo -n -e \\a
+  done
+fi
+
+if [ "$mmc" = true ]; then
+  for hd in /dev/mmcblk!(*s*); do
+    mmc extcsd read "$hd" &>> "$log"
+  done
+fi
 
 echo "$log"
 less "$log"

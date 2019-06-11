@@ -1,5 +1,5 @@
 { lib, makeWrapper, runCommand, substituteAll, bash, coreutils, gawk
-, gnugrep, lshw, smartmontools, stress-ng, target ? "holoport" }:
+, gnugrep, lshw, mmc-utils, smartmontools, stress-ng, target ? "holoport" }:
 
 let
   script = substituteAll {
@@ -12,6 +12,7 @@ let
       gawk
       gnugrep
       lshw
+      mmc-utils
       smartmontools
       stress-ng
     ];

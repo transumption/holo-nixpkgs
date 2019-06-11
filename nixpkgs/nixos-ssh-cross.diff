@@ -1,0 +1,13 @@
+diff --git a/nixos/modules/services/networking/ssh/sshd.nix b/nixos/modules/services/networking/ssh/sshd.nix
+index 89f56a726f4..19b1c062c03 100644
+--- a/nixos/modules/services/networking/ssh/sshd.nix
++++ b/nixos/modules/services/networking/ssh/sshd.nix
+@@ -4,7 +4,7 @@ with lib;
+ 
+ let
+ 
+-  sshconf = pkgs.runCommand "sshd.conf-validated" { nativeBuildInputs = [ cfgc.package ]; } ''
++  sshconf = pkgs.runCommand "sshd.conf-validated" { nativeBuildInputs = [ pkgs.buildPackages.openssh ]; } ''
+     cat >$out <<EOL
+     ${cfg.extraConfig}
+     EOL

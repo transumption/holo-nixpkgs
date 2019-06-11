@@ -1,4 +1,10 @@
-{ lib, pkgs, ... }:
+{ config, pkgs, ... }:
+
+with pkgs;
+
+let
+  inherit (config.system.holoportos) target;
+in
 
 {
   imports = [
@@ -12,6 +18,10 @@
   documentation.enable = false;
 
   environment.noXlibs = true;
+
+  environment.systemPackages = [
+    (holoport-hardware-test.override { inherit target; })
+  ];
 
   nix.gc = {
     automatic = true;

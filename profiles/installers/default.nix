@@ -24,7 +24,6 @@ let
       };
     };
   };
-
 in
 
 {
@@ -37,10 +36,6 @@ in
   documentation.enable = false;
 
   environment.noXlibs = true;
-
-  environment.systemPackages = [
-    (holoport-hardware-test.override { inherit target; })
-  ];
 
   programs.holoportos-install.enable = true;
 

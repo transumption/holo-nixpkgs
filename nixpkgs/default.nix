@@ -15,6 +15,7 @@ import (stdenvNoCC.mkDerivation {
       sha256 = "1sbwpffg0777jcc4ffs9vgc7rn443rvnb1f7ap0nayq0ajjlf1a0";
     })
 
+    ./ext4-no-resize2fs.diff
     ./kmod-cross.diff
   ];
 

@@ -7,7 +7,7 @@
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
-  services.aurora-led.device = "/dev/ttyUSB0";
+  services.holoport-led-daemon.device = "/dev/ttyUSB0";
 
   system.holoportos.target = "holoport";
 }

@@ -16,13 +16,13 @@ final: previous: with final;
   # TODO: fix build failure on aarch64
   # holo-cli = callPackage ./holo-cli {};
 
-  holo-health = callPackage ./holo-health {};
-
   holochain = callPackage ./holochain {};
 
   holochain-cli = callPackage ./holochain-cli {};
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
+
+  holoport-led-daemon = callPackage ./holoport-led-daemon {};
 
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {
     linux = linux_latest;

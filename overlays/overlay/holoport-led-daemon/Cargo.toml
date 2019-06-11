@@ -1,0 +1,7 @@
+[package]
+name = "holoport-led-daemon"
+version = "0.0.0"
+
+[dependencies]
+getopts = "0.2.19"
+reqwest = "0.9.18"

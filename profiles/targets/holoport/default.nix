@@ -4,5 +4,5 @@
     ../.
   ];
 
-  services.aurora-led.enable = true;
+  services.holoport-led-daemon.enable = true;
 }

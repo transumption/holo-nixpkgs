@@ -1,7 +1,13 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [ ../. ];
+
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    sun50i-a64-gpadc-iio
+  ];
+
+  boot.kernelModules = [ "sun50i-a64-gpadc-iio" ];
 
   # TODO: remove once Linux 5.1.4 becomes stable
   boot.kernelPackages = pkgs.linuxPackages_latest;

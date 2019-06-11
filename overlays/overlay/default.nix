@@ -39,5 +39,9 @@ final: previous: with final;
     patches = [ ./hydra/no-restrict-eval.diff ];
   });
 
+  linuxPackages_latest = previous.linuxPackages_latest.extend (self: super: {
+    sun50i-a64-gpadc-iio = self.callPackage ./sun50i-a64-gpadc-iio {};
+  });
+
   n3h = callPackage ./n3h {};
 }

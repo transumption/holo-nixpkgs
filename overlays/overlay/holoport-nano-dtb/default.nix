@@ -13,8 +13,8 @@ stdenv.mkDerivation {
   nativeBuildInputs = [ dtc ];
 
   patches = [
-    ./enable-thermal-sensor.diff
-    ./enable-uart2.diff
+    ./a64-ths.patch
+    ./uart2.diff
   ];
 
   buildPhase = ":";

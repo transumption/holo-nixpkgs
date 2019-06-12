@@ -53,11 +53,6 @@ in
 
       path = with pkgs; [ n3h ];
 
-      # TODO: This is extremely dangerous and should never be run by end user!
-      # This should be fixed upstream by separating state from config. If this
-      # warning is ignored, we will never, ever be able to change this config
-      # without resetting user's HoloPort to factory settings, which frankly
-      # would make running NixOS pointless.
       preStart = ''
         if [ ! -e ${home}/config.toml ]; then
           cat ${toml} > ${home}/config.toml

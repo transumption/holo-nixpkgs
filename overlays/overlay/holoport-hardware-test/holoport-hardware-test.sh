@@ -39,7 +39,7 @@ stress-ng \
   --tz \
   --verbose \
   --verify \
-  --metrics-brief >> "$log"
+  --metrics-brief &>> "$log"
 
 max_test_estimate=0
 

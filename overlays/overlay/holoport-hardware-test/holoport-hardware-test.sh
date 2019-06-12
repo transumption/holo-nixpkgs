@@ -24,7 +24,7 @@ case "$1" in
 esac
 
 set -euo pipefail
-shopt -s extglob
+shopt -s extglob nullglob
 
 log=$(mktemp)
 
@@ -43,7 +43,7 @@ stress-ng \
 
 max_test_estimate=0
 
-for hd in /dev/disk/by-id/ata!(*-part*); do
+for hd in /dev/disk/by-id/ata-!(*-part*); do
   smartctl -X "$hd" &>> /dev/null
   smartctl -i "$hd" &>> "$log"
 
@@ -56,11 +56,11 @@ done
 echo "Waiting $max_test_estimate minutes for SMART tests to complete"
 sleep "${max_test_estimate}m"
 
-for hd in /dev/disk/by-id/ata*; do
+for hd in /dev/disk/by-id/ata-!(*-part*); do
   smartctl -d ata "$hd" &>> "$log"
 done
 
-for hd in /dev/mmcblk!(*s*); do
+for hd in /dev/disk/by-id/mmc-!(*-part*); do
   mmc extcsd read "$hd" &>> "$log"
 done
 

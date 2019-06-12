@@ -54,16 +54,20 @@ fn main() {
     let device = matches.opt_str("device").unwrap();
     let operstate = matches.opt_str("operstate").unwrap();
 
+    let mut is_aurora = false;
+
     loop {
         sleep(Duration::new(1, 0));
 
         match get_temp() {
             79000...98999 => {
                 aurora_led(&["--device", &device, "--mode", "flash", "--color", "yellow"]);
+                is_aurora = false;
                 continue;
             }
             99000...i64::MAX => {
                 aurora_led(&["--device", &device, "--mode", "flash", "--color", "red"]);
+                is_aurora = false;
                 continue;
             }
             _ => {}
@@ -71,9 +75,13 @@ fn main() {
 
         if !is_online(&operstate) {
             aurora_led(&["--device", &device, "--mode", "flash", "--color", "purple"]);
+            is_aurora = false;
             continue;
         }
 
-        aurora_led(&["--device", &device, "--mode", "aurora"]);
+        if !is_aurora {
+            aurora_led(&["--device", &device, "--mode", "aurora"]);
+            is_aurora = true;
+        }
     }
 }

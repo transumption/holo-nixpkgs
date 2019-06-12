@@ -14,8 +14,11 @@ stdenv.mkDerivation ({
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
   meta.platforms = platforms.linux;
-} // optionalAttrs (stdenv.buildPlatform != stdenv.hostPlatform &&
-                    stdenv.hostPlatform.system == "aarch64-linux") {
-  ARCH = "arm64";
-  CROSS_COMPILE = "aarch64-unknown-linux-gnu-";
+} // optionalAttrs (stdenv.buildPlatform != stdenv.hostPlatform) {
+  ARCH = {
+    aarch64-linux = "arm64";
+    x86_64-linux = "x86";
+  }."${stdenv.hostPlatform.system}";
+
+  CROSS_COMPILE = "${stdenv.hostPlatform.config}-";
 })

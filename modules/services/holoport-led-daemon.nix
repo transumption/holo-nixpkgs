@@ -14,6 +14,10 @@ in
       type = types.string;
     };
 
+    operstate = mkOption {
+      type = types.string;
+    };
+
     package = mkOption {
       default = pkgs.holoport-led-daemon;
       type = types.package;
@@ -26,7 +30,7 @@ in
       wantedBy = [ "default.target" ];
 
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/holoport-led-daemon --device ${cfg.device}";
+        ExecStart = "${cfg.package}/bin/holoport-led-daemon --device ${cfg.device} --operstate ${cfg.operstate}";
         User = "holoport-led-daemon";
       };
     };

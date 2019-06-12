@@ -26,7 +26,10 @@
 
   nixpkgs.hostPlatform.system = "aarch64-linux";
 
-  services.holoport-led-daemon.device = "/dev/ttyS2";
+  services.holoport-led-daemon = {
+    device = "/dev/ttyS2";
+    operstate = "/sys/class/net/eth0/operstate";
+  };
 
   system.holoportos.target = "holoport-nano";
 }

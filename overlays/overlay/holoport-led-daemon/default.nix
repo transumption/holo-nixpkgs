@@ -4,7 +4,7 @@ rustPlatform.buildRustPackage {
   name = "holoport-led-daemon";
   src = lib.cleanSource ./.;
 
-  cargoSha256 = "10rlpygmn2i67w00zgv1dkv2mgzrxfn4lxi4c48rwjlnfnvksn18";
+  cargoSha256 = "10g8w0pvvxhdr3bax3ly5f619b3mn2j810rbmcbgibg077198b7h";
 
   nativeBuildInputs = [ makeWrapper pkgconfig ];
   buildInputs = [ openssl ];

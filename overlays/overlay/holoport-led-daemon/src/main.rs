@@ -1,5 +1,4 @@
 extern crate getopts;
-extern crate reqwest;
 
 use std::env;
 use std::fs;
@@ -25,15 +24,9 @@ fn get_temp() -> i64 {
         .unwrap();
 }
 
-// TODO: replace with a standalone TCP packet based service
-const REACHABLE_URL: &str =
-  "http://storage.bhs5.cloud.ovh.net/v1/AUTH_69eb89512d2e41329d542cd1abe12534/holoport-led-daemon";
-
-fn is_reachable() -> bool {
-    return match reqwest::get(REACHABLE_URL) {
-        Err(_) => false,
-        Ok(res) => res.status() == 204,
-    };
+// TODO: replace with self-hosted TCP service
+fn is_online(operstate: &str) -> bool {
+    return fs::read_to_string(operstate).unwrap().trim() == "up";
 }
 
 fn print_usage(program: &str, opts: Options) {
@@ -47,6 +40,7 @@ fn main() {
 
     let mut opts = Options::new();
     opts.reqopt("", "device", "path to Aurora LED controller device", "PATH");
+    opts.reqopt("", "operstate", "path to Linux net operstate", "PATH");
 
     let matches = match opts.parse(&args[1..]) {
         Ok(m) => m,
@@ -58,13 +52,14 @@ fn main() {
     };
 
     let device = matches.opt_str("device").unwrap();
+    let operstate = matches.opt_str("operstate").unwrap();
 
     loop {
-        sleep(Duration::new(5, 0));
+        sleep(Duration::new(1, 0));
 
         match get_temp() {
             79000...98999 => {
-                aurora_led(&["--device", &device, "--mode", "flash", "--color", "red"]);
+                aurora_led(&["--device", &device, "--mode", "flash", "--color", "yellow"]);
                 continue;
             }
             99000...i64::MAX => {
@@ -74,7 +69,7 @@ fn main() {
             _ => {}
         }
 
-        if !is_reachable() {
+        if !is_online(&operstate) {
             aurora_led(&["--device", &device, "--mode", "flash", "--color", "purple"]);
             continue;
         }

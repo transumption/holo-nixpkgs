@@ -3,13 +3,13 @@
 with lib;
 
 let
-  cfg = config.programs.holoportos-install;
+  cfg = config.system.holoportos.install;
 
   inherit (config.system.holoportos) network target;
 in
 
 {
-  options.programs.holoportos-install = {
+  options.system.holoportos.install = {
     enable = mkEnableOption "HoloPortOS installer";
 
     autorun = mkOption {

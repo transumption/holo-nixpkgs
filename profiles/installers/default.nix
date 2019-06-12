@@ -37,7 +37,7 @@ in
 
   environment.noXlibs = true;
 
-  programs.holoportos-install.enable = true;
+  system.holoportos.install.enable = true;
 
   services.openssh = {
     enable = true;

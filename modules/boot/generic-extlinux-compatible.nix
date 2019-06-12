@@ -3,16 +3,16 @@
 with lib;
 
 let
-  blCfg = config.boot.loader;
-  cfg = blCfg.generic-extlinux-compatible;
+  blcfg = config.boot.loader;
+  cfg = blcfg.generic-extlinux-compatible;
 
   dtbDirOpt = if cfg.dtbDir == null
     then ""
     else "-b ${cfg.dtbDir}";
 
-  timeout = if blCfg.timeout == null
+  timeout = if blcfg.timeout == null
     then -1
-    else blCfg.timeout;
+    else blcfg.timeout;
 in
 
 {
@@ -55,7 +55,9 @@ in
   };
 
   config = mkIf cfg.enable {
-    system.build.installBootLoader = "${pkgs.extlinux-conf-builder} ${dtbDirOpt} -g ${toString cfg.configurationLimit} -t ${toString timeout} -c";
+    system.build.installBootLoader =
+      "${pkgs.extlinux-conf-builder} ${dtbDirOpt} -g ${toString cfg.configurationLimit} -t ${toString timeout} -c";
+
     system.boot.loader.id = "generic-extlinux-compatible";
   };
 }

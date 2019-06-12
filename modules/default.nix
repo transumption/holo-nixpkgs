@@ -6,8 +6,5 @@
     ./system/holoportos.nix
     ./system/holoportos/auto-upgrade.nix
     ./system/holoportos/install.nix
-
-    # TODO: switch to node2nix
-    # ./services/envoy.nix
   ];
 }

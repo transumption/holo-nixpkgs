@@ -35,6 +35,21 @@ in
       };
     };
 
+    systemd.services.holoport-led-daemon-down = {
+      restartIfChanged = false;
+      unitConfig.X-StopOnRemoval = false;
+
+      wantedBy = [ "multi-user.target" ];
+
+      description = "Flash blue on any request for shutdown/poweroff/reboot";
+      serviceConfig = {
+        Type = "oneshot";
+        User = "holoport-led-daemon";
+        ExecStop = "${pkgs.aurora-led}/bin/aurora-led --device ${cfg.device} --mode flash --color blue";
+        RemainAfterExit = "yes";
+      };
+    };
+
     users.users.holoport-led-daemon = {
       extraGroups = [ "dialout" ];
     };

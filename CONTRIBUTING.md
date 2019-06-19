@@ -13,3 +13,7 @@ Then, add a new package to `overlays/overlay/default.nix`:
 
 Create `overlays/overlay/package-name/default.nix` and write the derivation as
 you normally would. To test if it builds, run `nix-build '<nixpkgs>' -A package-name`.
+
+## Test NixOS profile changes
+
+Enter `nix-shell`. Then, run `sudo nixos-rebuild switch` as you normally would.

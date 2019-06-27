@@ -44,4 +44,6 @@ final: previous: with final;
   });
 
   n3h = callPackage ./n3h {};
+
+  packet-block-storage = callPackage ./packet-block-storage {};
 }

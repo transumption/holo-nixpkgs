@@ -31,6 +31,9 @@ let
     (stopgap image).overrideAttrs (super: {
       meta.platforms = [ system ];
     });
+
+  overlay = import ./overlays/overlay;
+  overlayNames = lib.attrNames (overlay {} {});
 in
 
 {
@@ -41,6 +44,8 @@ in
       holoport-plus = mkImage ./profiles/installers/holoport-plus;
     };
   };
+
+  overlay = lib.getAttrs overlayNames (pkgs.extend overlay);
 
   tests = recurseIntoAttrs {
     boot = import ./tests/boot.nix { inherit pkgs; };

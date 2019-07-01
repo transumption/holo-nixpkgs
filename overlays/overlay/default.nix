@@ -9,7 +9,10 @@ final: previous: with final;
   };
 
   # TODO: node2nix
-  envoy = callPackage ./envoy {};
+  envoy = fetchzip {
+    url = "https://github.com/samrose/envoy/archive/envoy-v0.0.1.tar.gz";
+    sha256 = "1dvbi5p3njg9sk3xx4sqdsnsz250ginyyvsnghxl25bjw73jcjx7";
+  };
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 

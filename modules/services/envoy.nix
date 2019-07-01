@@ -21,10 +21,11 @@ in
 
     systemd.services.envoy = {
       after = [ "local-fs.target" "network.target" "holochain.service" ];
+      path = [ config.services.holochain.package ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        ExecStart = "${pkgs.nodejs}/bin/node ${cfg.package}/envoy/lib/index.js';
+        ExecStart = "${pkgs.nodejs}/bin/node ${cfg.package}/lib/index.js";
         KillMode = "process";
         Restart = "always";
       };

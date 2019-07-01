@@ -18,6 +18,7 @@ with lib;
         "holoport"
         "holoport-nano"
         "holoport-plus"
+        "virtualbox"
       ];
     };
   };

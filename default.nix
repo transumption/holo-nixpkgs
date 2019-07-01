@@ -22,15 +22,19 @@ let
 
       image = if build ? "isoImage"
         then build.isoImage
-        else build.sdImage;
+        else if build ? "sdImage"
+        then build.sdImage
+        else if build ? "virtualBoxOVA"
+        then build.virtualBoxOVA
+        else throw "${build} doesn't expose any known image format";
 
       stopgap = drv: if allowCross
         then drv
 	else runCommand drv.name {} "ln -s ${drv} $out";
     in
-    (stopgap image).overrideAttrs (super: {
+    lib.recursiveUpdate (stopgap image) {
       meta.platforms = [ system ];
-    });
+    };
 
   overlay = import ./overlays/overlay;
   overlayNames = lib.attrNames (overlay {} {});
@@ -42,6 +46,7 @@ in
       holoport = mkImage ./profiles/installers/holoport;
       holoport-nano = mkImage ./profiles/installers/holoport-nano;
       holoport-plus = mkImage ./profiles/installers/holoport-plus;
+      virtualbox = mkImage ./profiles/targets/virtualbox;
     };
   };
 

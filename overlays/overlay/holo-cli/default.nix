@@ -6,8 +6,8 @@ buildGoPackage rec {
   src = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "holo-cli";
-    rev = "dd5e25b1d919abfd86b355d29f9f29ab293ff452";
-    sha256 = "1wh2hi7zfs3dnp1xaw11dd7rr6xqq1973bghba8pp4sv6wmvy888";
+    rev = "39f9454c217cf5137a0afae5a47d6e6407f76405";
+    sha256 = "0wzm8sklrzcy4shddvkw71mnjkrhbzlfn6ryhy4qmp6glc56qm98";
   };
 
   goDeps = ./deps.nix;

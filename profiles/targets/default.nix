@@ -23,6 +23,15 @@ in
     (holoport-hardware-test.override { inherit target; })
   ];
 
+  nix.binaryCaches = [
+    "https://cache.nixos.org"
+    "https://holo.cachix.org"
+  ];
+
+  nix.binaryCachePublicKeys = [
+    "holo.cachix.org-1:dDYdjxXLazxlQUkKgqifHp00uhifdQPZi7Tu0jD8xmA="
+  ];
+
   nix.gc = {
     automatic = true;
     dates = "daily";

@@ -11,8 +11,9 @@ import (stdenvNoCC.mkDerivation {
   patches = [
     ./ext4-no-resize2fs.diff
     ./kmod-cross.diff
-    ./nixos-ssh-cross.diff
   ];
+
+  phases = [ "unpackPhase" "patchPhase" "installPhase" ];
 
   installPhase = ''
     mv $(pwd) $out

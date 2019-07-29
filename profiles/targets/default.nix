@@ -23,6 +23,8 @@ in
     (holoport-hardware-test.override { inherit target; })
   ];
 
+  networking.hostName = "holoport";
+
   nix.binaryCaches = [
     "https://cache.nixos.org"
     "https://holo.cachix.org"
@@ -39,6 +41,15 @@ in
   };
 
   security.sudo.wheelNeedsPassword = false;
+
+  services.avahi = {
+    enable = true;
+
+    publish = {
+      enable = true;
+      addresses = true;
+    };
+  };
 
   services.mingetty.autologinUser = "holoport";
 

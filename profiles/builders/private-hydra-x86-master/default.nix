@@ -1,23 +1,24 @@
-{ config, ... }:
-
 {
-  imports = [ ../. ];
+  imports = [ ../. ../master.nix ];
 
-  networking.firewall.allowedTCPPorts = [ 22 80 443 ];
+  nix.buildMachines = [
+    {
+      hostName = "localhost";
+      maxJobs = 2;
+      supportedFeatures = [
+        "benchmark"
+        "big-parallel"
+        "kvm"
+        "nixos-test"
+      ];
+      system = "x86_64-linux";
+    }
+  ];
 
-  services.hydra = {
-    enable = true;
-    hydraURL = "https://private-hydra.holo.host";
-  };
+  services.hydra.hydraURL = "https://private-hydra.holo.host";
 
-  services.nginx = {
-    enable = true;
-    virtualHosts.private-hydra = {
-      basicAuthFile = "/etc/nixos/htpasswd";
-      enableACME = true;
-      forceSSL = true;
-      locations."/".proxyPass = "http://localhost:${toString config.services.hydra.port}";
-      serverName = "private-hydra.holo.host";
-    };
+  services.nginx.virtualHosts.hydra = {
+    basicAuthFile = "/etc/nixos/htpasswd";
+    serverName = "private-hydra.holo.host";
   };
 }

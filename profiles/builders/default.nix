@@ -6,14 +6,7 @@
     ../self-aware.nix
   ];
 
-  services.hydra = {
-    extraConfig = ''
-      max_output_size = 17179869184
-    '';
-    logo = ./logo.png;
-    notificationSender = "hydra@holo.host";
-    useSubstitutes = true;
-  };
+  networking.firewall.allowedTCPPorts = [ 22 ];
 
   nix.gc = {
     automatic = true;
@@ -24,10 +17,4 @@
   programs.ssh.extraConfig = ''
     StrictHostKeyChecking accept-new
   '';
-
-  services.nginx = {
-    recommendedOptimisation = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
-  };
 }

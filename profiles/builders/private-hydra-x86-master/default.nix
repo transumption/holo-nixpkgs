@@ -13,7 +13,7 @@
   services.nginx = {
     enable = true;
     virtualHosts.private-hydra = {
-      basicAuthFile = "/root/htpasswd";
+      basicAuthFile = "/etc/nixos/htpasswd";
       enableACME = true;
       forceSSL = true;
       locations."/".proxyPass = "http://localhost:${toString config.services.hydra.port}";

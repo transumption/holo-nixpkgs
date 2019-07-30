@@ -7,20 +7,11 @@
 
   services.hydra = {
     enable = true;
-    extraConfig = ''
-      max_output_size = 17179869184
-    '';
-    logo = ./logo.png;
     hydraURL = "https://private-hydra.holo.host";
-    notificationSender = "hydra@holo.host";
-    useSubstitutes = true;
   };
 
   services.nginx = {
     enable = true;
-    recommendedOptimisation = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
     virtualHosts.private-hydra = {
       basicAuthFile = "/root/htpasswd";
       enableACME = true;

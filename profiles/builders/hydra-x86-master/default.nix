@@ -36,26 +36,13 @@ in
     builders-use-substitutes = true
   '';
 
-  programs.ssh.extraConfig = ''
-    StrictHostKeyChecking accept-new
-  '';
-
   services.hydra = {
     enable = true;
-    extraConfig = ''
-      max_output_size = 17179869184
-    '';
-    logo = ./logo.png;
     hydraURL = "https://hydra.holo.host";
-    notificationSender = "hydra@holo.host";
-    useSubstitutes = true;
   };
 
   services.nginx = {
     enable = true;
-    recommendedOptimisation = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
     virtualHosts.hydra = {
       enableACME = true;
       forceSSL = true;

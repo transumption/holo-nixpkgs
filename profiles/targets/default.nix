@@ -26,12 +26,12 @@ in
   networking.hostName = "holoport";
 
   nix.binaryCaches = [
+    "https://cache.holo.host"
     "https://cache.nixos.org"
-    "https://holo.cachix.org"
   ];
 
   nix.binaryCachePublicKeys = [
-    "holo.cachix.org-1:dDYdjxXLazxlQUkKgqifHp00uhifdQPZi7Tu0jD8xmA="
+    "cache.holo.host-1:lNXIXtJgS9Iuw4Cu6X0HINLu9sTfcjEntnrgwMQIMcE="
   ];
 
   nix.gc = {

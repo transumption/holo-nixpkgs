@@ -12,9 +12,9 @@ consistent, verifiable, and auditable.
 ### HoloPort Nano
 
 Download an installer image:
-https://hydra.holo.host/job/holoportos/release/artifacts.installers.holoport-nano.aarch64-linux/latest/download-by-type/file/sd-image
+https://hydra.holo.host/job/holoportos/master/artifacts.installers.holoport-nano.aarch64-linux/latest/download-by-type/file/sd-image
 
-To build an installer yourself, checkout this repo, switch to `release` branch,
+To build an installer yourself, checkout this repo, switch to `master` branch,
 install [Nix][nix] and run `nix-build -A artifacts.installers.holoport-nano`.
 
 Burn the image to a μSD card with `sudo cp result/sd-image/*.img /dev/mmcblkX`

@@ -5,10 +5,10 @@ with lib;
 {
   options.system.holoportos = {
     network = mkOption {
-      default = "release";
+      default = "master";
       type = types.enum [
+        "develop"
         "master"
-        "release"
         "staging"
       ];
     };

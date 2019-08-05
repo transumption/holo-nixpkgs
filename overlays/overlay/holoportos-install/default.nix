@@ -4,8 +4,8 @@
 { auroraLedDevice, channelUrl, network, target }:
 
 let
-  mkConfig = profile: substituteAll {
-    src = ./config.nix;
+  mkConfiguration = profile: substituteAll {
+    src = ./configuration.nix;
     inherit network profile;
   };
 
@@ -16,7 +16,7 @@ let
     channel = runCommand "channel" {} ''
       mkdir $out && ln -s ${lib.cleanSource ../../../.} $out/holoportos;
     '';
-    config = mkConfig profile;
+    configuration = mkConfiguration profile;
     path = lib.makeBinPath [ aurora-led coreutils e2fsprogs parted ];
     inherit bash auroraLedDevice channelUrl prePhase postPhase;
   };

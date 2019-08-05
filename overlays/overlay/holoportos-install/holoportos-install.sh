@@ -21,7 +21,7 @@ aurora-led --device @auroraLedDevice@ --mode flash --color orange
 @prePhase@
 
 nixos-generate-config --root /mnt
-cat @config@ > /mnt/etc/nixos/configuration.nix
+cat @configuration@ > /mnt/etc/nixos/configuration.nix
 
 nixos-install --channel @channel@ --no-root-passwd \
   -I holoportos=@channel@/holoportos

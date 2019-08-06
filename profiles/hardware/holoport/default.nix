@@ -9,7 +9,7 @@
 
   services.holoport-led-daemon = {
     device = "/dev/ttyUSB0";
-    operstate = "/sys/class/net/enp0s25/operstate";
+    operstate = "/sys/class/net/enp1s0/operstate";
   };
 
   system.holoportos.target = "holoport";

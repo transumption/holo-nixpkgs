@@ -5,8 +5,8 @@ with lib;
 {
   options.system.holoportos = {
     network = mkOption {
-      default = "main";
-      type = types.enum [ "dev" "test" "main" ];
+      default = "live";
+      type = types.enum [ "dev" "test" "live" ];
     };
 
     target = mkOption {

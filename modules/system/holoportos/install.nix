@@ -21,8 +21,13 @@ in
       default = "/dev/tty1";
     };
 
+    channel = mkOption {
+      default = "master";
+      type = types.enum [ "develop" "staging" "master" ];
+    };
+
     channelUrl = mkOption {
-      default = "https://hydra.holo.host/channel/custom/holoportos/${network}/holoportos";
+      default = "https://hydra.holo.host/channel/custom/holoportos/${cfg.channel}/holoportos";
     };
 
     package = mkOption {

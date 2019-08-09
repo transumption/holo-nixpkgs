@@ -13,13 +13,15 @@ in
 
   sdImage.imageName = "${config.system.build.baseName}.img";
 
+  sdImage.populateFirmwareCommands = ''
+    dd conv=notrunc if=${pkgs.ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=$img bs=8k seek=1
+  '';
+
   sdImage.populateRootCommands = with pkgs; ''
     ${buildPackages.extlinux-conf-builder} \
       -b ${holoport-nano-dtb} \
       -c ${config.system.build.toplevel} \
       -d boot \
       -t 1
-
-    dd conv=notrunc if=${ubootBananaPim64}/u-boot-sunxi-with-spl.bin of=$img bs=8k seek=1
   '';
 }

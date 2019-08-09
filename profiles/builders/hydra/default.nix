@@ -1,10 +1,12 @@
+{ config, ... }:
+
 {
   imports = [ ../. ../master.nix ];
 
   nix.buildMachines = [
     {
       hostName = "localhost";
-      maxJobs = 2;
+      maxJobs = config.nix.maxJobs;
       supportedFeatures = [
         "benchmark"
         "big-parallel"
@@ -15,7 +17,7 @@
     }
     {
       hostName = "hydra-arm-minion.holo.host";
-      maxJobs = 16;
+      maxJobs = 96;
       sshKey = "/var/lib/hydra/queue-runner/.ssh/id_ed25519";
       sshUser = "root";
       supportedFeatures = [

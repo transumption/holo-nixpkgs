@@ -41,13 +41,11 @@ let
 in
 
 {
-  artifacts = recurseIntoAttrs {
-    installers = recurseIntoAttrs {
-      holoport = mkImage ./profiles/installers/holoport;
-      holoport-nano = mkImage ./profiles/installers/holoport-nano;
-      holoport-plus = mkImage ./profiles/installers/holoport-plus;
-      virtualbox = mkImage ./profiles/targets/virtualbox;
-    };
+  installers = recurseIntoAttrs {
+    holoport = mkImage ./profiles/installers/holoport;
+    holoport-nano = mkImage ./profiles/installers/holoport-nano;
+    holoport-plus = mkImage ./profiles/installers/holoport-plus;
+    virtualbox = mkImage ./profiles/targets/virtualbox;
   };
 
   overlay = lib.getAttrs overlayNames (pkgs.extend overlay);

@@ -25,11 +25,7 @@ let
     holoportos = releaseTools.channel {
       name = "holoportos-${revision}";
       src = ./.;
-      constituents = constitute [
-        self.artifacts.installers
-        self.overlay
-        self.tests
-      ];
+      constituents = with self; constitute [ installers overlay tests ];
     };
   } // mapTestOn (packagePlatforms default);
 in

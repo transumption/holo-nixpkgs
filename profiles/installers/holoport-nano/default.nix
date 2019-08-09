@@ -13,7 +13,7 @@ in
 
   sdImage.imageName = "${config.system.build.baseName}.img";
 
-  sdImage.populateBootCommands = with pkgs; ''
+  sdImage.populateRootCommands = with pkgs; ''
     ${buildPackages.extlinux-conf-builder} \
       -b ${holoport-nano-dtb} \
       -c ${config.system.build.toplevel} \

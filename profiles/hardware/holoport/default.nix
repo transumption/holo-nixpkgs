@@ -3,7 +3,10 @@
 {
   imports = [ ../. ];
 
-  boot.loader.grub.enable = lib.mkDefault true;
+  boot.loader.grub = {
+    enable = lib.mkDefault true;
+    devices = [ "/dev/sda" ];
+  };
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
 

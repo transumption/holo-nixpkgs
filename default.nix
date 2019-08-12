@@ -35,9 +35,6 @@ let
     lib.recursiveUpdate (stopgap image) {
       meta.platforms = [ system ];
     };
-
-  overlay = import ./overlays/overlay;
-  overlayNames = lib.attrNames (overlay {} {});
 in
 
 {
@@ -47,8 +44,6 @@ in
     holoport-plus = mkImage ./profiles/installers/holoport-plus;
     virtualbox = mkImage ./profiles/targets/virtualbox;
   };
-
-  overlay = lib.getAttrs overlayNames (pkgs.extend overlay);
 
   tests = recurseIntoAttrs {
     boot = import ./tests/boot.nix { inherit pkgs; };

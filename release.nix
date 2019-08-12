@@ -5,17 +5,24 @@ with pkgs;
 let
   revision = import ./lib/revision.nix { inherit lib; };
 
-  default = import ./. { inherit pkgs; };
+  default = import ./.;
   overlay = import ./overlays/overlay;
+
+  defaultPkgs = default { inherit pkgs; };
+
+  overlayPkgs =
+    lib.getAttrs (lib.attrNames (overlay {} {})) pkgs;
 
   constitute = sets: lib.filter lib.isDerivation
     (lib.concatMap lib.attrValues sets);
+
+  override = static: final: previous: static { pkgs = final; };
 in
 
 with import "${pkgs.path}/pkgs/top-level/release-lib.nix" {
   nixpkgsArgs = {
     config.allowCross = false;
-    overlays = [ (final: previous: default) overlay ];
+    overlays = [ (override default) overlay ];
   };
   supportedSystems = [ "aarch64-linux" "x86_64-linux" ];
 };
@@ -31,7 +38,9 @@ let
         self.tests
       ];
     };
-  } // mapTestOn (packagePlatforms default);
+
+    overlay = mapTestOn (packagePlatforms overlayPkgs);
+  } // mapTestOn (packagePlatforms defaultPkgs);
 in
 
 self

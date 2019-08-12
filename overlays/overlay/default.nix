@@ -1,5 +1,14 @@
 final: previous: with final;
 
+let
+  npm-to-nix = fetchFromGitHub {
+    owner = "transumption-unstable";
+    repo = "npm-to-nix";
+    rev = "662fa58f63428d23bfbcf9c0348f18fc895a3b5a";
+    sha256 = "1mqz39fz1pc4xr18f1lzwvx4csw8n1kvbs4didkfdyzd43qnshaq";
+  };
+in
+
 {
   aurora-led = callPackage ./aurora-led {};
 
@@ -8,11 +17,7 @@ final: previous: with final;
     inherit (previous) e2fsprogs;
   };
 
-  # TODO: node2nix
-  envoy = fetchzip {
-    url = "https://github.com/samrose/envoy/archive/envoy-v0.0.1.tar.gz";
-    sha256 = "1dvbi5p3njg9sk3xx4sqdsnsz250ginyyvsnghxl25bjw73jcjx7";
-  };
+  envoy = callPackage ./envoy {};
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 
@@ -50,4 +55,6 @@ final: previous: with final;
     url = "https://github.com/samrose/n3h/archive/4c3541a7432b4f0ac72cb3dac83affc062f055e1.tar.gz";
     sha256 = "1cbdjjg0nxm4bwvw7l6srhlll1iiz2il1kggvkhbh7c0c830fr2w";
   }) {}).package;
+
+  inherit (callPackage npm-to-nix {}) npmToNix;
 }

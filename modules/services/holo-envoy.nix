@@ -3,15 +3,15 @@
 with lib;
 
 let
-  cfg = config.services.envoy;
+  cfg = config.services.holo-envoy;
 in
 
 {
-  options.services.envoy = {
-    enable = mkEnableOption "Envoy";
+  options.services.holo-envoy = {
+    enable = mkEnableOption "Holo Envoy";
 
     package = mkOption {
-      default = pkgs.envoy;
+      default = pkgs.holo-envoy;
       type = types.package;
     };
   };
@@ -19,9 +19,9 @@ in
   config = mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = [ 1111 2222 3333 8800 8880 8888 48080 ];
 
-    systemd.services.envoy = {
-      after = [ "local-fs.target" "network.target" "holochain.service" ];
-      path = [ config.services.holochain.package ];
+    systemd.services.holo-envoy = {
+      after = [ "local-fs.target" "network.target" "holochain-conductor.service" ];
+      path = [ config.services.holochain-conductor.package ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {

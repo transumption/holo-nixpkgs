@@ -3,9 +3,9 @@
 with lib;
 
 let
-  cfg = config.services.holochain;
+  cfg = config.services.holochain-conductor;
 
-  inherit (config.users.users.holochain) home;
+  inherit (config.users.users.holochain-conductor) home;
 
   defaults = {
     agents = [];
@@ -29,15 +29,15 @@ let
 in
 
 {
-  options.services.holochain = {
-    enable = mkEnableOption "Holochain conductor";
+  options.services.holochain-conductor = {
+    enable = mkEnableOption "Holochain Conductor";
 
     config = mkOption {
       type = types.attrs;
     };
 
     package = mkOption {
-      default = pkgs.holochain;
+      default = pkgs.holochain-conductor;
       type = types.package;
     };
   };
@@ -47,11 +47,9 @@ in
       holochain-cli
     ];
 
-    systemd.services.holochain = {
+    systemd.services.holochain-conductor = {
       after = [ "local-fs.target" "network.target" ];
       wantedBy = [ "multi-user.target" ];
-
-      path = with pkgs; [ n3h ];
 
       preStart = ''
         if [ ! -e ${home}/config.toml ]; then
@@ -63,13 +61,13 @@ in
         ExecStart = "${cfg.package}/bin/holochain -c ${home}/config.toml";
         KillMode = "process";
         Restart = "always";
-        User = "holochain";
+        User = "holochain-conductor";
       };
     };
     
     users.users.holochain = {
       createHome = true;
-      home = "/var/lib/holochain";
+      home = "/var/lib/holochain-conductor";
     };
   };
 }

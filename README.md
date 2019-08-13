@@ -30,4 +30,11 @@ If LED starts to blink with red, there was an error during installation.
 Connect over HDMI to see what's going on. To retry, reboot or type
 `holoportos-install` in console.
 
+### VirtualBox
+
+Download the latest HoloPortOS VirtualBox OVA:
+https://hydra.holo.host/job/holoportos/master/artifacts.targets.virtualbox.x86_64-linux/latest/download-by-type/file/ova
+
+Refer to [VirtualBox manual, chapter 1, section 1.15.2](https://www.virtualbox.org/manual/ch01.html#ovf-import-appliance).
+
 [nix]: https://nixos.org/nix/

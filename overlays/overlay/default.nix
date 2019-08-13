@@ -12,11 +12,6 @@ in
 {
   aurora-led = callPackage ./aurora-led {};
 
-  # TODO: remove with next repin (https://git.io/fj4DC)
-  e2fsprogs = callPackage ./e2fsprogs {
-    inherit (previous) e2fsprogs;
-  };
-
   envoy = callPackage ./envoy {};
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};

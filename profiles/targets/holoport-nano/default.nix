@@ -4,5 +4,5 @@
     ../.
   ];
 
-  services.holoport-led-daemon.enable = true;
+  system.holoportos.led-daemon.enable = true;
 }

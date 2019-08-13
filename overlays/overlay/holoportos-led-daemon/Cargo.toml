@@ -1,5 +1,5 @@
 [package]
-name = "holoport-led-daemon"
+name = "holoportos-led-daemon"
 version = "0.0.0"
 
 [dependencies]

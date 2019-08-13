@@ -24,8 +24,6 @@ in
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 
-  holoport-led-daemon = callPackage ./holoport-led-daemon {};
-
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {
     linux = linux_latest;
   };
@@ -35,6 +33,8 @@ in
       then ubootBananaPim64
       else pkgsCross.aarch64-multiplatform.ubootBananaPim64;
   };
+
+  holoportos-led-daemon = callPackage ./holoportos-led-daemon {};
 
   hydra = previous.hydra.overrideAttrs (super: {
     doCheck = false;

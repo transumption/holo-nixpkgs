@@ -3,11 +3,11 @@
 with lib;
 
 let
-  cfg = config.services.holoport-led-daemon;
+  cfg = config.system.holoportos.led-daemon;
 in
 
 {
-  options.services.holoport-led-daemon = {
+  options.system.holoportos.led-daemon = {
     enable = mkEnableOption "HoloPort LED daemon";
 
     device = mkOption {
@@ -19,23 +19,23 @@ in
     };
 
     package = mkOption {
-      default = pkgs.holoport-led-daemon;
+      default = pkgs.holoportos-led-daemon;
       type = types.package;
     };
   };
 
   config = mkIf cfg.enable {
-    systemd.services.holoport-led-daemon = {
+    systemd.services.holoportos-led-daemon = {
       enable = true;
       wantedBy = [ "default.target" ];
 
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/holoport-led-daemon --device ${cfg.device} --operstate ${cfg.operstate}";
-        User = "holoport-led-daemon";
+        ExecStart = "${cfg.package}/bin/holoportos-led-daemon --device ${cfg.device} --operstate ${cfg.operstate}";
+        User = "holoportos-led-daemon";
       };
     };
 
-    systemd.services.holoport-led-daemon-down = {
+    systemd.services.holoportos-led-daemon-down = {
       restartIfChanged = false;
       unitConfig.X-StopOnRemoval = false;
 
@@ -50,7 +50,7 @@ in
       };
     };
 
-    users.users.holoport-led-daemon = {
+    users.users.holoportos-led-daemon = {
       extraGroups = [ "dialout" ];
     };
   };

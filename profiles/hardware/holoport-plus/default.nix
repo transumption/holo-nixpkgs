@@ -5,7 +5,7 @@
 
   boot.loader.grub = {
     enable = lib.mkDefault true;
-    devices = [ "/dev/sda" ];
+    devices = [ "/dev/sdb" ];
   };
 
   nixpkgs.hostPlatform.system = "x86_64-linux";

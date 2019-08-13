@@ -14,7 +14,6 @@ in
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 
-  # TODO: fix build failure on aarch64
   holo-cli = callPackage ./holo-cli {};
 
   holo-envoy = callPackage ./holo-envoy {};

@@ -38,11 +38,15 @@ let
 in
 
 {
-  installers = recurseIntoAttrs {
-    holoport = mkImage ./profiles/installers/holoport;
-    holoport-nano = mkImage ./profiles/installers/holoport-nano;
-    holoport-plus = mkImage ./profiles/installers/holoport-plus;
-    virtualbox = mkImage ./profiles/targets/virtualbox;
+  artifacts = recurseIntoAttrs {
+    installers = recurseIntoAttrs {
+      holoport = mkImage ./profiles/installers/holoport;
+      holoport-nano = mkImage ./profiles/installers/holoport-nano;
+      holoport-plus = mkImage ./profiles/installers/holoport-plus;
+    };
+    targets = recurseIntoAttrs {
+      virtualbox = mkImage ./profiles/targets/virtualbox;
+    };
   };
 
   tests = recurseIntoAttrs {

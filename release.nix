@@ -11,7 +11,7 @@ let
   defaultPkgs = default { inherit pkgs; };
 
   overlayPkgs =
-    lib.getAttrs (lib.attrNames (overlay {} {})) pkgs;
+    recurseIntoAttrs (lib.getAttrs (lib.attrNames (overlay {} {})) pkgs);
 
   constitute = sets: lib.filter lib.isDerivation
     (lib.concatMap lib.attrValues sets);
@@ -33,7 +33,7 @@ let
       name = "holoportos-${revision}";
       src = ./.;
       constituents = constitute [
-        self.installers
+        self.artifacts
         self.overlay
         self.tests
       ];

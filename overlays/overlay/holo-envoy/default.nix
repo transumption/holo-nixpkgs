@@ -1,7 +1,7 @@
 { stdenv, fetchFromGitHub, npmToNix, nodejs }:
 
 stdenv.mkDerivation rec {
-  name = "envoy";
+  name = "holo-envoy";
 
   src = fetchFromGitHub {
     owner = "holo-host";

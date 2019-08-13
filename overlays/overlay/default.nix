@@ -12,12 +12,12 @@ in
 {
   aurora-led = callPackage ./aurora-led {};
 
-  envoy = callPackage ./envoy {};
-
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 
   # TODO: fix build failure on aarch64
   holo-cli = callPackage ./holo-cli {};
+
+  holo-envoy = callPackage ./holo-envoy {};
 
   holochain = callPackage ./holochain {};
 

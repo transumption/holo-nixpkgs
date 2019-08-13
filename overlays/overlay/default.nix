@@ -18,7 +18,7 @@ in
 
   holo-envoy = callPackage ./holo-envoy {};
 
-  holochain = callPackage ./holochain {};
+  holochain-conductor = callPackage ./holochain-conductor {};
 
   holochain-cli = callPackage ./holochain-cli {};
 

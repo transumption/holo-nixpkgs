@@ -1,0 +1,15 @@
+diff --git a/pkgs/build-support/rust/default.nix b/pkgs/build-support/rust/default.nix
+index 6afe93c7e4c..1fef3a767a0 100644
+--- a/pkgs/build-support/rust/default.nix
++++ b/pkgs/build-support/rust/default.nix
+@@ -79,6 +79,10 @@ in stdenv.mkDerivation (args // {
+ 
+   configurePhase = args.configurePhase or ''
+     runHook preConfigure
++
++    # https://github.com/NixOS/nixpkgs/issues/61618
++    export HOME=$(mktemp -d)
++
+     mkdir -p .cargo
+     cat >> .cargo/config <<'EOF'
+     [target."${stdenv.buildPlatform.config}"]

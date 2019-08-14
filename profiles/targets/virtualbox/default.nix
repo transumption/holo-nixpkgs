@@ -1,9 +1,9 @@
-{ config, lib, ... }:
+{ config, pkgs, ... }:
 
 let
   nixpkgs = import ../../../vendor/nixpkgs;
 
-  rev = gitRevision (toString ../../..);
+  rev = pkgs.gitRevision (toString ../../..);
 in
 
 {

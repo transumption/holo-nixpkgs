@@ -5,7 +5,7 @@ with pkgs;
 let
   inherit (config.system.holoportos) target;
 
-  revision = import ../../lib/revision.nix { inherit lib; };
+  rev = gitRevision (toString ../..);
 
   nixpkgs = import ../../vendor/nixpkgs;
 
@@ -50,7 +50,7 @@ in
 
   services.udisks2.enable = lib.mkDefault false;
 
-  system.build.baseName = "holoportos-for-${target}-${revision}";
+  system.build.baseName = "holoportos-for-${target}-${rev}";
 
   system.extraDependencies =
     lib.optionals (stdenv.buildPlatform == stdenv.hostPlatform) [

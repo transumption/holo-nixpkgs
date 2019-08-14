@@ -28,6 +28,14 @@ in
   inherit (callPackage gitignore {}) gitignoreSource;
   inherit (callPackage npm-to-nix {}) npmToNix;
 
+  gitRevision = root:
+    let
+      repo = "${root}/.git";
+    in
+    if lib.pathIsDirectory repo
+      then commitIdFromGitRepo repo
+      else "HEAD";
+
   aurora-led = callPackage ./aurora-led {};
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};

@@ -3,7 +3,7 @@
 with pkgs;
 
 let
-  revision = import ./lib/revision.nix { inherit lib; };
+  rev = gitRevision (toString ./.);
 
   default = import ./.;
   overlay = import ./overlays/overlay;
@@ -30,7 +30,7 @@ with import "${pkgs.path}/pkgs/top-level/release-lib.nix" {
 let
   self = {
     holoportos = releaseTools.channel {
-      name = "holoportos-${revision}";
+      name = "holoportos-${rev}";
       src = ./.;
       constituents = constitute [
         self.artifacts

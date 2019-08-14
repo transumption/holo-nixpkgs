@@ -3,7 +3,7 @@
 let
   nixpkgs = import ../../../vendor/nixpkgs;
 
-  revision = import ../../../lib/revision.nix { inherit lib; };
+  rev = gitRevision (toString ../../..)
 in
 
 {
@@ -17,7 +17,7 @@ in
   system.holoportos.target = "virtualbox";
 
   virtualbox.vmFileName =
-    "holoportos-for-${config.system.holoportos.target}-${revision}.ova";
+    "holoportos-for-${config.system.holoportos.target}-${rev}.ova";
 
   virtualisation.virtualbox.guest.x11 = false;
 }

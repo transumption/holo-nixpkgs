@@ -11,6 +11,7 @@ import (stdenvNoCC.mkDerivation {
   patches = [
     ./ext4-no-resize2fs.diff
     ./kmod-cross.diff
+    ./rust-windows-cross.diff
   ];
 
   phases = [ "unpackPhase" "patchPhase" "installPhase" ];

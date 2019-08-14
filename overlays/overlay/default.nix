@@ -68,5 +68,7 @@ in
     sun50i-a64-gpadc-iio = self.callPackage ./sun50i-a64-gpadc-iio {};
   });
 
-  pthreads-w32 = callPackage ./pthreads-w32 {};
+  windows = previous.windows // {
+    pthreads = callPackage ./windows/pthreads {};
+  };
 }

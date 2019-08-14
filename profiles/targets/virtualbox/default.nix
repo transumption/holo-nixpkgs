@@ -3,7 +3,7 @@
 let
   nixpkgs = import ../../../vendor/nixpkgs;
 
-  rev = gitRevision (toString ../../..)
+  rev = gitRevision (toString ../../..);
 in
 
 {

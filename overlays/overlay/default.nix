@@ -1,6 +1,13 @@
 final: previous: with final;
 
 let
+  gitignore = fetchFromGitHub {
+    owner = "hercules-ci";
+    repo = "gitignore";
+    rev = "ec5dd0536a5e4c3a99c797b86180f7261197c124";
+    sha256 = "0k2r8y21rn4kr5dmddd3906x0733fs3bb8hzfpabkdav3wcy3klv";
+  };
+
   npm-to-nix = fetchFromGitHub {
     owner = "transumption-unstable";
     repo = "npm-to-nix";
@@ -10,6 +17,9 @@ let
 in
 
 {
+  inherit (callPackage gitignore {}) gitignoreSource;
+  inherit (callPackage npm-to-nix {}) npmToNix;
+
   aurora-led = callPackage ./aurora-led {};
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
@@ -49,6 +59,4 @@ in
   linuxPackages_latest = previous.linuxPackages_latest.extend (self: super: {
     sun50i-a64-gpadc-iio = self.callPackage ./sun50i-a64-gpadc-iio {};
   });
-
-  inherit (callPackage npm-to-nix {}) npmToNix;
 }

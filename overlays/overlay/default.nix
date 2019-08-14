@@ -1,6 +1,13 @@
 final: previous: with final;
 
 let
+  cargo-to-nix = fetchFromGitHub {
+    owner = "transumption-unstable";
+    repo = "cargo-to-nix";
+    rev = "6712c9b5e943ec091ef75badfe79f04afd75bfc1";
+    sha256 = "0cqclqx5z57vf4isy6bm8x22rm9zi51mkcjhfgvm80p28x45sja8";
+  };
+
   gitignore = fetchFromGitHub {
     owner = "hercules-ci";
     repo = "gitignore";
@@ -17,6 +24,7 @@ let
 in
 
 {
+  inherit (callPackage cargo-to-nix {}) cargoToNix;
   inherit (callPackage gitignore {}) gitignoreSource;
   inherit (callPackage npm-to-nix {}) npmToNix;
 

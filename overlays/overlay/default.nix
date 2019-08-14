@@ -59,4 +59,6 @@ in
   linuxPackages_latest = previous.linuxPackages_latest.extend (self: super: {
     sun50i-a64-gpadc-iio = self.callPackage ./sun50i-a64-gpadc-iio {};
   });
+
+  pthreads-w32 = callPackage ./pthreads-w32 {};
 }

@@ -4,8 +4,8 @@ let
   cargo-to-nix = fetchFromGitHub {
     owner = "transumption-unstable";
     repo = "cargo-to-nix";
-    rev = "6712c9b5e943ec091ef75badfe79f04afd75bfc1";
-    sha256 = "0cqclqx5z57vf4isy6bm8x22rm9zi51mkcjhfgvm80p28x45sja8";
+    rev = "50056e4bf3d0807f99ef620d90534deb3e924474";
+    sha256 = "1aiyp4rillgzdhx1fjll8fy2vj70g9b1s4qa6w26wsvgb8z5cn01";
   };
 
   gitignore = fetchFromGitHub {
@@ -26,23 +26,10 @@ let
     rev = "662fa58f63428d23bfbcf9c0348f18fc895a3b5a";
     sha256 = "1mqz39fz1pc4xr18f1lzwvx4csw8n1kvbs4didkfdyzd43qnshaq";
   };
-
-  rustChannel = (rustChannelOf {
-    channel = "nightly";
-    date = "2019-07-14";
-    sha256 = "1llbwkjkjis6rv0rbznwwl0j6bf80j38xgwsd4ilcf0qps4cvjsx";
-  }).rust.override {
-    targets = [
-      "aarch64-unknown-linux-musl"
-      "x86_64-pc-windows-gnu"
-      "x86_64-unknown-linux-musl"
-      "wasm32-unknown-unknown"
-    ];
-  };
 in
 
 {
-  inherit (callPackage cargo-to-nix {}) cargoToNix;
+  inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
   inherit (callPackage gitignore {}) gitignoreSource;
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
@@ -98,13 +85,23 @@ in
   rust = previous.rust // {
     packages = previous.rust.packages // {
       nightly = {
-        rustPlatform = makeRustPlatform {
-          cargo = rustChannel;
-          rustc = rustChannel;
+        rustPlatform = final.makeRustPlatform {
+          inherit (buildPackages.rust.packages.nightly) cargo rustc;
         };
 
-        cargo = rustChannel;
-        rustc = rustChannel;
+        cargo = final.rust.packages.nightly.rustc;
+        rustc = (rustChannelOf {
+          channel = "nightly";
+          date = "2019-07-14";
+          sha256 = "1llbwkjkjis6rv0rbznwwl0j6bf80j38xgwsd4ilcf0qps4cvjsx";
+        }).rust.override {
+          targets = [
+            "aarch64-unknown-linux-musl"
+            "wasm32-unknown-unknown"
+            "x86_64-pc-windows-gnu"
+            "x86_64-unknown-linux-musl"
+          ];
+        };
       };
     };
   };

@@ -15,11 +15,29 @@ let
     sha256 = "0k2r8y21rn4kr5dmddd3906x0733fs3bb8hzfpabkdav3wcy3klv";
   };
 
+  nixpkgs-mozilla = fetchTarball {
+    url = "https://github.com/mozilla/nixpkgs-mozilla/archive/ac8e9d7bbda8fb5e45cae20c5b7e44c52da3ac0c.tar.gz";
+    sha256 = "1irlkqc0jdkxdfznq7r52ycnf0kcvvrz416qc7346xhmilrx2gy6";
+  };
+
   npm-to-nix = fetchFromGitHub {
     owner = "transumption-unstable";
     repo = "npm-to-nix";
     rev = "662fa58f63428d23bfbcf9c0348f18fc895a3b5a";
     sha256 = "1mqz39fz1pc4xr18f1lzwvx4csw8n1kvbs4didkfdyzd43qnshaq";
+  };
+
+  rustChannel = (rustChannelOf {
+    channel = "nightly";
+    date = "2019-07-14";
+    sha256 = "1llbwkjkjis6rv0rbznwwl0j6bf80j38xgwsd4ilcf0qps4cvjsx";
+  }).rust.override {
+    targets = [
+      "aarch64-unknown-linux-musl"
+      "x86_64-pc-windows-gnu"
+      "x86_64-unknown-linux-musl"
+      "wasm32-unknown-unknown"
+    ];
   };
 in
 
@@ -27,6 +45,7 @@ in
   inherit (callPackage cargo-to-nix {}) cargoToNix;
   inherit (callPackage gitignore {}) gitignoreSource;
   inherit (callPackage npm-to-nix {}) npmToNix;
+  inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
 
   gitRevision = root:
     let
@@ -75,6 +94,20 @@ in
   linuxPackages_latest = previous.linuxPackages_latest.extend (self: super: {
     sun50i-a64-gpadc-iio = self.callPackage ./sun50i-a64-gpadc-iio {};
   });
+
+  rust = previous.rust // {
+    packages = previous.rust.packages // {
+      nightly = {
+        rustPlatform = makeRustPlatform {
+          cargo = rustChannel;
+          rustc = rustChannel;
+        };
+
+        cargo = rustChannel;
+        rustc = rustChannel;
+      };
+    };
+  };
 
   windows = previous.windows // {
     pthreads = callPackage ./windows/pthreads {};

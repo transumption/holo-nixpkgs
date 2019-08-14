@@ -1,46 +1,55 @@
-{ pkgs ? import ./nixpkgs { overlays = [ (import ./overlays/overlay) ]; } }:
+{ pkgs ? import ./. }:
 
 with pkgs;
 
 let
-  rev = gitRevision (toString ./.);
+  mkImage = profile:
+    let
+      allowCross = config.allowCross or true;
 
-  default = import ./.;
-  overlay = import ./overlays/overlay;
+      nixos = import "${pkgs.path}/nixos" {
+        configuration = { config, ... }: {
+	  imports = [ profile ];
 
-  defaultPkgs = default { inherit pkgs; };
+	  nixpkgs.localSystem.system = if allowCross
+	    then builtins.currentSystem
+	    else config.nixpkgs.hostPlatform.system;
+	};
+      };
 
-  overlayPkgs =
-    recurseIntoAttrs (lib.getAttrs (lib.attrNames (overlay {} {})) pkgs);
+      inherit (nixos.config.system) build;
+      inherit (nixos.config.nixpkgs.hostPlatform) system;
 
-  constitute = sets: lib.filter lib.isDerivation
-    (lib.concatMap lib.attrValues sets);
+      image = if build ? "isoImage"
+        then build.isoImage
+        else if build ? "sdImage"
+        then build.sdImage
+        else if build ? "virtualBoxOVA"
+        then build.virtualBoxOVA
+        else throw "${build} doesn't expose any known image format";
 
-  override = static: final: previous: static { pkgs = final; };
-in
-
-with import "${pkgs.path}/pkgs/top-level/release-lib.nix" {
-  nixpkgsArgs = {
-    config.allowCross = false;
-    overlays = [ (override default) overlay ];
-  };
-  supportedSystems = [ "aarch64-linux" "x86_64-linux" ];
-};
-
-let
-  self = {
-    holoportos = releaseTools.channel {
-      name = "holoportos-${rev}";
-      src = ./.;
-      constituents = constitute [
-        self.artifacts
-        self.overlay
-        self.tests
-      ];
+      stopgap = drv: if allowCross
+        then drv
+	else runCommand drv.name {} "ln -s ${drv} $out";
+    in
+    lib.recursiveUpdate (stopgap image) {
+      meta.platforms = [ system ];
     };
-
-    overlay = mapTestOn (packagePlatforms overlayPkgs);
-  } // mapTestOn (packagePlatforms defaultPkgs);
 in
 
-self
+{
+  artifacts = recurseIntoAttrs {
+    installers = recurseIntoAttrs {
+      holoport = mkImage ./profiles/installers/holoport;
+      holoport-nano = mkImage ./profiles/installers/holoport-nano;
+      holoport-plus = mkImage ./profiles/installers/holoport-plus;
+    };
+    targets = recurseIntoAttrs {
+      virtualbox = mkImage ./profiles/targets/virtualbox;
+    };
+  };
+
+  tests = recurseIntoAttrs {
+    boot = import ./tests/boot.nix { inherit pkgs; };
+  };
+}

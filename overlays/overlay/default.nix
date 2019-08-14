@@ -22,6 +22,11 @@ in
 
   holochain-cli = callPackage ./holochain-cli {};
 
+  libsodium = previous.libsodium.overrideAttrs (super: {
+    # Separate debug output breaks cross-compilation:
+    separateDebugInfo = false;
+  });
+
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {

@@ -52,7 +52,7 @@ in
       repo = "${root}/.git";
     in
     if lib.pathIsDirectory repo
-      then commitIdFromGitRepo repo
+      then lib.commitIdFromGitRepo repo
       else "HEAD";
 
   aurora-led = callPackage ./aurora-led {};

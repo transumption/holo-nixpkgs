@@ -15,6 +15,13 @@ let
     sha256 = "0k2r8y21rn4kr5dmddd3906x0733fs3bb8hzfpabkdav3wcy3klv";
   };
 
+  holochain-rust = fetchFromGitHub {
+    owner = "holochain";
+    repo = "holochain-rust";
+    rev = "8317fffaf5256d266a645fd40ce337cb099cb749";
+    sha256 = "0qi85g831mdslsp03ab44dd9piwbczp25jc4gh85sv2ypwsf5pk6";
+  };
+
   nixpkgs-mozilla = fetchTarball {
     url = "https://github.com/mozilla/nixpkgs-mozilla/archive/ac8e9d7bbda8fb5e45cae20c5b7e44c52da3ac0c.tar.gz";
     sha256 = "1irlkqc0jdkxdfznq7r52ycnf0kcvvrz416qc7346xhmilrx2gy6";
@@ -50,14 +57,7 @@ in
 
   holo-envoy = callPackage ./holo-envoy {};
 
-  holochain-conductor = callPackage ./holochain-conductor {};
-
-  holochain-cli = callPackage ./holochain-cli {};
-
-  libsodium = previous.libsodium.overrideAttrs (super: {
-    # Separate debug output breaks cross-compilation:
-    separateDebugInfo = false;
-  });
+  inherit (import holochain-rust {}) holochain-cli holochain-conductor;
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 
@@ -76,6 +76,11 @@ in
   hydra = previous.hydra.overrideAttrs (super: {
     doCheck = false;
     patches = [ ./hydra/no-restrict-eval.diff ];
+  });
+
+  libsodium = previous.libsodium.overrideAttrs (super: {
+    # Separate debug output breaks cross-compilation
+    separateDebugInfo = false;
   });
 
   linuxPackages_latest = previous.linuxPackages_latest.extend (self: super: {

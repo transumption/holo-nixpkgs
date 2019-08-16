@@ -41,9 +41,9 @@ in
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
 
-  buildZome = callPackage ./build-zome {
+  buildZome = makeOverridable (callPackage ./build-zome {
     inherit (rust.packages.nightly) rustPlatform;
-  };
+  });
 
   gitRevision = root:
     let

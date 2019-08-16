@@ -30,7 +30,7 @@ in
 if shell
 
 then stdenv.mkDerivation {
-  name = "build-zome-env";
+  name = "${name}-env";
 
   nativeBuildInputs = [
     holochainRust.holochain-cli
@@ -64,11 +64,11 @@ else rustPlatform.buildRustPackage {
 
   buildPhase = ''
     mkdir dist
-    hc package -o dist/${name}
+    hc package -o dist/${name}.dna.json
     cp -r dist $out
 
     mkdir $out/nix-support
-    echo "file binary-dist $out/${name}" > $out/nix-support/hydra-build-products
+    echo "file binary-dist $out/${name}.dna.json" > $out/nix-support/hydra-build-products
   '';
 
   installPhase = ":";

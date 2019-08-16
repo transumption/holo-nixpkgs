@@ -18,8 +18,8 @@ let
   holochain-rust = fetchFromGitHub {
     owner = "holochain";
     repo = "holochain-rust";
-    rev = "8317fffaf5256d266a645fd40ce337cb099cb749";
-    sha256 = "0qi85g831mdslsp03ab44dd9piwbczp25jc4gh85sv2ypwsf5pk6";
+    rev = "8b03abf555c62782ca258cbe6a010f92629c0cd5";
+    sha256 = "0ipsyxvhgz7kjhdfh70lh03ccmq6h88nvfkapsqbvinhylb4jx9q";
   };
 
   nixpkgs-mozilla = fetchTarball {

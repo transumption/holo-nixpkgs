@@ -1,5 +1,5 @@
 { stdenv, cargoToNix, gitignoreSource, runCommand, rustPlatform, holochain-cli }:
-{ name, shell ? false, src, zomePath }:
+{ name, src, shell ? false }:
 
 let
   holochain-rust =
@@ -59,7 +59,7 @@ else rustPlatform.buildRustPackage {
   preConfigure = ''
     export HOME=$(mktemp -d)
   '' + ''
-    ln -s ${cargoToNix "${src-with-holochain}/${zomePath}/code"} vendor
+    ln -s ${cargoToNix "${src-with-holochain}/zomes/${name}/code"} vendor
   '';
 
   buildPhase = ''

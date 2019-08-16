@@ -4,8 +4,8 @@ let
   cargo-to-nix = fetchFromGitHub {
     owner = "transumption-unstable";
     repo = "cargo-to-nix";
-    rev = "97d44efd2cfc7b5e4cfc26572f059cacfa589c6f";
-    sha256 = "01w56ianpdiv2rx0habw15lm23qlwr0jhk7hbyw4vdpqh3108r4g";
+    rev = "ba6adc0a075dfac2234e851b0d4c2511399f2ef0";
+    sha256 = "1rcwpaj64fwz1mwvh9ir04a30ssg35ni41ijv9bq942pskagf1gl";
   };
 
   gitignore = fetchFromGitHub {

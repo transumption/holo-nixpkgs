@@ -1,5 +1,3 @@
 args: import ./nixpkgs (args // {
-  overlays = (args.overlays or []) ++ [
-    (import ./overlays/overlay)
-  ];
+  overlays = [ (import ./overlays/overlay) ] ++ (args.overlays or []);
 })

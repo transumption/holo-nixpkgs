@@ -30,7 +30,22 @@ let
 
       stopgap = drv: if allowCross
         then drv
-	else runCommand drv.name {} "ln -s ${drv} $out";
+        else runCommand drv.name {} ''
+          mkdir -p $out
+
+          for f in ${drv}/*; do
+            if [ "$f" = "${drv}/nix-support" ]; then
+              cp -r $f $out
+              chmod -R +w $out/$(basename $f)
+            else
+              ln -s $f $out
+            fi
+          done
+
+          for f in $out/nix-support/*; do
+            substituteInPlace $f --replace ${drv} $out
+          done
+        '';
     in
     lib.recursiveUpdate (stopgap image) {
       meta.platforms = [ system ];

@@ -45,6 +45,7 @@ in
     inherit (rust.packages.nightly) rustPlatform;
   });
 
+  # https://github.com/hercules-ci/gitignore/pull/11
   gitignoreSource = path: builtins.path {
     name = "source";
     filter = gitignoreFilter path;

@@ -11,8 +11,8 @@ let
   gitignore = fetchFromGitHub {
     owner = "hercules-ci";
     repo = "gitignore";
-    rev = "ec5dd0536a5e4c3a99c797b86180f7261197c124";
-    sha256 = "0k2r8y21rn4kr5dmddd3906x0733fs3bb8hzfpabkdav3wcy3klv";
+    rev = "6e7569637d699facfdcde91ab5c94bac06d39edc";
+    sha256 = "1lz09rmr2yza8bv46ff49226jls6q1rl2x0p11q1940rw4k4bwa9";
   };
 
   holochain-rust = fetchFromGitHub {
@@ -37,20 +37,13 @@ in
 
 {
   inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
-  inherit (callPackage gitignore {}) gitignoreFilter;
+  inherit (callPackage gitignore {}) gitignoreSource;
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
 
   buildZome = makeOverridable (callPackage ./build-zome {
     inherit (rust.packages.nightly) rustPlatform;
   });
-
-  # https://github.com/hercules-ci/gitignore/pull/11
-  gitignoreSource = path: builtins.path {
-    name = "source";
-    filter = gitignoreFilter path;
-    inherit path;
-  };
 
   gitRevision = root:
     let

@@ -47,7 +47,7 @@ in
 
   gitignoreSource = path: builtins.path {
     name = "source";
-    filter = gitignoreFilter;
+    filter = gitignoreFilter path;
     inherit path;
   };
 

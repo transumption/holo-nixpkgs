@@ -30,9 +30,21 @@
     }
   ];
 
+  services.hydra.extraConfig = ''
+    binary_cache_public_uri = https://cache.holo.host
+    store_uri = s3://holo-cache?endpoint=s3.us-west-1.wasabisys.com&secret-key=/var/lib/hydra/queue-runner/keys/cache.holo.host-1/secret
+    upload_logs_to_binary_cache = true
+  '';
+
   services.hydra.hydraURL = "https://hydra.holo.host";
 
   services.nginx = {
+    virtualHosts.cache = {
+      enableACME = true;
+      forceSSL = true;
+      globalRedirect = "holo-cache.s3.wasabisys.com";
+      serverName = "cache.holo.host";
+    };
     virtualHosts.hydra.serverName = "hydra.holo.host";
     virtualHosts.hydra-legacy = {
       enableACME = true;

@@ -32,6 +32,7 @@
 
   services.hydra.extraConfig = ''
     binary_cache_public_uri = https://cache.holo.host
+    server_store_uri = https://cache.holo.host
     store_uri = s3://holo-cache?endpoint=s3.us-west-1.wasabisys.com&secret-key=/var/lib/hydra/queue-runner/keys/cache.holo.host-1/secret
     upload_logs_to_binary_cache = true
   '';

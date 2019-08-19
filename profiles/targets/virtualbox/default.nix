@@ -2,8 +2,6 @@
 
 let
   nixpkgs = import ../../../vendor/nixpkgs;
-
-  rev = pkgs.gitRevision (toString ../../..);
 in
 
 {
@@ -17,7 +15,7 @@ in
   system.holoportos.target = "virtualbox";
 
   virtualbox.vmFileName =
-    "holoportos-for-${config.system.holoportos.target}-${rev}.ova";
+    "holoportos-for-${config.system.holoportos.target}.ova";
 
   virtualisation.virtualbox.guest.x11 = false;
 }

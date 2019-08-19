@@ -45,14 +45,6 @@ in
     inherit (rust.packages.nightly) rustPlatform;
   });
 
-  gitRevision = root:
-    let
-      repo = "${root}/.git";
-    in
-    if lib.pathIsDirectory repo
-      then lib.commitIdFromGitRepo repo
-      else "HEAD";
-
   aurora-led = callPackage ./aurora-led {};
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};

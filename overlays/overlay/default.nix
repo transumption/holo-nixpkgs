@@ -37,13 +37,19 @@ in
 
 {
   inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
-  inherit (callPackage gitignore {}) gitignoreSource;
+  inherit (callPackage gitignore {}) gitignoreFilter;
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
 
   buildZome = makeOverridable (callPackage ./build-zome {
     inherit (rust.packages.nightly) rustPlatform;
   });
+
+  gitignoreSource = path: builtins.path {
+    name = "source";
+    filter = gitignoreFilter;
+    inherit path;
+  };
 
   gitRevision = root:
     let

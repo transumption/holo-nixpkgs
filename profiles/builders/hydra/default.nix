@@ -32,9 +32,9 @@
 
   services.hydra.extraConfig = ''
     binary_cache_public_uri = https://cache.holo.host
-    log_prefix = https://holo-cache.s3.us-west-1.wasabisys.com/
-    server_store_uri = https://cache.holo.host?local-nar-cache=/var/cache/hydra/nar-cache
-    store_uri = s3://holo-cache?endpoint=s3.us-west-1.wasabisys.com&log-compression=br&ls-compression=br&parallel-compression=1&secret-key=/var/lib/hydra/queue-runner/keys/cache.holo.host-1/secret&write-nar-listing=1
+    log_prefix = https://holo.s3.wasabisys.com/
+    server_store_uri = https://holo.s3.wasabisys.com?local-nar-cache=/var/cache/hydra/nar-cache
+    store_uri = s3://holo?endpoint=s3.wasabisys.com&log-compression=br&ls-compression=br&parallel-compression=1&secret-key=/var/lib/hydra/queue-runner/keys/cache.holo.host-1/secret&write-nar-listing=1
     upload_logs_to_binary_cache = true
   '';
 
@@ -44,7 +44,7 @@
     virtualHosts.cache = {
       enableACME = true;
       forceSSL = true;
-      globalRedirect = "holo-cache.s3.wasabisys.com";
+      globalRedirect = "holo.s3.wasabisys.com";
       serverName = "cache.holo.host";
     };
     virtualHosts.hydra.serverName = "hydra.holo.host";

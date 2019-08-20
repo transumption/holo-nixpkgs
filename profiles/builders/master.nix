@@ -18,6 +18,7 @@
       store_uri = s3://holo?endpoint=s3.wasabisys.com&log-compression=br&ls-compression=br&parallel-compression=1&secret-key=/var/lib/hydra/queue-runner/keys/cache.holo.host-1/secret&write-nar-listing=1
       upload_logs_to_binary_cache = true
     '';
+    hydraURL = "https://${config.services.nginx.virtualHosts.hydra.serverName}";
     logo = ./logo.png;
     notificationSender = "hydra@holo.host";
     useSubstitutes = true;
@@ -32,7 +33,6 @@
       enableACME = true;
       forceSSL = true;
       locations."/".proxyPass = "http://localhost:${toString config.services.hydra.port}";
-      serverName = "https://${config.services.hydra.hydraURL}";
     };
   };
 

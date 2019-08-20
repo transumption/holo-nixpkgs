@@ -38,7 +38,7 @@ let
               cp -r $f $out
               chmod -R +w $out/$(basename $f)
             else
-              ln -s $f $out
+              cp -rs $f $out
             fi
           done
 

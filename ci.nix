@@ -11,8 +11,7 @@ let
   overlayPkgs =
     recurseIntoAttrs (lib.getAttrs (lib.attrNames (overlay {} {})) pkgs);
 
-  constitute = sets: lib.filter lib.isDerivation
-    (lib.concatMap lib.attrValues sets);
+  constitute = sets: lib.concatMap (lib.collect lib.isDerivation) sets;
 
   override = static: final: previous: static { pkgs = final; };
 in

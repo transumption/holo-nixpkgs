@@ -1,5 +1,5 @@
 let
-  self = "/nix/var/nix/profiles/per-user/root/channels/holoportos";
+  self = "/nix/var/nix/profiles/per-user/root/channels/holopkgs";
 in
 
 {

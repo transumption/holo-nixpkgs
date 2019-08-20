@@ -41,13 +41,21 @@
   services.hydra.hydraURL = "https://hydra.holo.host";
 
   services.nginx = {
-    virtualHosts.cache = {
+    # HoloPortOS points to https://cache.holo.host for binary cache. It points
+    # to a domain that we control so that we have flexibility to move the bucket
+    # somewhere else in the future.
+    virtualHosts.binary-cache = {
       enableACME = true;
       forceSSL = true;
       globalRedirect = "holo.s3.wasabisys.com";
       serverName = "cache.holo.host";
     };
+
     virtualHosts.hydra.serverName = "hydra.holo.host";
+
+    # First HoloPort/HoloPort+ batch points to Hydra-based Nix channel on
+    # holoportbuild.holo.host. This has to be left here forever for reverse-
+    # compatibility reasons.
     virtualHosts.hydra-legacy = {
       enableACME = true;
       forceSSL = true;

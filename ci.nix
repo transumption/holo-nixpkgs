@@ -27,8 +27,8 @@ with import "${pkgs.path}/pkgs/top-level/release-lib.nix" {
 
 let
   self = {
-    holoportos = releaseTools.channel {
-      name = "holoportos";
+    holopkgs = releaseTools.channel {
+      name = "holopkgs";
       src = ./.;
       constituents = constitute [
         self.artifacts

@@ -24,9 +24,10 @@ let
 
   holochainRust = callPackage holochain-rust {};
 
+  # https://github.com/mozilla/nixpkgs-mozilla/pull/200
   nixpkgs-mozilla = fetchTarball {
-    url = "https://github.com/mozilla/nixpkgs-mozilla/archive/ac8e9d7bbda8fb5e45cae20c5b7e44c52da3ac0c.tar.gz";
-    sha256 = "1irlkqc0jdkxdfznq7r52ycnf0kcvvrz416qc7346xhmilrx2gy6";
+    url = "https://github.com/mozilla/nixpkgs-mozilla/archive/24d112e4895f081700ab910889818c5e189f4d69.tar.gz";
+    sha256 = "0kvwbnwxbqhc3c3hn121c897m89d9wy02s8xcnrvqk9c96fj83qw";
   };
 
   npm-to-nix = fetchFromGitHub {
@@ -110,9 +111,5 @@ in
         };
       };
     };
-  };
-
-  windows = previous.windows // {
-    pthreads = callPackage ./windows/pthreads {};
   };
 }

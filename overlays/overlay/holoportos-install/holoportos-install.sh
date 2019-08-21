@@ -10,8 +10,6 @@ function on_exit {
   else
     aurora-led --device @auroraLedDevice@ --mode static --color green
   fi
-
-  yes "$(head -c12 /dev/urandom | base64)" | passwd
 }
 
 trap on_exit EXIT

@@ -1,18 +1,18 @@
-## Add package to overlay
+## Iterate on overlay packages
 
-First, enter `nix-shell`. This will set up local overlay and Nixpkgs pin in
-such a way that completely reproduces production environment.
+First, enter `nix-shell`. This sets up reproducible development environment.
 
-Then, add a new package to `overlays/overlay/default.nix`:
+Then, add a new package to `overlays/overlay/default.nix` in alphabetical order:
 
 ```nix
 {
-  package-name = callPackage ./package-name {};
+  foo = callPackage ./foo {};
 }
 ```
 
-Create `overlays/overlay/package-name/default.nix` and write the derivation as
-you normally would. To test if it builds, run `nix-build '<nixpkgs>' -A package-name`.
+Write the derivation to `overlays/overlay/foo/default.nix`.
+
+To test if it builds, run `nix-build '<nixpkgs>' -A foo`.
 
 ## Iterate on NixOS modules/profiles
 

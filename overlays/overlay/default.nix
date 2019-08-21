@@ -103,8 +103,4 @@ in
       };
     };
   };
-
-  windows = previous.windows // {
-    pthreads = callPackage ./windows/pthreads {};
-  };
 }

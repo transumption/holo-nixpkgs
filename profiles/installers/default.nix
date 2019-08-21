@@ -25,7 +25,7 @@ let
 in
 
 {
-  imports = [ "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix" ../. ];
+  imports = [ ../. ];
 
   boot.postBootCommands = ''
     mkdir -p /mnt

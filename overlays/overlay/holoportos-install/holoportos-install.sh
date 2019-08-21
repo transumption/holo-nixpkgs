@@ -24,7 +24,9 @@ nixos-generate-config --root /mnt
 cat @configuration@ > /mnt/etc/nixos/configuration.nix
 
 nixos-install --channel @channel@ --no-root-passwd \
-  -I holoportos=@channel@/holoportos
-echo '@channelUrl@ holoportos' > /mnt/root/.nix-channels
+  -I holopkgs=@channel@/holopkgs \
+  -I nixpkgs=@channel@/holopkgs/nixpkgs \
+  -I nixpkgs-overlays=@channel@/holopkgs/overlays
+echo '@channelUrl@ holopkgs' > /mnt/root/.nix-channels
 
 @postPhase@

@@ -1,5 +1,5 @@
-{ lib, runCommand, substituteAll, aurora-led, bash, coreutils, e2fsprogs
-, parted, ubootBananaPim64 }:
+{ lib, gitignoreSource, runCommand, substituteAll, aurora-led, bash, coreutils
+, e2fsprogs, parted, ubootBananaPim64 }:
 
 { auroraLedDevice, channelUrl, network, target }:
 
@@ -14,7 +14,7 @@ let
     isExecutable = true;
 
     channel = runCommand "channel" {} ''
-      mkdir $out && ln -s ${lib.cleanSource ../../../.} $out/holoportos;
+      mkdir $out && ln -s ${gitignoreSource ../../../.} $out/holopkgs;
     '';
     configuration = mkConfiguration profile;
     path = lib.makeBinPath [ aurora-led coreutils e2fsprogs parted ];
@@ -23,7 +23,7 @@ let
 
   targets = {
     holoport = mkTarget {
-      profile = "<holoportos/profiles/targets/holoport>";
+      profile = "<holopkgs/profiles/targets/holoport>";
 
       prePhase = ''
         parted /dev/sda --align optimal --script \
@@ -37,7 +37,7 @@ let
     };
 
     holoport-nano = mkTarget {
-      profile = "<holoportos/profiles/targets/holoport-nano>";
+      profile = "<holopkgs/profiles/targets/holoport-nano>";
 
       prePhase = ''
         parted /dev/mmcblk2 --align optimal --script \
@@ -55,7 +55,7 @@ let
     };
 
     holoport-plus = mkTarget {
-      profile = "<holoportos/profiles/targets/holoport-plus>";
+      profile = "<holopkgs/profiles/targets/holoport-plus>";
 
       prePhase = ''
         parted /dev/sda --align optimal --script \

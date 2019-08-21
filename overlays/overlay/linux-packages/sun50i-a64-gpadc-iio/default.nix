@@ -1,5 +1,7 @@
 { stdenv, gitignoreSource, kernel }:
 
+with stdenv.lib;
+
 let
   inherit (stdenv.hostPlatform) system;
 in
@@ -15,7 +17,7 @@ stdenv.mkDerivation ({
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
-  meta.platforms = stdenv.lib.platforms.linux;
+  meta.platforms = platforms.linux;
 } // optionalAttrs (stdenv.buildPlatform != stdenv.hostPlatform) {
   ARCH = {
     aarch64-linux = "arm64";

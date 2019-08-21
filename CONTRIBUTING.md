@@ -1,3 +1,23 @@
+## Leverage binary cache
+
+On NixOS, add the following to `/etc/nixos/configuration.nix` and rebuild:
+
+```nix
+{
+  nix.binaryCaches = [
+    "https://cache.holo.host"
+  ];
+
+  nix.binaryCachePublicKeys = [
+    "cache.holo.host-1:lNXIXtJgS9Iuw4Cu6X0HINLu9sTfcjEntnrgwMQIMcE="
+  ];
+}
+```
+
+Otherwise, add `https://cache.holo.host` to `substituters` and
+`cache.holo.host-1:lNXIXtJgS9Iuw4Cu6X0HINLu9sTfcjEntnrgwMQIMcE=` to
+`trusted-public-keys` in `/etc/nix/nix.conf`.
+
 ## Iterate on overlay packages
 
 First, enter `nix-shell`. This sets up reproducible development environment.

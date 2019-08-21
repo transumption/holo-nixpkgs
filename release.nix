@@ -53,7 +53,7 @@ let
 in
 
 {
-  artifacts = recurseIntoAttrs {
+  holoportos = recurseIntoAttrs {
     installers = recurseIntoAttrs {
       holoport = mkImage ./profiles/installers/holoport;
       holoport-nano = mkImage ./profiles/installers/holoport-nano;

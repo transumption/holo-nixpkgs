@@ -30,7 +30,7 @@ let
       name = "holopkgs";
       src = gitignoreSource ./.;
       constituents = constitute [
-        self.artifacts
+        self.holoportos
         self.overlay
         self.tests
       ];

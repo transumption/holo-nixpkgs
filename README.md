@@ -12,10 +12,10 @@ consistent, verifiable, and auditable.
 ### HoloPort Nano
 
 Download the latest HoloPort Nano installer image:
-https://hydra.holo.host/job/holoportos/master/artifacts.installers.holoport-nano.aarch64-linux/latest/download-by-type/file/sd-image
+https://hydra.holo.host/job/holopkgs/master/holoportos.installers.holoport-nano.aarch64-linux/latest/download-by-type/file/sd-image
 
 To build an installer yourself, checkout this repo, switch to `master` branch,
-install [Nix][nix] and run `nix-build -A artifacts.installers.holoport-nano`.
+install [Nix][nix] and run `nix-build release.nix -A holoportos.installers.holoport-nano`.
 
 Burn the image to a μSD card with `sudo cp result/sd-image/*.img /dev/mmcblkX`
 (see `lsblk` on Linux and `diskutil list` on macOS for the exact device name).
@@ -33,7 +33,7 @@ Connect over HDMI to see what's going on. To retry, reboot or type
 ### VirtualBox
 
 Download the latest HoloPortOS VirtualBox OVA:
-https://hydra.holo.host/job/holoportos/master/artifacts.targets.virtualbox.x86_64-linux/latest/download-by-type/file/ova
+https://hydra.holo.host/job/holopkgs/master/holoportos.targets.virtualbox.x86_64-linux/latest/download-by-type/file/ova
 
 Refer to [VirtualBox manual, chapter 1, section 1.15.2](https://www.virtualbox.org/manual/ch01.html#ovf-import-appliance).
 

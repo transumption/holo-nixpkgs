@@ -1,3 +1,3 @@
-args: import ./nixpkgs (args // {
+{ ... } @ args: import ./nixpkgs (args // {
   overlays = [ (import ./overlays/overlay) ] ++ (args.overlays or []);
 })

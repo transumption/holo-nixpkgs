@@ -28,7 +28,7 @@ let
   self = {
     holopkgs = releaseTools.channel {
       name = "holopkgs";
-      src = ./.;
+      src = gitignoreSource ./.;
       constituents = constitute [
         self.artifacts
         self.overlay

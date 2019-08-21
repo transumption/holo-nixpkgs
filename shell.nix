@@ -7,15 +7,15 @@ let
 in
 
 stdenvNoCC.mkDerivation {
-  name = "holoportos";
+  name = "holopkgs";
 
   shellHook = ''
-    alias sudo='sudo -E'
+    alias holoportos-build-vm='nixos-rebuild build-vm -I nixos-config=${root}/profiles/targets/generic'
+    alias holoportos-switch='sudo -E nixos-rebuild switch -I nixos-config=/etc/nixos/configuration.nix'
   '';
 
   NIX_PATH = builtins.concatStringsSep ":" [
-    "holoportos=${root}"
-    "nixos-config=/etc/nixos/configuration.nix"
+    "holopkgs=${root}"
     "nixpkgs=${pkgs.path}"
     "nixpkgs-overlays=${root}/overlays"
   ];

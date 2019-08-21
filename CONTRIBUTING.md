@@ -14,6 +14,11 @@ Then, add a new package to `overlays/overlay/default.nix`:
 Create `overlays/overlay/package-name/default.nix` and write the derivation as
 you normally would. To test if it builds, run `nix-build '<nixpkgs>' -A package-name`.
 
-## Test NixOS profile changes
+## Iterate on NixOS modules/profiles
 
-Enter `nix-shell`. Then, run `sudo nixos-rebuild switch` as you normally would.
+To test HoloPortOS integration with physical hardware, you will need to rebuild
+HoloPortOS on target device. To do that, enter `nix-shell` and then run
+`holoportos-switch`.
+
+To test HoloPortOS in a VM for a generic target: enter `nix-shell`, run
+`holoportos-build-vm`, and then, execute `result/bin/run-holoport-vm`.

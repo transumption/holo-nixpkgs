@@ -11,6 +11,7 @@ with lib;
 
     target = mkOption {
       type = types.enum [
+        "generic"
         "holoport"
         "holoport-nano"
         "holoport-plus"

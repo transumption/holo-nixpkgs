@@ -59,11 +59,7 @@ in
     linux = linux_latest;
   };
 
-  holoportos-install = callPackage ./holoportos-install {
-    ubootBananaPim64 = if stdenv.isAarch64
-      then ubootBananaPim64
-      else pkgsCross.aarch64-multiplatform.ubootBananaPim64;
-  };
+  holoportos-install = callPackage ./holoportos-install {};
 
   holoportos-led-daemon = callPackage ./holoportos-led-daemon {};
 

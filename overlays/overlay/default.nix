@@ -49,8 +49,6 @@ in
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 
-  holo-cli = callPackage ./holo-cli {};
-
   holo-envoy = callPackage ./holo-envoy {};
 
   inherit (import holochain-rust {}) holochain-cli holochain-conductor;

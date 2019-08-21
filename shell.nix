@@ -14,6 +14,8 @@ stdenvNoCC.mkDerivation {
     alias holoportos-switch='sudo -E nixos-rebuild switch -I nixos-config=/etc/nixos/configuration.nix'
   '';
 
+  buildInputs = [ ((nixos {}).nixos-rebuild) ];
+
   NIX_PATH = builtins.concatStringsSep ":" [
     "holopkgs=${root}"
     "nixpkgs=${pkgs.path}"

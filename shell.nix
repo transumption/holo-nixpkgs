@@ -10,7 +10,7 @@ stdenvNoCC.mkDerivation {
   name = "holopkgs";
 
   shellHook = ''
-    alias holoportos-build-vm='nixos-rebuild build-vm -I nixos-config=${root}/profiles/targets/generic'
+    alias holoportos-build-vm='nixos-rebuild build-vm -I nixos-config=${root}/profiles/targets'
     alias holoportos-switch='sudo -E nixos-rebuild switch -I nixos-config=/etc/nixos/configuration.nix'
   '';
 

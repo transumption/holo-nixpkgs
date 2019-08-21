@@ -19,7 +19,7 @@ let
     owner = "holochain";
     repo = "holochain-rust";
     rev = "56d69ee2a2694b5d4b304f40b594c73cb9f0c27d";
-    sha256 = "0ipsyxvhgz7kjhdfh70lh03ccmq6h88nvfkapsqbvinhylb4jx00";
+    sha256 = "0cl6jqqg7sd2qjiy0dxyv0p6s8yrrv55fqqkp9nlhlv5jg4wm54w";
   };
 
   nixpkgs-mozilla = fetchTarball {

@@ -1,8 +1,8 @@
-{ lib, rustPlatform, makeWrapper, pkgconfig, aurora-led, openssl }:
+{ lib, gitignoreSource, rustPlatform, makeWrapper, pkgconfig, aurora-led, openssl }:
 
 rustPlatform.buildRustPackage {
   name = "holoportos-led-daemon";
-  src = lib.cleanSource ./.;
+  src = gitignoreSource ./.;
 
   cargoSha256 = "10g8w0pvvxhdr3bax3ly5f619b3mn2j810rbmcbgibg077198b7h";
 

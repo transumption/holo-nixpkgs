@@ -40,4 +40,4 @@ To test HoloPortOS in a VM for a generic target, enter `nix-shell`, run
 `holoportos-build-vm` and then execute `result/bin/run-holoport-vm`.
 
 To rebuild HoloPortOS on the current system, enter `nix-shell` and then run
-`holoportos-switch`. This is useful for working on hardware support.
+`holoportos-switch`. This is useful for testing hardware support.

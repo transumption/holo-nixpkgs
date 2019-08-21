@@ -1,10 +1,12 @@
-{ stdenv, kernel }:
+{ stdenv, gitignoreSource, kernel }:
 
-with stdenv.lib;
+let
+  inherit (stdenv.hostPlatform) system;
+in
 
 stdenv.mkDerivation ({
   name = "sun50i-a64-gpadc-iio-${kernel.version}";
-  src = ./.;
+  src = gitignoreSource ./.;
 
   hardeningDisable = [ "pic" ];
 
@@ -13,12 +15,12 @@ stdenv.mkDerivation ({
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
-  meta.platforms = platforms.linux;
+  meta.platforms = stdenv.lib.platforms.linux;
 } // optionalAttrs (stdenv.buildPlatform != stdenv.hostPlatform) {
   ARCH = {
     aarch64-linux = "arm64";
     x86_64-linux = "x86";
-  }."${stdenv.hostPlatform.system}";
+  }."${system}" or throw "unsupported host: ${system}";
 
-  CROSS_COMPILE = "${stdenv.hostPlatform.config}-";
+  CROSS_COMPILE = stdenv.cc.targetPrefix;
 })

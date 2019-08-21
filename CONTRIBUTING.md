@@ -30,7 +30,7 @@ Then, add a new package to `overlays/overlay/default.nix` in alphabetical order:
 }
 ```
 
-Write the derivation to `overlays/overlay/foo/default.nix`.
+Write the derivation in `overlays/overlay/foo/default.nix`.
 
 To test if it builds, run `nix-build '<nixpkgs>' -A foo`.
 

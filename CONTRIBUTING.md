@@ -16,9 +16,8 @@ To test if it builds, run `nix-build '<nixpkgs>' -A foo`.
 
 ## Iterate on NixOS modules/profiles
 
-To test HoloPortOS integration with physical hardware, you will need to rebuild
-HoloPortOS on target device. To do that, enter `nix-shell` and then run
-`holoportos-switch`.
+To test HoloPortOS in a VM for a generic target, enter `nix-shell`, run
+`holoportos-build-vm` and then execute `result/bin/run-holoport-vm`.
 
-To test HoloPortOS in a VM for a generic target: enter `nix-shell`, run
-`holoportos-build-vm`, and then, execute `result/bin/run-holoport-vm`.
+To rebuild HoloPortOS on the current system, enter `nix-shell` and then run
+`holoportos-switch`. This is useful for working on hardware support.

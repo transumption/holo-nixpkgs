@@ -66,6 +66,9 @@ in
   hydra = previous.hydra.overrideAttrs (super: {
     doCheck = false;
     patches = [ ./hydra/no-restrict-eval.diff ];
+    meta = super.meta // {
+      hydraPlatforms = [ "x86_64-linux" ];
+    };
   });
 
   libsodium = previous.libsodium.overrideAttrs (super: {

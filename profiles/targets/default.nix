@@ -20,6 +20,7 @@ in
   environment.noXlibs = true;
 
   environment.systemPackages = [
+    holochain-cli
     (holoport-hardware-test.override { inherit target; })
   ];
 

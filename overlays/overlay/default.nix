@@ -51,6 +51,8 @@ in
 
   hAppPackages = recurseIntoAttrs {
     example-happ = callPackage ./happ-packages/example-happ {};
+    happ-store = callPackage ./happ-packages/happ-store {};
+    holo-hosting-app = callPackage ./happ-packages/holo-hosting-app {};
     holofuel = callPackage ./happ-packages/holofuel {};
     servicelogger = callPackage ./happ-packages/servicelogger {};
   };

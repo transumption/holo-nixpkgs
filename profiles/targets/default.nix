@@ -50,7 +50,7 @@ in
       addresses = true;
     };
   };
-
+ 
   services.mingetty.autologinUser = "holoport";
 
   services.openssh.enable = true;

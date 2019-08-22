@@ -1,4 +1,5 @@
-{ stdenv, callPackage, cargoToNix, gitignoreSource, runCommand, rustPlatform, holochain-cli }:
+{ stdenv, callPackage, cargoToNix, gitignoreSource, runCommand, rustPlatform
+, holochain-cli, nodejs }:
 { name, src, shell ? false }:
 
 with stdenv.lib;
@@ -45,6 +46,7 @@ then stdenv.mkDerivation {
   nativeBuildInputs = [
     holochainRust.holochain-cli
     holochainRust.holochain-conductor
+    nodejs
     rustPlatform.rust.cargo
     rustPlatform.rust.rustc
   ];

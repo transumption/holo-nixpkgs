@@ -48,7 +48,7 @@ in
     ];
 
     systemd.services.holochain-conductor = {
-      after = [ "local-fs.target" "network.target" ];
+      after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
 
       preStart = ''

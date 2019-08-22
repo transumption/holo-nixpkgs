@@ -20,7 +20,7 @@ in
     networking.firewall.allowedTCPPorts = [ 1111 2222 3333 8800 8880 8888 48080 ];
 
     systemd.services.holo-envoy = {
-      after = [ "local-fs.target" "network.target" "holochain-conductor.service" ];
+      after = [ "network.target" "holochain-conductor.service" ];
       path = [ config.services.holochain-conductor.package ];
       wantedBy = [ "multi-user.target" ];
 

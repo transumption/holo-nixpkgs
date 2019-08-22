@@ -52,9 +52,7 @@ in
       wantedBy = [ "multi-user.target" ];
 
       preStart = ''
-        if [ ! -e ${home}/config.toml ]; then
-          cat ${toml} > ${home}/config.toml
-	fi
+        cat ${toml} > ${home}/config.toml
       '';
     
       serviceConfig = {

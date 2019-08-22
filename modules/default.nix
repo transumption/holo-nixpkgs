@@ -2,6 +2,8 @@
   imports = [
     ./boot/generic-extlinux-compatible.nix
     ./nixpkgs/host-platform.nix
+    ./services/holo-envoy.nix
+    ./services/holochain-conductor.nix
     ./system/holoportos.nix
     ./system/holoportos/auto-upgrade.nix
     ./system/holoportos/install.nix

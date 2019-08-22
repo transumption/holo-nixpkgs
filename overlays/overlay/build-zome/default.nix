@@ -1,6 +1,8 @@
 { stdenv, cargoToNix, gitignoreSource, runCommand, rustPlatform, holochain-cli }:
 { name, src, shell ? false }:
 
+with stdenv.lib;
+
 let
   holochain-rust =
     let
@@ -25,6 +27,14 @@ let
     chmod +w $out
     ln -s ${holochain-rust} $out/holochain-rust
   '';
+
+  fetchZomeDeps = name: ''
+    ln -s ${cargoToNix "${src-with-holochain}/zomes/${name}/code"} vendor
+  '';
+
+  subDirNames = dir: attrNames
+    (filterAttrs (name: type: type == "directory")
+                 (builtins.readDir dir));
 in
 
 if shell
@@ -55,12 +65,7 @@ else rustPlatform.buildRustPackage {
 
   cargoVendorDir = "vendor";
 
-  # https://github.com/NixOS/nixpkgs/issues/61618
-  preConfigure = ''
-    export HOME=$(mktemp -d)
-  '' + ''
-    ln -s ${cargoToNix "${src-with-holochain}/zomes/${name}/code"} vendor
-  '';
+  preConfigure = concatStrings (map fetchZomeDeps (subDirNames "${src-with-holochain}/zomes"));
 
   buildPhase = ''
     mkdir dist

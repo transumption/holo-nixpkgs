@@ -1,5 +1,5 @@
 diff --git a/pkgs/build-support/rust/default.nix b/pkgs/build-support/rust/default.nix
-index 09802d56d34..9cebc3ee9da 100644
+index 09802d56d34..00ae75b596d 100644
 --- a/pkgs/build-support/rust/default.nix
 +++ b/pkgs/build-support/rust/default.nix
 @@ -93,6 +93,11 @@ stdenv.mkDerivation (args // {
@@ -7,7 +7,7 @@ index 09802d56d34..9cebc3ee9da 100644
    '' + (args.postUnpack or "");
  
 +  # https://github.com/NixOS/nixpkgs/issues/61618
-+  preConfigure = args.preConfigure + ''
++  preConfigure = (args.preConfigure or "") + ''
 +    export HOME=$(mktemp -d)
 +  '';
 +

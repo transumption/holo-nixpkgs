@@ -19,9 +19,9 @@ let
     persistence_dir = home;
   };
 
-  config = defaults // cfg.config;
+  configWithDefaults = defaults // cfg.config;
 
-  json = pkgs.writeText "dnscrypt-proxy.json" (builtins.toJSON config);
+  json = pkgs.writeText "dnscrypt-proxy.json" (builtins.toJSON configWithDefaults);
 
   toml = pkgs.runCommand "dnscrypt-proxy.toml" {} ''
     ${pkgs.remarshal}/bin/json2toml < ${json} > $out
@@ -42,7 +42,7 @@ in
     };
   };
 
-  config = {
+  config = mkIf (cfg.enable) {
     environment.systemPackages = with pkgs; [
       holochain-cli
     ];

@@ -59,13 +59,7 @@ in
 
   holo-envoy = callPackage ./holo-envoy {};
 
-  holochain-cli = holochainRust.holochain-cli.overrideAttrs (super: {
-    meta = (super.meta or {}) // { platforms = lib.platforms.all; };
-  });
-
-  holochain-conductor = holochainRust.holochain-conductor.overrideAttrs (super: {
-    meta = (super.meta or {}) // { platforms = lib.platforms.all; };
-  });
+  inherit (holochainRust) holochain-cli holochain-conductor;
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 

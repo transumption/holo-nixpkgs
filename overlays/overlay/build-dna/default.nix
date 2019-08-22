@@ -47,6 +47,7 @@ then stdenv.mkDerivation {
     holochainRust.holochain-cli
     holochainRust.holochain-conductor
     nodejs
+    python2
     rustPlatform.rust.cargo
     rustPlatform.rust.rustc
   ];

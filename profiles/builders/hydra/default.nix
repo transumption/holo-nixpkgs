@@ -30,6 +30,10 @@
     }
   ];
 
+  services.postgresql.extraConfig = ''
+    max_connections = 1024
+  '';
+
   services.nginx = {
     # HoloPortOS points to https://cache.holo.host for binary cache. It points
     # to a domain that we control so that we have flexibility to move the bucket

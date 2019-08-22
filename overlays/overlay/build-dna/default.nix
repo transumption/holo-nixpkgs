@@ -1,4 +1,4 @@
-{ stdenv, cargoToNix, gitignoreSource, runCommand, rustPlatform, holochain-cli }:
+{ stdenv, callPackage, cargoToNix, gitignoreSource, runCommand, rustPlatform, holochain-cli }:
 { name, src, shell ? false }:
 
 with stdenv.lib;
@@ -20,7 +20,7 @@ let
       then toString <holochain-rust>
       else holochain-cli.src;
 
-  holochainRust = import holochain-rust {};
+  holochainRust = callPackage holochain-rust {};
 
   src-with-holochain = runCommand "source" {} ''
     cp -Lr ${src} $out

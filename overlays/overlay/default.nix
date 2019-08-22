@@ -46,9 +46,9 @@ in
   });
 
   dnaPackages = recurseIntoAttrs {
+    example-happ = callPackage ./dna-packages/example-happ {};
     holofuel = callPackage ./dna-packages/holofuel {};
     servicelogger = callPackage ./dna-packages/servicelogger {};
-    zome-example = callPackage ./dna-packages/zome-example {};
   };
 
   aurora-led = callPackage ./aurora-led {};

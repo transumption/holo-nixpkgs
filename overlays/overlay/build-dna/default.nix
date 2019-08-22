@@ -79,4 +79,6 @@ else rustPlatform.buildRustPackage {
   installPhase = ":";
 
   doCheck = false;
+
+  meta.platforms = platforms.all;
 }

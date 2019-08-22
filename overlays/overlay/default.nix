@@ -22,6 +22,8 @@ let
     sha256 = "1i9wlx6ypy02a828427lprdp0jb6gn3s4smqk8d7gpshc44x6v0p";
   };
 
+  holochainRust = callPackage holochain-rust {};
+
   nixpkgs-mozilla = fetchTarball {
     url = "https://github.com/mozilla/nixpkgs-mozilla/archive/ac8e9d7bbda8fb5e45cae20c5b7e44c52da3ac0c.tar.gz";
     sha256 = "1irlkqc0jdkxdfznq7r52ycnf0kcvvrz416qc7346xhmilrx2gy6";
@@ -57,11 +59,11 @@ in
 
   holo-envoy = callPackage ./holo-envoy {};
 
-  holochain-cli = (import holochain-rust {}).holochain-cli.overrideAttrs (super: {
+  holochain-cli = holochainRust.holochain-cli.overrideAttrs (super: {
     meta = (super.meta or {}) // { platforms = lib.platforms.all; };
   });
 
-  holochain-conductor = (import holochain-rust {}).holochain-conductor.overrideAttrs (super: {
+  holochain-conductor = holochainRust.holochain-conductor.overrideAttrs (super: {
     meta = (super.meta or {}) // { platforms = lib.platforms.all; };
   });
 

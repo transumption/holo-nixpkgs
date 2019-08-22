@@ -47,10 +47,10 @@ in
     inherit (rust.packages.nightly) rustPlatform;
   });
 
-  dnaPackages = recurseIntoAttrs {
-    example-happ = callPackage ./dna-packages/example-happ {};
-    holofuel = callPackage ./dna-packages/holofuel {};
-    servicelogger = callPackage ./dna-packages/servicelogger {};
+  hAppPackages = recurseIntoAttrs {
+    example-happ = callPackage ./happ-packages/example-happ {};
+    holofuel = callPackage ./happ-packages/holofuel {};
+    servicelogger = callPackage ./happ-packages/servicelogger {};
   };
 
   aurora-led = callPackage ./aurora-led {};

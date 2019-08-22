@@ -65,7 +65,7 @@ in
       };
     };
     
-    users.users.holochain = {
+    users.users.holochain-conductor = {
       createHome = true;
       home = "/var/lib/holochain-conductor";
     };

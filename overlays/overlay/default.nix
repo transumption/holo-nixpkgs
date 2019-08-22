@@ -41,7 +41,7 @@ in
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
 
-  buildZome = makeOverridable (callPackage ./build-zome {
+  buildDNA = makeOverridable (callPackage ./build-dna {
     inherit (rust.packages.nightly) rustPlatform;
   });
 

@@ -1,4 +1,5 @@
 import json
+import pathlib
 import requests
 import subprocess
 
@@ -52,7 +53,8 @@ def zerotier_ipv4():
 
 def main():
     ipv4 = zerotier_ipv4()
-    public_key = holochain_keygen('holoport-key')
+    home = pathlib.Path.home()
+    public_key = holochain_keygen(pathlib.Path(home, 'holoport-key'))
 
     zato_setup_dns(public_key)
     res = zato_setup_proxy(public_key, ipv4)

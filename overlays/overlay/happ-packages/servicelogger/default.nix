@@ -4,8 +4,8 @@ let
   src = fetchFromGitHub {
     owner = "holo-host";
     repo = "servicelogger";
-    rev = "7d97be8d1ac4d2257a1f024171123e0e77a35776";
-    sha256 = "1hml9l7v2dgkcikbzsdvl0p88arjbz6yshbcasl53pk4icdlbn3c";
+    rev = "c8d38afa72ceadb85e94c81874b65a13248c5203";
+    sha256 = "0k5205wkjl81svzhi6icwd11mkjm3f32fi24z60zkmlz7x7mlwbp";
   };
 in
 

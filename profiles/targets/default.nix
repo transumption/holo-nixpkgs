@@ -58,7 +58,8 @@ in
   services.zerotierone = {
     enable = true;
     joinNetworks = {
-      live = [ "e5cd7a9e1c3e8c42" ];
+      dev = [ "8286ac0e47fdb6b5" ];
+      live = [];
       test = [ "93afae5963c547f1" ];
     }."${config.system.holoportos.network}";
   };

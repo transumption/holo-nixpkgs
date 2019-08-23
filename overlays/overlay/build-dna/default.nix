@@ -1,5 +1,5 @@
 { stdenv, callPackage, cargoToNix, gitignoreSource, npmToNix, runCommand
-, rustPlatform, holochain-cli, lld, nodejs, python2 }:
+, rustPlatform, holochain-cli, lld, nodejs, python2, which }:
 { name, src, nativeBuildInputs ? [], doCheck ? true, shell ? false }:
 
 with stdenv.lib;
@@ -27,16 +27,16 @@ let
     echo -n "${stringWithContext}" > $out
   '');
 
-  srcWithHolochain = runCommand "source" {} ''
+  this = runCommand name {} ''
     cp -Lr ${src} $out
     chmod +w $out
     ln -s ${holochain-rust} $out/holochain-rust
   '';
 
-  testDir = "${srcWithHolochain}/test";
+  testDir = "${this}/test";
 
   fetchZomeDeps = name: ''
-    ln -s ${cargoToNix "${srcWithHolochain}/zomes/${name}/code"} vendor
+    ln -s ${cargoToNix "${this}/zomes/${name}/code"} vendor
   '';
 
   subDirNames = dir: attrNames
@@ -53,6 +53,7 @@ rustPlatform.buildRustPackage ({
     lld
     nodejs
     python2
+    which
   ];
 
   cargoVendorDir = "vendor";
@@ -62,17 +63,14 @@ rustPlatform.buildRustPackage ({
     ln -s ${holochain-rust-shell} holochain-rust
   '';
 } // optionalAttrs (shell == false) {
-  src = srcWithHolochain;
+  src = this;
 
-  preConfigure = concatStrings (map fetchZomeDeps (subDirNames "${srcWithHolochain}/zomes"));
+  preConfigure = concatStrings (map fetchZomeDeps (subDirNames "${this}/zomes"));
+
+  RUSTFLAGS = "-C linker=lld";
 
   buildPhase = ''
-    mkdir dist
-    RUSTFLAGS='-C linker=lld' hc package -o dist/${name}.dna.json
-    cp -r dist $out
-
-    mkdir $out/nix-support
-    echo "file binary-dist $out/${name}.dna.json" > $out/nix-support/hydra-build-products
+    hc package
   '';
 
   checkPhase = if pathExists (stripContext testDir)
@@ -84,5 +82,10 @@ rustPlatform.buildRustPackage ({
 
   inherit doCheck;
 
-  installPhase = ":";
+  installPhase = ''
+    cp -r dist $out
+
+    mkdir $out/nix-support
+    echo "file binary-dist $out/${name}.dna.json" > $out/nix-support/hydra-build-products
+  '';
 })

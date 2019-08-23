@@ -1,5 +1,5 @@
 { stdenv, callPackage, cargoToNix, gitignoreSource, npmToNix, runCommand
-, rustPlatform, holochain-cli, lld, nodejs, python2, which }:
+, rustPlatform, holochain-cli, jq, lld, nodejs, python2, which }:
 { name, src, nativeBuildInputs ? [], doCheck ? true, shell ? false }:
 
 with stdenv.lib;
@@ -50,6 +50,7 @@ rustPlatform.buildRustPackage ({
   nativeBuildInputs = nativeBuildInputs ++ [
     holochainRust.holochain-cli
     holochainRust.holochain-conductor
+    jq
     lld
     nodejs
     python2
@@ -70,22 +71,31 @@ rustPlatform.buildRustPackage ({
   RUSTFLAGS = "-C linker=lld";
 
   buildPhase = ''
+    runHook preBuild
+
     hc package
+
+    runHook postBuild
   '';
 
-  checkPhase = if pathExists (stripContext testDir)
-    then ''
-      cp -Lr ${npmToNix { src = testDir; }} test/node_modules
-      hc test
-    ''
-    else ":";
+  checkPhase = ''
+    runHook preCheck
+  '' + optionalString (pathExists (stripContext testDir)) ''
+    cp -Lr ${npmToNix { src = testDir; }} test/node_modules
+    hc test
+  '' + ''
+    runHook postCheck
+  '';
 
   inherit doCheck;
 
   installPhase = ''
-    cp -r dist $out
+    runHook preInstall
 
-    mkdir $out/nix-support
+    mkdir -p $out/nix-support
+    jq -cS < dist/${name}.dna.json > $out/${name}.dna.json
     echo "file binary-dist $out/${name}.dna.json" > $out/nix-support/hydra-build-products
+
+    runHook postInstall
   '';
 })

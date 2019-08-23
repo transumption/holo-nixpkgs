@@ -90,6 +90,8 @@ in
     sun50i-a64-gpadc-iio = self.callPackage ./linux-packages/sun50i-a64-gpadc-iio {};
   });
 
+  n3h = callPackage ./n3h {};
+
   rust = previous.rust // {
     packages = previous.rust.packages // {
       nightly = {

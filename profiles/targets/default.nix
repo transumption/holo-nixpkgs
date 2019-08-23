@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with pkgs;
 
@@ -23,7 +23,7 @@ in
     (holoport-hardware-test.override { inherit target; })
   ];
 
-  networking.hostName = "holoport";
+  networking.hostName = lib.mkDefault "holoport";
 
   nix.binaryCaches = [
     "https://cache.holo.host"

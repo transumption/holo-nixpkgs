@@ -1,5 +1,5 @@
 { stdenv, callPackage, cargoToNix, gitignoreSource, npmToNix, runCommand
-, rustPlatform, holochain-cli, jq, lld, nodejs, python2, which }:
+, rustPlatform, holochain-cli, jq, lld, n3h, nodejs, python2, which }:
 { name, src, nativeBuildInputs ? [], doCheck ? true, shell ? false }:
 
 with stdenv.lib;
@@ -52,6 +52,7 @@ rustPlatform.buildRustPackage ({
     holochainRust.holochain-conductor
     jq
     lld
+    n3h
     nodejs
     python2
     which

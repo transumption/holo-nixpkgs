@@ -45,6 +45,7 @@ in
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
 
   buildDNA = makeOverridable (callPackage ./build-dna {
+    inherit (llvmPackages_8) lld;
     inherit (rust.packages.nightly) rustPlatform;
   });
 

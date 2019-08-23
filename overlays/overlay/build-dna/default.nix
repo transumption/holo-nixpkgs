@@ -1,5 +1,5 @@
 { stdenv, callPackage, cargoToNix, gitignoreSource, npmToNix, runCommand
-, rustPlatform, holochain-cli, nodejs, python2 }:
+, rustPlatform, holochain-cli, lld, nodejs, python2 }:
 { name, src, nativeBuildInputs ? [], doCheck ? true, shell ? false }:
 
 with stdenv.lib;
@@ -50,6 +50,7 @@ rustPlatform.buildRustPackage ({
   nativeBuildInputs = nativeBuildInputs ++ [
     holochainRust.holochain-cli
     holochainRust.holochain-conductor
+    lld
     nodejs
     python2
   ];
@@ -67,7 +68,7 @@ rustPlatform.buildRustPackage ({
 
   buildPhase = ''
     mkdir dist
-    hc package -o dist/${name}.dna.json
+    RUSTFLAGS='-C linker=lld' hc package -o dist/${name}.dna.json
     cp -r dist $out
 
     mkdir $out/nix-support

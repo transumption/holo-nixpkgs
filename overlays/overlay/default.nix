@@ -69,6 +69,11 @@ in
     linux = linux_latest;
   };
 
+  holoportos-initialize = callPackage ./holoportos-initialize {
+    stdenv = stdenvNoCC;
+    python3 = python3.withPackages (ps: [ ps.requests ]);
+  };
+
   holoportos-install = callPackage ./holoportos-install {};
 
   holoportos-led-daemon = callPackage ./holoportos-led-daemon {};

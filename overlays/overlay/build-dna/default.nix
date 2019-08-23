@@ -1,6 +1,6 @@
-{ stdenv, callPackage, cargoToNix, gitignoreSource, runCommand, rustPlatform
-, holochain-cli, nodejs }:
-{ name, src, shell ? false }:
+{ stdenv, callPackage, cargoToNix, gitignoreSource, npmToNix, runCommand
+, rustPlatform, holochain-cli, nodejs, python2 }:
+{ name, src, nativeBuildInputs ? [], doCheck ? true, shell ? false }:
 
 with stdenv.lib;
 
@@ -23,14 +23,20 @@ let
 
   holochainRust = callPackage holochain-rust {};
 
-  src-with-holochain = runCommand "source" {} ''
+  stripContext = stringWithContext: builtins.readFile (runCommand "string" {} ''
+    echo -n "${stringWithContext}" > $out
+  '');
+
+  srcWithHolochain = runCommand "source" {} ''
     cp -Lr ${src} $out
     chmod +w $out
     ln -s ${holochain-rust} $out/holochain-rust
   '';
 
+  testDir = "${srcWithHolochain}/test";
+
   fetchZomeDeps = name: ''
-    ln -s ${cargoToNix "${src-with-holochain}/zomes/${name}/code"} vendor
+    ln -s ${cargoToNix "${srcWithHolochain}/zomes/${name}/code"} vendor
   '';
 
   subDirNames = dir: attrNames
@@ -38,37 +44,26 @@ let
                  (builtins.readDir dir));
 in
 
-if shell
+rustPlatform.buildRustPackage ({
+  inherit name;
 
-then stdenv.mkDerivation {
-  name = "${name}-env";
-
-  nativeBuildInputs = [
+  nativeBuildInputs = nativeBuildInputs ++ [
     holochainRust.holochain-cli
     holochainRust.holochain-conductor
     nodejs
     python2
-    rustPlatform.rust.cargo
-    rustPlatform.rust.rustc
-  ];
-
-  shellHook = ''
-    rm -f holochain-rust
-    ln -s ${holochain-rust-shell} holochain-rust
-  '';
-}
-
-else rustPlatform.buildRustPackage {
-  inherit name;
-  src = src-with-holochain;
-
-  nativeBuildInputs = [
-    holochainRust.holochain-cli
   ];
 
   cargoVendorDir = "vendor";
+} // optionalAttrs shell {
+   shellHook = ''
+    rm -f holochain-rust
+    ln -s ${holochain-rust-shell} holochain-rust
+  '';
+} // optionalAttrs (shell == false) {
+  src = srcWithHolochain;
 
-  preConfigure = concatStrings (map fetchZomeDeps (subDirNames "${src-with-holochain}/zomes"));
+  preConfigure = concatStrings (map fetchZomeDeps (subDirNames "${srcWithHolochain}/zomes"));
 
   buildPhase = ''
     mkdir dist
@@ -79,7 +74,14 @@ else rustPlatform.buildRustPackage {
     echo "file binary-dist $out/${name}.dna.json" > $out/nix-support/hydra-build-products
   '';
 
-  installPhase = ":";
+  checkPhase = if pathExists (stripContext testDir)
+    then ''
+      cp -Lr ${npmToNix { src = testDir; }} test/node_modules
+      hc test
+    ''
+    else ":";
 
-  doCheck = false;
-}
+  inherit doCheck;
+
+  installPhase = ":";
+})

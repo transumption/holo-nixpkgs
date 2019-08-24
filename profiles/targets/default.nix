@@ -51,7 +51,7 @@ in
     };
   };
  
-  services.mingetty.autologinUser = "holoport";
+  services.mingetty.autologinUser = "root";
 
   services.openssh.enable = true;
 
@@ -73,12 +73,7 @@ in
 
   users.mutableUsers = false;
 
-  users.users.holoport = {
-    extraGroups = [ "wheel" ];
-    isNormalUser = true;
-  };
+  users.users.holo.isNormalUser = true;
 
-  users.users.root.password = "";
-
-  users.users.support.isNormalUser = true;
+  users.users.root.hashedPassword = "*";
 }

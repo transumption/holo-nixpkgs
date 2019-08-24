@@ -1,7 +1,8 @@
 import json
-import pathlib
 import requests
+import retry
 import subprocess
+import sys
 
 def holochain_keygen(path):
     return subprocess.run(['hc', 'keygen', '-np', path, '-q'], capture_output=True) \
@@ -21,6 +22,9 @@ def zato_setup_dns(public_key):
 
 def zato_setup_zerotier(zerotier_address):
     return zato_request('/holo-zt-auth', {'member_id': zerotier_address})
+
+def zato_setup_zerotier_address():
+    return zato_setup_zerotier(zerotier_address())
 
 def zato_setup_proxy(public_key, ipv4):
     return zato_request('/holo-init-proxy-service-create', {
@@ -48,17 +52,19 @@ def zerotier_info():
 def zerotier_address():
     return zerotier_info()['address']
 
+@retry.retry(IndexError, tries=10, delay=2, backoff=2)
 def zerotier_ipv4():
-    return zato_setup_zerotier(zerotier_address())['config']['ipAssignments'][0]
+    return zato_setup_zerotier_address()['config']['ipAssignments'][0]
 
-def main():
+def main(private_key_path):
     ipv4 = zerotier_ipv4()
-    home = pathlib.Path.home()
-    public_key = holochain_keygen(pathlib.Path(home, 'holoport-key'))
+    public_key = holochain_keygen(private_key_path)
+    with open(private_key_path + '.pub', 'w') as f:
+        print(public_key, file=f)
 
     zato_setup_dns(public_key)
     res = zato_setup_proxy(public_key, ipv4)
     print(zato_setup_proxy_route(public_key, res['id'])['name'])
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1])

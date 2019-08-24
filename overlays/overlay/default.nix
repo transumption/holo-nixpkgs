@@ -73,7 +73,7 @@ in
 
   holoportos-initialize = callPackage ./holoportos-initialize {
     stdenv = stdenvNoCC;
-    python3 = python3.withPackages (ps: [ ps.requests ]);
+    python3 = python3.withPackages (ps: [ ps.requests ps.retry ]);
   };
 
   holoportos-install = callPackage ./holoportos-install {};

@@ -19,6 +19,10 @@
     };
   };
 
+  systemd.tmpfiles.rules = ''
+    D! /var 1777 root root
+  ''
+
   users.users.root.openssh.authorizedKeys.keys = [
     # Matthew Brisebois
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGakK6G+lvSpg3NKfuWNopUlI/Z2keLGBH09jeAVbslO"

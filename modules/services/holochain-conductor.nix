@@ -37,6 +37,12 @@ in
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
 
+      path = with pkgs; [
+        holochain-cli
+        holochain-conductor
+        n3h
+      ];
+
       preStart = ''
         cat ${toml} > ${home}/config.toml
       '';

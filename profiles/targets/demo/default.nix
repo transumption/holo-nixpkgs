@@ -12,19 +12,27 @@ let
     servicelogger
   ];
 
+  dnaHash = drv: builtins.readFile (runCommand "${drv.name}-hash" {} ''
+    ${holochain-cli}/bin/hc hash -p ${drv}/${drv.name}.dna.json \
+      | tail -1 \
+      | cut -d ' ' -f 3- \
+      | tr -d '\n' > $out
+  '');
+
   dnaConfig = drv: {
     id = drv.name;
     file = "${drv}/${drv.name}.dna.json";
+    hash = dnaHash drv;
   };
 
   instanceConfig = drv: {
     agent = "host-agent";
     dna = drv.name;
     id = drv.name;
-    storage = [{
+    storage = {
       path = "${conductorHome}/${drv.name}";
-      file = "file";
-    }];
+      type = "file";
+    };
   };
 in
 
@@ -38,40 +46,46 @@ in
   services.holochain-conductor = {
     enable = true;
     config = {
+      agents = [{
+        id = "host-agent";
+        name = "Host Agent";
+        keystore_file = "${conductorHome}/holoportos-key";
+        public_address = "@public_key@";
+      }];
       bridges = [];
       dnas = map dnaConfig hApps;
       instances = map instanceConfig hApps;
-      keystore_file = "${conductorHome}/holoportos-key";
-      network = [
-        { n3h_persistance_path = "${conductorHome}/n3h"; }
-      ];
+      network = {
+        n3h_persistance_path = "${conductorHome}/n3h";
+        type = "n3h";
+      };
       persistence_dir = conductorHome;
       signing_service_uri = "http://localhost:8888";
       interfaces = [
         {
           id = "master-interface";
           admin = true;
-          driver = [{
-            port = "1111";
+          driver = {
+            port = 1111;
             type = "websocket";
-          }];
+          };
           instances = map (drv: { id = drv.name; }) hApps;
         }
         {
-          id = "internal-interface";
+          id = "internal-interface-1";
           admin = false;
-          driver = [{
-            port = "3333";
-            type = "websocket";
-          }];
-        }
-        {
-          id = "internal-interface";
-          admin = false;
-          driver = [{
+          driver = {
             port = 2222;
             type = "websocket";
-          }];
+          };
+        }
+        {
+          id = "internal-interface-2";
+          admin = false;
+          driver = {
+            port = 3333;
+            type = "websocket";
+          };
         }
       ];
     };

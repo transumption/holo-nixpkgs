@@ -17,8 +17,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [ 1111 2222 3333 8800 8880 8888 48080 ];
-
     systemd.services.holo-envoy = {
       after = [ "network.target" "holochain-conductor.service" ];
       path = [ config.services.holochain-conductor.package ];

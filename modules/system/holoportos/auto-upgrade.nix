@@ -26,7 +26,7 @@ in
         HOME = "/root";
       } // config.networking.proxy.envVars;
 
-      path = with pkgs; [ config.nix.package gzip gnutar xz ];
+      path = with pkgs; [ config.nix.package git gzip gnutar xz ];
 
       script = ''
         ${config.nix.package.out}/bin/nix-channel --update

@@ -7,21 +7,7 @@ let
 
   inherit (config.users.users.holochain-conductor) home;
 
-  defaults = {
-    agents = [];
-    dnas = [];
-    instances = [];
-    interfaces = [];
-    bridges = [];
-
-    logger.type = "debug";
-
-    persistence_dir = home;
-  };
-
-  configWithDefaults = defaults // cfg.config;
-
-  json = pkgs.writeText "dnscrypt-proxy.json" (builtins.toJSON configWithDefaults);
+  json = pkgs.writeText "dnscrypt-proxy.json" (builtins.toJSON cfg.config);
 
   toml = pkgs.runCommand "dnscrypt-proxy.toml" {} ''
     ${pkgs.remarshal}/bin/json2toml < ${json} > $out

@@ -39,6 +39,8 @@ in
 {
   imports = [ ../. ];
 
+  environment.systemPackages = [ pkgs.holoportos-initialize ];
+
   networking.firewall.allowedTCPPorts = [ 1111 2222 3333 8800 8880 8888 48080 ];
 
   services.holo-envoy.enable = true;

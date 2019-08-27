@@ -27,7 +27,7 @@ in
     };
 
     channelUrl = mkOption {
-      default = "https://hydra.holo.host/channel/custom/holopkgs/${cfg.channel}/holopkgs";
+      default = "https://hydra.holo.host/channel/custom/holo-nixpkgs/${cfg.channel}/holo-nixpkgs";
     };
 
     package = mkOption {

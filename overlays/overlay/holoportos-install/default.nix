@@ -14,7 +14,7 @@ let
     isExecutable = true;
 
     channel = runCommand "channel" {} ''
-      mkdir $out && ln -s ${gitignoreSource ../../../.} $out/holopkgs;
+      mkdir $out && ln -s ${gitignoreSource ../../../.} $out/holo-nixpkgs;
     '';
     configuration = mkConfiguration profile;
     path = lib.makeBinPath [ aurora-led coreutils e2fsprogs parted ];
@@ -23,7 +23,7 @@ let
 
   targets = {
     holoport = mkTarget {
-      profile = "<holopkgs/profiles/targets/holoport>";
+      profile = "<holo-nixpkgs/profiles/targets/holoport>";
 
       prePhase = ''
         parted /dev/sda --align optimal --script \
@@ -37,7 +37,7 @@ let
     };
 
     holoport-nano = mkTarget {
-      profile = "<holopkgs/profiles/targets/holoport-nano>";
+      profile = "<holo-nixpkgs/profiles/targets/holoport-nano>";
 
       prePhase = ''
         parted /dev/mmcblk2 --align optimal --script \
@@ -55,7 +55,7 @@ let
     };
 
     holoport-plus = mkTarget {
-      profile = "<holopkgs/profiles/targets/holoport-plus>";
+      profile = "<holo-nixpkgs/profiles/targets/holoport-plus>";
 
       prePhase = ''
         parted /dev/sda --align optimal --script \

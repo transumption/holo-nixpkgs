@@ -7,7 +7,7 @@ let
 in
 
 stdenvNoCC.mkDerivation {
-  name = "holopkgs";
+  name = "holo-nixpkgs";
 
   shellHook = ''
     holoportos-build-vm() {
@@ -21,7 +21,7 @@ stdenvNoCC.mkDerivation {
   buildInputs = [ ((nixos {}).nixos-rebuild) ];
 
   NIX_PATH = builtins.concatStringsSep ":" [
-    "holopkgs=${root}"
+    "holo-nixpkgs=${root}"
     "nixpkgs=${pkgs.path}"
     "nixpkgs-overlays=${root}/overlays"
   ];

@@ -26,8 +26,8 @@ with import "${pkgs.path}/pkgs/top-level/release-lib.nix" {
 
 let
   self = {
-    holopkgs = releaseTools.channel {
-      name = "holopkgs";
+    holo-nixpkgs = releaseTools.channel {
+      name = "holo-nixpkgs";
       src = gitignoreSource ./.;
       constituents = constitute [
         self.holoportos

@@ -109,8 +109,8 @@ in
         cargo = final.rust.packages.nightly.rustc;
         rustc = (rustChannelOf {
           channel = "nightly";
-          date = "2019-07-14";
-          sha256 = "1llbwkjkjis6rv0rbznwwl0j6bf80j38xgwsd4ilcf0qps4cvjsx";
+          date = "2019-08-26";
+          sha256 = "142r8glfnk9j84mjdsni15hddfmhhgpdf3v6dc6r2ssx97fkqj91";
         }).rust.override {
           targets = [
             "aarch64-unknown-linux-musl"

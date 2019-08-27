@@ -44,7 +44,9 @@ in
       ];
 
       preStart = ''
+        mkdir -p ${home}/n3h
         cat ${toml} > ${home}/config.toml
+        sed -i s/@public_key@/$(cat ${home}/holoportos-key.pub)/ ${home}/config.toml
       '';
     
       serviceConfig = {

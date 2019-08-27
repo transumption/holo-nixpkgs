@@ -93,25 +93,7 @@ in
     };
   };
 
-  systemd.services.holochain-conductor = {
-    after = [ "holoportos-initialize.service" ];
-    requires = [ "holoportos-initialize.service" ];
-  };
-
-  systemd.services.holoportos-initialize = {
-    after = [ "network.target" "zerotierone.service" ];
-    requires = [ "zerotierone.service" ];
-    wantedBy = [ "multi-user.target" ];
-
-    serviceConfig = {
-      ExecStart = "${pkgs.holoportos-initialize}/bin/holoportos-initialize";
-      User = "holochain-conductor";
-    };
-  };
-
-  systemd.tmpfiles.rules = [
-    "D! /var 1777 root root"
-  ];
+  system.holoportos.network = "test";
 
   users.users.root.openssh.authorizedKeys.keys = [
     # Matthew Brisebois

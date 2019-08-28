@@ -26,5 +26,5 @@ stdenvNoCC.mkDerivation {
     "nixpkgs-overlays=${root}/overlays"
   ];
 
-  QEMU_OPTS = "-m 2048";
+  QEMU_OPTS = "-m 2048 -display none -device virtio-scsi-pci,id=scsi -device virtio-serial-pci -serial stdio";
 }

@@ -36,12 +36,16 @@ To test if it builds, run `nix-build -A foo`.
 
 ## Iterate on NixOS modules/profiles
 
-To test HoloPortOS in a VM for a generic target, enter `nix-shell`, run
-`holoportos-build-vm` and then execute `result/bin/run-holoport-vm`.
+First, enter `nix-shell`.
 
-To test HoloPortOS in a VM for a custom target, enter `nix-shell`, run
-`holoportos-build-vm <target>` and then execute `result/bin/run-holoport-vm`.
-For example, try `demo`.
+To test HoloPortOS in a VM for a generic target, run `holoportos-shell`. First
+argument can optionally specify a custom target: for example, to test
+[`profiles/targets/demo`](profiles/targets/demo/default.nix) profile, you'd run
+`holoportos-shell demo`.
 
-To rebuild HoloPortOS on the current system, enter `nix-shell` and then run
-`holoportos-switch`. This is useful for testing hardware support.
+If you want to build a VM without entering it, use `holoportos-build-vm`
+instead of `holoportos-shell`. It similarly supports an optional target
+argument.
+
+To rebuild HoloPortOS directly on the current system, enter `nix-shell` and
+then run `holoportos-switch`. This is useful for testing hardware support.

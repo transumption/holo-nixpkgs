@@ -23,7 +23,6 @@ in
 
     channel = mkOption {
       default = "master";
-      type = types.enum [ "develop" "staging" "master" ];
     };
 
     channelUrl = mkOption {

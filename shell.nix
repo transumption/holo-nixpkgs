@@ -27,5 +27,5 @@ stdenvNoCC.mkDerivation {
     "nixpkgs-overlays=${root}/overlays"
   ];
 
-  QEMU_OPTS = "-nographic -m 2048";
+  QEMU_OPTS = "-m 2048 -nographic";
 }

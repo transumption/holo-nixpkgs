@@ -24,9 +24,8 @@ let
 
   holochainRust = callPackage holochain-rust {};
 
-  # https://github.com/mozilla/nixpkgs-mozilla/pull/200
   nixpkgs-mozilla = fetchTarball {
-    url = "https://github.com/mozilla/nixpkgs-mozilla/archive/24d112e4895f081700ab910889818c5e189f4d69.tar.gz";
+    url = "https://github.com/mozilla/nixpkgs-mozilla/archive/dea7b9908e150a08541680462fe9540f39f2bceb.tar.gz";
     sha256 = "0kvwbnwxbqhc3c3hn121c897m89d9wy02s8xcnrvqk9c96fj83qw";
   };
 

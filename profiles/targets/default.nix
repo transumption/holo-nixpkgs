@@ -23,7 +23,7 @@ in
     (holoport-hardware-test.override { inherit target; })
   ];
 
-  networking.hostName = lib.mkDefault "holoport";
+  networking.hostName = lib.mkDefault "holoportos";
 
   nix.binaryCaches = [
     "https://cache.holo.host"

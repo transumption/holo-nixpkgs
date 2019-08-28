@@ -10,8 +10,9 @@ stdenvNoCC.mkDerivation {
   name = "holo-nixpkgs";
 
   shellHook = ''
-    holoportos-build-vm() {
-      nixos-rebuild build-vm -I nixos-config=${root}/profiles/targets/$1
+    holoportos-run-vm() {
+      $(nixos-rebuild build-vm -I nixos-config=${root}/profiles/targets/$1)
+      ./result/bin/run-holoportos-vm
     }
     holoportos-switch() {
       sudo -E nixos-rebuild switch -I nixos-config=/etc/nixos/configuration.nix
@@ -26,5 +27,5 @@ stdenvNoCC.mkDerivation {
     "nixpkgs-overlays=${root}/overlays"
   ];
 
-  QEMU_OPTS = "-m 2048 -display none -device virtio-scsi-pci,id=scsi -device virtio-serial-pci -serial stdio";
+  QEMU_OPTS = "-nographic -m 2048";
 }

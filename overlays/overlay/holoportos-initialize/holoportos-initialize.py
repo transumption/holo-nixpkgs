@@ -58,15 +58,12 @@ def zerotier_ipv4():
 
 def main(private_key_path):
     ipv4 = zerotier_ipv4()
-    print(ipv4)
     public_key = holochain_keygen(private_key_path)
     with open(private_key_path + '.pub', 'w') as f:
         print(public_key, file=f)
 
-    res = zato_setup_dns(public_key)
-    print(res)
+    zato_setup_dns(public_key)
     res = zato_setup_proxy(public_key, ipv4)
-    print(res)
     print(zato_setup_proxy_route(public_key, res['id'])['name'])
 
 if __name__ == "__main__":

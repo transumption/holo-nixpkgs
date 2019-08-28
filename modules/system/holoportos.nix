@@ -11,13 +11,6 @@ with lib;
 
     target = mkOption {
       default = "generic";
-      type = types.enum [
-        "generic"
-        "holoport"
-        "holoport-nano"
-        "holoport-plus"
-        "virtualbox"
-      ];
     };
   };
 }

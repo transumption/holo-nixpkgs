@@ -58,9 +58,9 @@ in
       dnas = map dnaConfig hApps;
       instances = map instanceConfig hApps;
       network = {
+        bootstrap_nodes = [];
         n3h_persistence_path = "${conductorHome}/.n3h";
         type = "n3h";
-        bootstrap_nodes = [];
       };
       persistence_dir = conductorHome;
       signing_service_uri = "http://localhost:8888";

@@ -15,6 +15,13 @@ let
     sha256 = "1lz09rmr2yza8bv46ff49226jls6q1rl2x0p11q1940rw4k4bwa9";
   };
 
+  holo-envoy = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "envoy";
+    rev = "5667c5ae6b3e1a36e4b1757f8118d18c34df5e32";
+    sha256 = "0bvr2lag2wjbw03jblabg18x655skcpqiqbygf52229gvkyjnlbh";
+  };
+
   holochain-rust = fetchFromGitHub {
     owner = "holochain";
     repo = "holochain-rust";
@@ -60,8 +67,7 @@ in
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 
-  holo-envoy = callPackage ./holo-envoy {};
-
+  inherit (callPackage holo-envoy {}) holo-envoy;
   inherit (holochainRust) holochain-cli holochain-conductor;
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};

@@ -19,8 +19,7 @@ stdenvNoCC.mkDerivation {
     }
 
     holoportos-shell() {
-      holoportos-build-vm "$1"
-      ./result/bin/run-holoportos-vm
+      holoportos-build-vm "$1" && ./result/bin/run-holoportos-vm
     }
 
     holoportos-run-vm() {

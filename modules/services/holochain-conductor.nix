@@ -44,7 +44,7 @@ in
       ];
 
       preStart = ''
-        mkdir -p ${home}/n3h
+        mkdir -p ${cfg.config.network.n3h_persistence_path}
         cat ${toml} > ${home}/config.toml
         sed -i s/@public_key@/$(cat ${home}/holoportos-key.pub)/ ${home}/config.toml
       '';

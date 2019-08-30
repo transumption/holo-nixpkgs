@@ -135,6 +135,8 @@ in
 
   hclient = callPackage ./hclient {};
 
+  holofuel-app = callPackage ./holofuel-app {};
+
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {

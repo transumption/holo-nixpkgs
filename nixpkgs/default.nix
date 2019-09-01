@@ -1,5 +1,5 @@
 let
-  nixpkgs = import ../vendor/nixpkgs;
+  nixpkgs = import ../vendor/nixpkgs.nix;
 
   inherit (import nixpkgs {}) stdenvNoCC fetchpatch;
 in

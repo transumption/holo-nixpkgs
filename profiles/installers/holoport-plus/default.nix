@@ -1,7 +1,7 @@
 { config, ... }:
 
 let
-  nixpkgs = import ../../../vendor/nixpkgs;
+  nixpkgs = import ../../../vendor/nixpkgs.nix;
 in
 
 {

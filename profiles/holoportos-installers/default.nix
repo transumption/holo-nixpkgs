@@ -5,7 +5,7 @@ with pkgs;
 let
   inherit (config.system.holoportos) target;
 
-  nixpkgs = import ../../vendor/nixpkgs;
+  nixpkgs = import ../../vendor/nixpkgs.nix;
 
   closure = import "${nixpkgs}/nixos" {
     configuration = {

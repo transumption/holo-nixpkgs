@@ -10,8 +10,8 @@ with pkgs;
       holoport-plus = mkImage ./profiles/installers/holoport-plus;
     };
     targets = recurseIntoAttrs {
-      qemu = mkImage ./profiles/targets/qemu;
-      virtualbox = mkImage ./profiles/targets/virtualbox;
+      qemu = mkImage ./profiles/holoportos/qemu;
+      virtualbox = mkImage ./profiles/holoportos/virtualbox;
     };
   };
 

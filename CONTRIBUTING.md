@@ -1,3 +1,7 @@
+## Review commit message style guide
+
+https://nixos.org/nixpkgs/manual/#submitting-changes-making-patches
+
 ## Leverage binary cache
 
 On NixOS, add the following to `/etc/nixos/configuration.nix` and rebuild:

@@ -5,7 +5,7 @@ with pkgs;
 let
   conductorHome = config.users.users.holochain-conductor.home;
 
-  hApps = with hAppPackages; [
+  dnas = with dnaPackages; [
     happ-store
     holo-hosting-app
     holofuel
@@ -55,8 +55,8 @@ in
         public_address = "@public_key@";
       }];
       bridges = [];
-      dnas = map dnaConfig hApps;
-      instances = map instanceConfig hApps;
+      dnas = map dnaConfig dnas;
+      instances = map instanceConfig dnas;
       network = {
         bootstrap_nodes = [];
         n3h_persistence_path = "${conductorHome}/.n3h";
@@ -72,7 +72,7 @@ in
             port = 1111;
             type = "websocket";
           };
-          instances = map (drv: { id = drv.name; }) hApps;
+          instances = map (drv: { id = drv.name; }) dnas;
         }
         {
           id = "internal-interface-1";

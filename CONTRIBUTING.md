@@ -22,7 +22,7 @@ Otherwise, add `https://cache.holo.host` to `substituters` and
 
 First, enter `nix-shell`. This sets up reproducible development environment.
 
-Then, add a new package to `overlays/overlay/default.nix` in alphabetical order:
+Then, add a new package to `overlays/holo-nixpkgs/default.nix` in alphabetical order:
 
 ```nix
 {
@@ -30,7 +30,7 @@ Then, add a new package to `overlays/overlay/default.nix` in alphabetical order:
 }
 ```
 
-Write the derivation in `overlays/overlay/foo/default.nix`.
+Write the derivation in `overlays/holo-nixpkgs/foo/default.nix`.
 
 To test if it builds, run `nix-build -A foo`.
 

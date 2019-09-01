@@ -4,7 +4,7 @@ with pkgs;
 
 let
   release = import ./release.nix;
-  overlay = import ./overlays/overlay;
+  overlay = import ./overlays/holo-nixpkgs;
 
   releasePkgs = release { inherit pkgs; };
 

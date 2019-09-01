@@ -1,5 +1,5 @@
 {
   imports = [ ../modules ];
 
-  nixpkgs.overlays = [ (import ../overlays/overlay) ];
+  nixpkgs.overlays = [ (import ../overlays/holo-nixpkgs) ];
 }

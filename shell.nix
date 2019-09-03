@@ -15,7 +15,9 @@ stdenvNoCC.mkDerivation {
     }
 
     holoportos-shell() {
-      $(nix-build release.nix -A holoportos.qemu --no-out-link)/bin/run-holoportos-vm
+      $(nix-build release.nix -I nixos-config=profiles/holoportos/$1 \
+        --attr holoportos.qemu \
+        --no-out-link)/bin/run-holoportos-vm
     }
   '';
 

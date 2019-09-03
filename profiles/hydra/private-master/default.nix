@@ -15,6 +15,8 @@
     }
   ];
 
+  nix.useSandbox = false;
+
   services.hydra.hydraURL = "https://private-hydra.holo.host";
 
   services.nginx.virtualHosts.hydra = {

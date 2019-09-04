@@ -126,7 +126,7 @@ in
     linux = linux_latest;
   };
 
-  holoportos-initialize = callPackage ./holoportos-initialize {
+  holo-init = callPackage ./holo-init {
     stdenv = stdenvNoCC;
     python3 = python3.withPackages (ps: [ ps.requests ps.retry ]);
   };

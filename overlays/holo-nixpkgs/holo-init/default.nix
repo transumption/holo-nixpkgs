@@ -3,14 +3,14 @@
 with stdenv.lib;
 
 stdenv.mkDerivation {
-  name = "holoportos-initialize";
+  name = "holo-init";
 
   nativeBuildInputs = [ makeWrapper ];
   buildInputs = [ python3 ];
 
   buildCommand = ''
-    makeWrapper ${python3}/bin/python3 $out/bin/holoportos-initialize \
-      --add-flags ${./holoportos-initialize.py} \
+    makeWrapper ${python3}/bin/python3 $out/bin/holo-init \
+      --add-flags ${./holo-init.py} \
       --prefix PATH : ${makeBinPath [ holochain-cli zerotierone ]}
   '';
 

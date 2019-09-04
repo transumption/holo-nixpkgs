@@ -4,15 +4,15 @@ with pkgs;
 with import "${pkgs.path}/nixos/lib/testing.nix" { inherit pkgs system; };
 
 makeTest {
-  name = "boot";
+  name = "holo-envoy";
 
   machine = {
-    imports = [ (import ../profiles/holoportos) ];
+    imports = [ (import ../profiles/holoportos/demo) ];
   };
 
   testScript = ''
     startAll;
-    $machine->waitForUnit("multi-user.target");
+    $machine->execute("curl localhost");
     $machine->shutdown;
   '';
 

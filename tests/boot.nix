@@ -7,7 +7,7 @@ makeTest {
   name = "boot";
 
   machine = {
-    imports = [ (import ../profiles) ];
+    imports = [ (import ../profiles/holoportos) ];
   };
 
   testScript = ''

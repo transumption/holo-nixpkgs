@@ -18,6 +18,9 @@ makeTest {
     print($machine->execute("ls -la /var/lib/holochain-conductor/holo"));
     print($machine->execute("cat /var/lib/holochain-conductor/holo"));
     print($machine->systemctl("restart holochain-conductor.service"));
+    print($machine->systemctl("restart holo-envoy.service"));
+    $machine->waitForUnit("holochain-conductor.service");
+    $machine->waitForUnit("holo-envoy.service");
     $machine->shutdown;
   '';
 

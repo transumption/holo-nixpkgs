@@ -55,7 +55,7 @@ in
     inherit (rust.packages.nightly) rustPlatform;
   });
 
-  mkImage = profile:
+  buildImage = profile:
     let
       allowCross = config.allowCross or true;
 
@@ -105,6 +105,19 @@ in
       meta.platforms = [ system ];
     };
 
+  writeJSON = config: writeText "config.json" (builtins.toJSON config);
+
+  writeTOML = config: runCommand "config.toml" {} ''
+    ${remarshal}/bin/json2toml < ${writeJSON config} > $out
+  '';
+
+  dnaHash = dna: builtins.readFile (runCommand "${dna.name}-hash" {} ''
+    ${holochain-cli}/bin/hc hash -p ${dna}/${dna.name}.dna.json \
+      | tail -1 \
+      | cut -d ' ' -f 3- \
+      | tr -d '\n' > $out
+  '');
+
   dnaPackages = recurseIntoAttrs {
     example-happ = callPackage ./dna-packages/example-happ {};
     happ-store = callPackage ./dna-packages/happ-store {};
@@ -119,6 +132,10 @@ in
 
   inherit (callPackage holo-envoy {}) holo-envoy;
   inherit (holochainRust) holochain-cli holochain-conductor;
+
+  hclient = callPackage ./hclient {};
+
+  holofuel-app = callPackage ./holofuel-app {};
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 

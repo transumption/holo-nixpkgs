@@ -6,12 +6,6 @@ let
   cfg = config.services.holochain-conductor;
 
   inherit (config.users.users.holochain-conductor) home;
-
-  json = pkgs.writeText "dnscrypt-proxy.json" (builtins.toJSON cfg.config);
-
-  toml = pkgs.runCommand "dnscrypt-proxy.toml" {} ''
-    ${pkgs.remarshal}/bin/json2toml < ${json} > $out
-  '';
 in
 
 {
@@ -45,12 +39,12 @@ in
 
       preStart = ''
         mkdir -p ${cfg.config.network.n3h_persistence_path}
-        cat ${toml} > ${home}/config.toml
-        sed -i s/@public_key@/$(cat ${home}/holo.pub)/ ${home}/config.toml
+        cat ${pkgs.writeTOML config} > ${home}/conductor-config.toml
+        sed -i s/@public_key@/$(cat ${home}/holo.pub)/ ${home}/conductor-config.toml
       '';
     
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/holochain -c ${home}/config.toml";
+        ExecStart = "${cfg.package}/bin/holochain -c ${home}/conductor-config.toml";
         KillMode = "process";
         Restart = "always";
         User = "holochain-conductor";

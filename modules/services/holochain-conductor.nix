@@ -39,7 +39,7 @@ in
 
       preStart = ''
         mkdir -p ${cfg.config.network.n3h_persistence_path}
-        cat ${pkgs.writeTOML config} > ${home}/conductor-config.toml
+        cat ${pkgs.writeTOML cfg.config} > ${home}/conductor-config.toml
         sed -i s/@public_key@/$(cat ${home}/holo.pub)/ ${home}/conductor-config.toml
       '';
     

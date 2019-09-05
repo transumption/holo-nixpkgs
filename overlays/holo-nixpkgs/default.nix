@@ -148,6 +148,11 @@ in
     python3 = python3.withPackages (ps: [ ps.requests ps.retry ]);
   };
 
+  # TODO: upstream to holochain-cli
+  holo-keygen = callPackage ./holo-keygen {
+    stdenv = stdenvNoCC;
+  };
+
   holoportos-install = callPackage ./holoportos-install {};
 
   holoportos-led-daemon = callPackage ./holoportos-led-daemon {};

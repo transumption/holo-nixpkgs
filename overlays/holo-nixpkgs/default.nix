@@ -55,7 +55,7 @@ in
     inherit (rust.packages.nightly) rustPlatform;
   });
 
-  mkImage = profile:
+  buildImage = profile:
     let
       allowCross = config.allowCross or true;
 

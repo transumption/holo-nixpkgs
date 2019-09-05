@@ -4,14 +4,14 @@ with pkgs;
 
 {
   holoportos = recurseIntoAttrs {
-    qemu = mkImage ./profiles/holoportos/qemu;
-    virtualbox = mkImage ./profiles/holoportos/virtualbox;
+    qemu = buildImage ./profiles/holoportos/qemu;
+    virtualbox = buildImage ./profiles/holoportos/virtualbox;
   };
 
   holoportos-installers = recurseIntoAttrs {
-    holoport = mkImage ./profiles/holoportos-installers/holoport;
-    holoport-nano = mkImage ./profiles/holoportos-installers/holoport-nano;
-    holoport-plus = mkImage ./profiles/holoportos-installers/holoport-plus;
+    holoport = buildImage ./profiles/holoportos-installers/holoport;
+    holoport-nano = buildImage ./profiles/holoportos-installers/holoport-nano;
+    holoport-plus = buildImage ./profiles/holoportos-installers/holoport-plus;
   };
 
   tests = recurseIntoAttrs {

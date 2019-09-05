@@ -12,17 +12,10 @@ let
     servicelogger
   ];
 
-  dnaHash = drv: builtins.readFile (runCommand "${drv.name}-hash" {} ''
-    ${holochain-cli}/bin/hc hash -p ${drv}/${drv.name}.dna.json \
-      | tail -1 \
-      | cut -d ' ' -f 3- \
-      | tr -d '\n' > $out
-  '');
-
   dnaConfig = drv: {
     id = drv.name;
     file = "${drv}/${drv.name}.dna.json";
-    hash = dnaHash drv;
+    hash = pkgs.dnaHash drv;
   };
 
   instanceConfig = drv: {

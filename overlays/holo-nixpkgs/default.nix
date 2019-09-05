@@ -111,6 +111,13 @@ in
     ${remarshal}/bin/json2toml < ${writeJSON config} > $out
   '';
 
+  dnaHash = dna: builtins.readFile (runCommand "${dna.name}-hash" {} ''
+    ${holochain-cli}/bin/hc hash -p ${dna}/${dna.name}.dna.json \
+      | tail -1 \
+      | cut -d ' ' -f 3- \
+      | tr -d '\n' > $out
+  '');
+
   dnaPackages = recurseIntoAttrs {
     example-happ = callPackage ./dna-packages/example-happ {};
     happ-store = callPackage ./dna-packages/happ-store {};

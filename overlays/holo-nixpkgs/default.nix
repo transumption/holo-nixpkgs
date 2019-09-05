@@ -105,6 +105,12 @@ in
       meta.platforms = [ system ];
     };
 
+  writeJSON = config: writeText "config.json" (builtins.toJSON config);
+
+  writeTOML = config: runCommand "config.toml" {} ''
+    ${remarshal}/bin/json2toml < ${writeJSON config} > $out
+  '';
+
   dnaPackages = recurseIntoAttrs {
     example-happ = callPackage ./dna-packages/example-happ {};
     happ-store = callPackage ./dna-packages/happ-store {};

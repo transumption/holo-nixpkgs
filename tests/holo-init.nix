@@ -14,8 +14,8 @@ makeTest {
     startAll;
     print($machine->execute("pwd"));
     print($machine->succeed("free -m"));
-    print($machine->succeed("hc keygen -np /var/lib/holochain-conductor/holoportos-key"));
-    print($machine->execute("ls -la /var/lib/holochain-conductor/holoportos-key"));
+    print($machine->succeed("hc keygen -np /var/lib/holochain-conductor/holo"));
+    print($machine->execute("ls -la /var/lib/holochain-conductor/holo"));
     $machine->shutdown;
   '';
 

@@ -10,6 +10,7 @@ import (stdenvNoCC.mkDerivation {
 
   patches = [
     ./ext4-no-resize2fs.diff
+    ./rust-aarch64-musl-cross.diff
     ./rust-home.diff
   ];
 

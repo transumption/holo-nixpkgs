@@ -3,7 +3,7 @@
 let
   wasabiBucket = "cache.holo.host";
   wasabiEndpoint = "s3.wasabisys.com";
-  wasabiURL = "https://${wasabiBucket}.${wasabiEndpoint}";
+  wasabiURL = "http://${wasabiBucket}.${wasabiEndpoint}";
 in
 
 {

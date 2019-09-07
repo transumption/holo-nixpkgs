@@ -37,6 +37,7 @@ in
     {
       hostName = "208.52.170.228";
       maxJobs = 12;
+      sshKey = "/var/lib/hydra/queue-runner/.ssh/id_ed25519";
       sshUser = "administrator";
       supportedFeatures = [];
       system = "x86_64-darwin";

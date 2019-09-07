@@ -34,6 +34,13 @@ in
       ];
       system = "aarch64-linux";
     }
+    {
+      hostName = "208.52.170.228";
+      maxJobs = 12;
+      sshUser = "administrator";
+      supportedFeatures = [];
+      system = "x86_64-darwin";
+    }
   ];
 
   services.postgresql.extraConfig = ''

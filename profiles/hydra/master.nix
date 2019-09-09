@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   networking.firewall.allowedTCPPorts = [ 80 443 ];
@@ -11,7 +11,7 @@
   services.hydra = {
     enable = true;
     hydraURL = "https://${config.services.nginx.virtualHosts.hydra.serverName}";
-    logo = ./logo.png;
+    logo = ./logo.svg;
     notificationSender = "hydra@holo.host";
     useSubstitutes = true;
   };
@@ -24,7 +24,10 @@
     virtualHosts.hydra = {
       enableACME = true;
       forceSSL = true;
-      locations."/".proxyPass = "http://localhost:${toString config.services.hydra.port}";
+      locations = {
+        "/".proxyPass = "http://localhost:${toString config.services.hydra.port}";
+        "/favicon.ico".root = pkgs.singletonDir "${./favicon.ico}";
+      };
     };
   };
 }

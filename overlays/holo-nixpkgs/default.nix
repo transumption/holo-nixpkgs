@@ -105,6 +105,15 @@ in
       meta.platforms = [ system ];
     };
 
+  singletonDir = path:
+    let
+      drv = lib.toDerivation path;
+    in
+    runCommand "singleton" {} ''
+      mkdir $out
+      ln -s ${path} $out/${drv.name}
+    '';
+
   writeJSON = config: writeText "config.json" (builtins.toJSON config);
 
   writeTOML = config: runCommand "config.toml" {} ''
@@ -159,7 +168,10 @@ in
 
   hydra = previous.hydra.overrideAttrs (super: {
     doCheck = false;
-    patches = [ ./hydra/no-restrict-eval.diff ];
+    patches = [
+      ./hydra/logo-vertical-align.diff
+      ./hydra/no-restrict-eval.diff
+    ];
     meta = super.meta // {
       hydraPlatforms = [ "x86_64-linux" ];
     };

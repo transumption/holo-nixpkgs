@@ -25,16 +25,16 @@ let
     schedulingshares = 60;
   };
 
-  pullRequestToJobset = pr: sharedJobset // {
+  pullRequestToJobset = n: pr: sharedJobset // {
     inputs.holo-nixpkgs = {
       emailresponsible = false;
       type = "git";
-      value = "https://github.com/${pr.head.repo.owner.login}/${pr.head.repo.name} ${pr.head.ref}";
+      value = "https://github.com/${pr.base.repo.owner.login}/${pr.base.repo.name} pull/${n}/head";
     };
     schedulingshares = 20;
   };
 
-  jobsets = lib.mapAttrs (lib.const pullRequestToJobset) pullRequests // {
+  jobsets = lib.mapAttrs pullRequestToJobset pullRequests // {
     develop = branchJobset "develop";
     staging = branchJobset "staging";
     master = branchJobset "master";

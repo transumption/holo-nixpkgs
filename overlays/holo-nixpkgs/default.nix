@@ -1,4 +1,7 @@
-final: previous: with final;
+final: previous:
+
+with final;
+with lib;
 
 let
   cargo-to-nix = fetchFromGitHub {
@@ -55,55 +58,20 @@ in
     inherit (rust.packages.nightly) rustPlatform;
   });
 
-  buildImage = profile:
+  buildImage = imports:
     let
-      allowCross = config.allowCross or true;
-
-      nixos = import "${pkgs.path}/nixos" {
-        configuration = { config, ... }: {
-	  imports = [ profile ];
-
-	  nixpkgs.localSystem.system = if allowCross
-	    then builtins.currentSystem
-	    else config.nixpkgs.hostPlatform.system;
-	};
+      system = nixos {
+        inherit imports;
       };
 
-      inherit (nixos.config.system) build;
-      inherit (nixos.config.nixpkgs.hostPlatform) system;
-
-      image = if build ? "vm"
-        then build.vm
-        else if build ? "virtualBoxOVA"
-        then build.virtualBoxOVA
-        else if build ? "sdImage"
-        then build.sdImage
-        else if build ? "isoImage"
-        then build.isoImage
-        else throw "${build} doesn't expose any known image format";
-
-      stopgap = drv: if allowCross
-        then drv
-        else runCommand drv.name {} ''
-          mkdir -p $out
-
-          for f in ${drv}/*; do
-            if [ "$f" = "${drv}/nix-support" ]; then
-              cp -r $f $out
-              chmod -R +w $out/$(basename $f)
-            else
-              cp -rs $f $out
-            fi
-          done
-
-          for f in $out/nix-support/*; do
-            substituteInPlace $f --replace ${drv} $out
-          done
-        '';
+      imageNames = filter (name: hasAttr name system) [
+        "isoImage"
+        "sdImage"
+        "virtualBoxOVA"
+        "vm"
+      ];
     in
-    lib.recursiveUpdate (stopgap image) {
-      meta.platforms = [ system ];
-    };
+    head (attrVals imageNames system);
 
   singletonDir = path:
     let

@@ -7,7 +7,6 @@ in
 {
   imports = [
     "${nixpkgs}/nixos/modules/virtualisation/virtualbox-image.nix"
-    ../.
   ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";

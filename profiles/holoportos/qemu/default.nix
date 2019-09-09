@@ -18,6 +18,10 @@ in
     nixos-config
   ];
 
+  environment.loginShellInit = ''
+    alias exit='poweroff'
+  '';
+
   programs.bash.shellInit = ''
     source <( ${pkgs.xterm}/bin/resize )
   '';

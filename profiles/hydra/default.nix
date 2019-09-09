@@ -18,6 +18,8 @@
     StrictHostKeyChecking accept-new
   '';
 
+  time.timeZone = "UTC";
+
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHLGgzH3ROvo65cnvkXmuz7Qc9bPvU+L2SrafQh0bMrK"
   ];

@@ -1,12 +1,9 @@
-{ pkgs ? import ../nixpkgs {} }:
-
-with pkgs;
-with import "${pkgs.path}/nixos/lib/testing.nix" { inherit pkgs system; };
+{ lib, makeTest }:
 
 makeTest {
   name = "holo-init";
   machine = {
-    imports = [ (import ../profiles/holoportos/demo) ];
+    imports = [ (import ../../profiles/holoportos/demo) ];
     virtualisation.memorySize = 2024;
   };
 

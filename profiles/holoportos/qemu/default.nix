@@ -25,6 +25,7 @@ in
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
   virtualisation = {
+    diskSize = 2048;
     graphics = false;
     memorySize = 2048;
   };

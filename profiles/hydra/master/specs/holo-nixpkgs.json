@@ -1,5 +1,5 @@
 {
-  "checkinterval": 0,
+  "checkinterval": 10,
   "emailoverride": "",
   "enabled": true,
   "enableemail": false,

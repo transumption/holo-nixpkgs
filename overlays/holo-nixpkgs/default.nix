@@ -114,6 +114,12 @@ in
       ln -s ${path} $out/${drv.name}
     '';
 
+  tryDefault = x: default:
+    let
+      eval = builtins.tryEval x;
+    in
+    if eval.success then eval.value else default;
+
   writeJSON = config: writeText "config.json" (builtins.toJSON config);
 
   writeTOML = config: runCommand "config.toml" {} ''

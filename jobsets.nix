@@ -6,7 +6,7 @@ let
   pullRequests = lib.importJSON <holo-nixpkgs-pull-requests>;
 
   sharedJobset = {
-    checkinterval = 0;
+    checkinterval = 10;
     emailoverride = "";
     enabled = true;
     enableemail = false;

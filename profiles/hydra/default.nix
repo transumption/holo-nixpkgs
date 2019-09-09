@@ -18,6 +18,8 @@
     StrictHostKeyChecking accept-new
   '';
 
+  time.timeZone = "UTC";
+
   # NB! Anyone in this list is in a position to poison binary cache. Give away
   # root or trusted user access to Hydra *very* carefully.
   users.users.root.openssh.authorizedKeys.keys = lib.mkForce [

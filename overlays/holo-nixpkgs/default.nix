@@ -39,8 +39,8 @@ let
   npm-to-nix = fetchFromGitHub {
     owner = "transumption-unstable";
     repo = "npm-to-nix";
-    rev = "662fa58f63428d23bfbcf9c0348f18fc895a3b5a";
-    sha256 = "1mqz39fz1pc4xr18f1lzwvx4csw8n1kvbs4didkfdyzd43qnshaq";
+    rev = "6d2cbbc9d58566513019ae176bab7c2aeb68efae";
+    sha256 = "1wm9f2j8zckqbp1w7rqnbvr8wh6n072vyyzk69sa6756y24sni9a";
   };
 in
 
@@ -105,6 +105,15 @@ in
       meta.platforms = [ system ];
     };
 
+  singletonDir = path:
+    let
+      drv = lib.toDerivation path;
+    in
+    runCommand "singleton" {} ''
+      mkdir $out
+      ln -s ${path} $out/${drv.name}
+    '';
+
   writeJSON = config: writeText "config.json" (builtins.toJSON config);
 
   writeTOML = config: runCommand "config.toml" {} ''
@@ -159,7 +168,10 @@ in
 
   hydra = previous.hydra.overrideAttrs (super: {
     doCheck = false;
-    patches = [ ./hydra/no-restrict-eval.diff ];
+    patches = [
+      ./hydra/logo-vertical-align.diff
+      ./hydra/no-restrict-eval.diff
+    ];
     meta = super.meta // {
       hydraPlatforms = [ "x86_64-linux" ];
     };

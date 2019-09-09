@@ -11,7 +11,7 @@
   services.hydra = {
     enable = true;
     hydraURL = "https://${config.services.nginx.virtualHosts.hydra.serverName}";
-    logo = ./logo.png;
+    logo = ./logo.svg;
     notificationSender = "hydra@holo.host";
     useSubstitutes = true;
   };

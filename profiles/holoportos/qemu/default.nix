@@ -23,4 +23,9 @@ in
   '';
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
+
+  virtualisation = {
+    graphics = false;
+    memorySize = 2048;
+  };
 }

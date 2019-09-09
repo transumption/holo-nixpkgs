@@ -20,7 +20,7 @@ let
     inputs.holo-nixpkgs = {
       emailresponsible = false;
       type = "git";
-      value = "https://github.com/Holo-Host/holo-nixpkgs ${ref}";
+      value = "https://github.com/Holo-Host/holo-nixpkgs.git ${ref}";
     };
     schedulingshares = 60;
   };

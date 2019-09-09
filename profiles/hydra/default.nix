@@ -18,7 +18,10 @@
     StrictHostKeyChecking accept-new
   '';
 
+  # NB! Anyone in this list is in a position to poison binary cache. Give away
+  # root or trusted user access to Hydra *very* carefully.
   users.users.root.openssh.authorizedKeys.keys = [
+    # Yegor Timoshenko
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHLGgzH3ROvo65cnvkXmuz7Qc9bPvU+L2SrafQh0bMrK"
   ];
 }

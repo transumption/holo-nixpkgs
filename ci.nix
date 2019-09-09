@@ -1,43 +1,30 @@
 { pkgs ? import ./. {} }:
 
 with pkgs;
+with lib;
 
 let
-  release = import ./release.nix;
+  constitute = sets: concatMap (collect isDerivation) sets;
+
   overlay = import ./overlays/holo-nixpkgs;
 
-  releasePkgs = release { inherit pkgs; };
-
-  overlayPkgs =
-    recurseIntoAttrs (lib.getAttrs (lib.attrNames (overlay {} {})) pkgs);
-
-  constitute = sets: lib.concatMap (lib.collect lib.isDerivation) sets;
-
-  override = static: final: previous: static { pkgs = final; };
+  overlayPackages =
+    recurseIntoAttrs (getAttrs (attrNames (overlay {} {})) pkgs);
 in
 
 with import "${pkgs.path}/pkgs/top-level/release-lib.nix" {
-  nixpkgsArgs = {
-    config.allowCross = false;
-    overlays = [ (override release) overlay ];
-  };
+  nixpkgsArgs.overlays = [ overlay ];
   supportedSystems = [ "aarch64-linux" "x86_64-linux" ];
 };
 
 let
-  self = {
-    holo-nixpkgs = releaseTools.channel {
-      name = "holo-nixpkgs";
-      src = gitignoreSource ./.;
-      constituents = constitute [
-        self.holoportos
-        self.overlay
-        self.tests
-      ];
-    };
-
-    overlay = mapTestOn (packagePlatforms overlayPkgs);
-  } // mapTestOn (packagePlatforms releasePkgs);
+  self = mapTestOn (packagePlatforms overlayPackages);
 in
 
-self
+self // {
+  holo-nixpkgs = releaseTools.channel {
+    name = "holo-nixpkgs";
+    src = gitignoreSource ./.;
+    constituents = constitute self;
+  };
+}

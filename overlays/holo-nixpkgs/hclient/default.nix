@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ nodejs ];
 
   preConfigure = ''
-    cp -Lr ${npmToNix { inherit src; }} node_modules
+    cp -r ${npmToNix { inherit src; }} node_modules
     chmod -R +w node_modules
     patchShebangs node_modules
   '';

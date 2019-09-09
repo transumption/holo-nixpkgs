@@ -39,8 +39,8 @@ let
   npm-to-nix = fetchFromGitHub {
     owner = "transumption-unstable";
     repo = "npm-to-nix";
-    rev = "662fa58f63428d23bfbcf9c0348f18fc895a3b5a";
-    sha256 = "1mqz39fz1pc4xr18f1lzwvx4csw8n1kvbs4didkfdyzd43qnshaq";
+    rev = "6d2cbbc9d58566513019ae176bab7c2aeb68efae";
+    sha256 = "1wm9f2j8zckqbp1w7rqnbvr8wh6n072vyyzk69sa6756y24sni9a";
   };
 in
 

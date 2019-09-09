@@ -168,6 +168,10 @@ in
     stdenv = stdenvNoCC;
   };
 
+  holoportos = recurseIntoAttrs {
+    profile = tryDefault <nixos-config> ../../profiles/holoportos;
+  };
+
   holoportos-install = callPackage ./holoportos-install {};
 
   holoportos-led-daemon = callPackage ./holoportos-led-daemon {};

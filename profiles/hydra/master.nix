@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   networking.firewall.allowedTCPPorts = [ 80 443 ];
@@ -24,7 +24,10 @@
     virtualHosts.hydra = {
       enableACME = true;
       forceSSL = true;
-      locations."/".proxyPass = "http://localhost:${toString config.services.hydra.port}";
+      locations = {
+        "/".proxyPass = "http://localhost:${toString config.services.hydra.port}";
+        "/favicon.ico".root = pkgs.singletonDir "${./favicon.ico}";
+      };
     };
   };
 }

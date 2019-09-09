@@ -105,6 +105,15 @@ in
       meta.platforms = [ system ];
     };
 
+  singletonDir = path:
+    let
+      drv = lib.toDerivation path;
+    in
+    runCommand "singleton" {} ''
+      mkdir $out
+      ln -s ${path} $out/${drv.name}
+    '';
+
   writeJSON = config: writeText "config.json" (builtins.toJSON config);
 
   writeTOML = config: runCommand "config.toml" {} ''

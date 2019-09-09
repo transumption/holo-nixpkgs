@@ -168,7 +168,10 @@ in
 
   hydra = previous.hydra.overrideAttrs (super: {
     doCheck = false;
-    patches = [ ./hydra/no-restrict-eval.diff ];
+    patches = [
+      ./hydra/logo-vertical-align.diff
+      ./hydra/no-restrict-eval.diff
+    ];
     meta = super.meta // {
       hydraPlatforms = [ "x86_64-linux" ];
     };

@@ -58,13 +58,8 @@ in
     inherit (rust.packages.nightly) rustPlatform;
   });
 
-  buildHoloPortOS = hardware: meta:
-    let
-      image = buildImage [ holoportos.profile hardware ];
-    in
-    image.overrideAttrs (super: {
-      meta = recursiveUpdate (super.meta or {}) meta;
-    });
+  buildHoloPortOS = hardware:
+    buildImage [ holoportos.profile hardware ];
 
   buildImage = imports:
     let
@@ -149,11 +144,11 @@ in
   holoportos = recurseIntoAttrs {
     profile = tryDefault <nixos-config> ../../profiles/holoportos;
 
-    qemu = buildHoloPortOS ../../profiles/hardware/qemu {
+    qemu = (buildHoloPortOS ../../profiles/hardware/qemu) // {
       meta.platforms = [ "aarch64-linux" "x86_64-linux" ];
     };
 
-    virtualbox = buildHoloPortOS ../../profiles/hardware/virtualbox {
+    virtualbox = (buildHoloPortOS ../../profiles/hardware/virtualbox) // {
       meta.platforms = [ "x86_64-linux" ];
     };
   };

@@ -17,8 +17,6 @@ in
     source <( ${pkgs.xterm}/bin/resize )
   '';
 
-  nixpkgs.hostPlatform.system = "x86_64-linux";
-
   virtualisation = {
     diskSize = 2048;
     graphics = false;

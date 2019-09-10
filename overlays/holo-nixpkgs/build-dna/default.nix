@@ -82,7 +82,7 @@ rustPlatform.buildRustPackage ({
   checkPhase = ''
     runHook preCheck
   '' + optionalString (pathExists (stripContext testDir)) ''
-    cp -Lr ${npmToNix { src = testDir; }} test/node_modules
+    cp -r ${npmToNix { src = testDir; }} test/node_modules
     hc test
   '' + ''
     runHook postCheck

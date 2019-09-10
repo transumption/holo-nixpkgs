@@ -8,7 +8,7 @@ with pkgs;
     virtualbox = buildImage ./profiles/holoportos/virtualbox;
   };
 
-  holoportos-installers = recurseIntoAttrs {
+  holoportos-installers = {
     holoport = buildImage ./profiles/holoportos-installers/holoport;
     holoport-nano = buildImage ./profiles/holoportos-installers/holoport-nano;
     holoport-plus = buildImage ./profiles/holoportos-installers/holoport-plus;

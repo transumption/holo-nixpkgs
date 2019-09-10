@@ -31,7 +31,6 @@ let
       src = gitignoreSource ./.;
       constituents = constitute [
         self.holoportos
-        self.holoportos-installers
         self.overlay
         self.tests
       ];

@@ -18,6 +18,7 @@ makeTest {
     $machine->waitForUnit("holochain-conductor.service");
     $machine->waitForUnit("holo-envoy.service");
     $machine->waitForOpenPort("1111");
+    $machine->waitForOpenPort("48080");
     $machine->shutdown;
   '';
 

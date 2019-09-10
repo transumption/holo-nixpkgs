@@ -25,6 +25,6 @@ self // {
   holo-nixpkgs = releaseTools.channel {
     name = "holo-nixpkgs";
     src = gitignoreSource ./.;
-    constituents = constitute self;
+    constituents = constitute (attrValues self);
   };
 }

@@ -12,15 +12,12 @@ makeTest {
 
   testScript = ''
     startAll;
-    print($machine->execute("pwd"));
-    print($machine->succeed("free -m"));
-    print($machine->succeed("holo-keygen /var/lib/holochain-conductor/holo"));
-    print($machine->execute("ls -la /var/lib/holochain-conductor/holo"));
-    print($machine->execute("cat /var/lib/holochain-conductor/holo"));
-    print($machine->systemctl("restart holochain-conductor.service"));
-    print($machine->systemctl("restart holo-envoy.service"));
+    $machine->succeed("holo-keygen /var/lib/holochain-conductor/holo");
+    $machine->systemctl("restart holochain-conductor.service");
+    $machine->systemctl("start holo-envoy.service");
     $machine->waitForUnit("holochain-conductor.service");
     $machine->waitForUnit("holo-envoy.service");
+    $machine->waitForOpenPort("1111");
     $machine->shutdown;
   '';
 

@@ -44,7 +44,7 @@ in
       agents = [{
         id = "host-agent";
         name = "Host Agent";
-        keystore_file = "${conductorHome}/holoportos-key";
+        keystore_file = "${conductorHome}/holo";
         public_address = "@public_key@";
       }];
       bridges = [];

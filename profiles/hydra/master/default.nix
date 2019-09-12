@@ -21,7 +21,7 @@ in
       system = "x86_64-linux";
     }
     {
-      hostName = "hydra-aarch64-linux.holo.host";
+      hostName = "hydra-minion-1.holo.host";
       maxJobs = 96;
       sshKey = "/var/lib/hydra/queue-runner/.ssh/id_ed25519";
       sshUser = "root";

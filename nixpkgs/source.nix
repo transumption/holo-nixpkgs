@@ -1,4 +1,22 @@
-fetchTarball {
-  url = "https://github.com/NixOS/nixpkgs/archive/1412af4b2cfae71d447164097d960d426e9752c0.tar.gz";
-  sha256 = "1m2d0cwckblnsv8c4x69h3c6672sxiw4d41jvaiqh76q945dnzpw";
+let
+  nixpkgs = import ./source-original.nix;
+
+  inherit (import nixpkgs {}) stdenvNoCC fetchpatch;
+in
+
+stdenvNoCC.mkDerivation {
+  name = "nixpkgs";
+  src = nixpkgs;
+
+  patches = [
+    ./ext4-no-resize2fs.diff
+    ./rust-aarch64-musl-cross.diff
+    ./rust-home.diff
+  ];
+
+  phases = [ "unpackPhase" "patchPhase" "installPhase" ];
+
+  installPhase = ''
+    mv $PWD $out
+  '';
 }

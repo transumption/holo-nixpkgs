@@ -139,16 +139,18 @@ in
     stdenv = stdenvNoCC;
   };
 
-  holo-nixpkgs-tests = recurseIntoAttrs (import ../../tests { inherit pkgs; });
+  holo-nixpkgs-tests = recurseIntoAttrs (import ../../nixpkgs/nixos/tests {
+    inherit pkgs;
+  });
 
   holoportos = recurseIntoAttrs {
-    profile = tryDefault <nixos-config> ../../profiles/holoportos;
+    profile = tryDefault <nixos-config> ../../nixpkgs/nixos/profiles/holoportos;
 
-    qemu = (buildHoloPortOS ../../profiles/hardware/qemu) // {
+    qemu = (buildHoloPortOS ../../nixpkgs/nixos/profiles/hardware/qemu) // {
       meta.platforms = [ "aarch64-linux" "x86_64-linux" ];
     };
 
-    virtualbox = (buildHoloPortOS ../../profiles/hardware/virtualbox) // {
+    virtualbox = (buildHoloPortOS ../../nixpkgs/nixos/profiles/hardware/virtualbox) // {
       meta.platforms = [ "x86_64-linux" ];
     };
   };

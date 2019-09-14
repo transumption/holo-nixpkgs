@@ -17,6 +17,6 @@ import (stdenvNoCC.mkDerivation {
   phases = [ "unpackPhase" "patchPhase" "installPhase" ];
 
   installPhase = ''
-    mv $(pwd) $out
+    mv $PWD $out
   '';
 })

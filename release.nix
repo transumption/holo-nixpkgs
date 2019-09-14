@@ -14,7 +14,11 @@ in
 
 with import "${pkgs.path}/pkgs/top-level/release-lib.nix" {
   nixpkgsArgs.overlays = [ overlay ];
-  supportedSystems = [ "aarch64-linux" "x86_64-linux" ];
+  supportedSystems = [
+    "aarch64-linux"
+    "x86_64-darwin"
+    "x86_64-linux"
+  ];
 };
 
 let

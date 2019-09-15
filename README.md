@@ -9,7 +9,29 @@ consistent, verifiable, and auditable.
 
 ## Setup
 
-### HoloPort Nano
+### Binary cache
+
+On NixOS, add the following to `/etc/nixos/configuration.nix` and rebuild:
+
+```nix
+{
+  nix.binaryCaches = [
+    "https://cache.holo.host"
+  ];
+
+  nix.binaryCachePublicKeys = [
+    "cache.holo.host-1:lNXIXtJgS9Iuw4Cu6X0HINLu9sTfcjEntnrgwMQIMcE="
+  ];
+}
+```
+
+Otherwise, add `https://cache.holo.host` to `substituters` and
+`cache.holo.host-1:lNXIXtJgS9Iuw4Cu6X0HINLu9sTfcjEntnrgwMQIMcE=` to
+`trusted-public-keys` in `/etc/nix/nix.conf`.
+
+### HoloPortOS
+
+#### HoloPort Nano
 
 Checkout this repo, switch to `master` branch, install [Nix][nix] and run
 `nix-build release.nix -A holoportos-installers.holoport-nano`.
@@ -27,7 +49,7 @@ If LED starts to blink with red, there was an error during installation.
 Connect over HDMI to see what's going on. To retry, reboot or type
 `holoportos-install` in console.
 
-### VirtualBox
+#### VirtualBox
 
 Download the latest HoloPortOS VirtualBox OVA:
 https://hydra.holo.host/job/holo-nixpkgs/master/holoportos.targets.virtualbox.x86_64-linux/latest/download-by-type/file/ova

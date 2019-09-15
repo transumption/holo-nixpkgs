@@ -12,5 +12,6 @@ in
 
 {
   _01-holoportos-boot = callPackage ./01-holoportos-boot {};
-  _02-holo-init = callPackage ./02-holo-init {};
+
+  holo-envoy = callPackage ./holo-envoy {};
 }

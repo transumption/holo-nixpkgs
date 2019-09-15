@@ -1,7 +1,8 @@
 { lib, makeTest }:
 
 makeTest {
-  name = "holo-init";
+  name = "holo-envoy";
+
   machine = {
     imports = [ (import ../../profiles/holoportos/demo) ];
     virtualisation.memorySize = 2024;

@@ -1,4 +1,8 @@
 {
+  disabledModules = [
+    "system/boot/loader/generic-extlinux-compatible"
+  ];
+
   imports = [
     ./boot/generic-extlinux-compatible.nix
     ./services/holo-envoy.nix

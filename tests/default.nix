@@ -11,7 +11,5 @@ let
 in
 
 {
-  _01-holoportos-boot = callPackage ./01-holoportos-boot {};
-
   holo-envoy = callPackage ./holo-envoy {};
 }

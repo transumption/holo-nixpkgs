@@ -5,7 +5,7 @@ makeTest {
 
   machine = {
     imports = [ (import ../../profiles/holoportos/demo) ];
-    virtualisation.memorySize = 2024;
+    virtualisation.memorySize = 2048;
   };
 
   testScript = ''

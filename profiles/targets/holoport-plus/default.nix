@@ -1,7 +1,7 @@
 {
   imports = [
-    ../../../nixpkgs/nixos/hardware/holoport-plus
-    ../../../nixpkgs/nixos/holoportos
+    ../../hardware/holoport-plus
+    ../../holoportos
   ];
 
   system.holoportos.led-daemon.enable = true;

@@ -11,7 +11,7 @@ stdenvNoCC.mkDerivation {
 
   shellHook = ''
     holoportos-shell() {
-      $(nix-build -I nixos-config=${root}/nixpkgs/nixos/profiles/holoportos/$1 \
+      $(nix-build -I nixos-config=${root}/profiles/holoportos/$1 \
         --attr holoportos.qemu \
         --no-out-link)/bin/run-holoportos-vm
     }

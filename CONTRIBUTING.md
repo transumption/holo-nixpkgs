@@ -1,6 +1,20 @@
-## Review commit message style guide
+## Branch protection rules
 
-https://nixos.org/nixpkgs/manual/#submitting-changes-making-patches
+`develop` requires signed commits, passing CI and pull request with at least
+one review. Administrators may waive some of restrictions for individual pull
+requests.
+
+`staging` bears the same restrictions as `develop`, plus administrators must no
+longer waive any restrictions.
+
+`master` requires signed commits, passing CI and pull request with at least two
+reviews, both of which must be made against the most recent tip of the branch.
+If any, code owner reviews are mandatory. Change request reviews can't be
+dismissed. Administrators must not waive any restrictions.
+
+## Commit message style guide
+
+See: https://nixos.org/nixpkgs/manual/#submitting-changes-making-patches
 
 ## Iterate on overlay packages
 

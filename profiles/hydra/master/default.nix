@@ -65,6 +65,12 @@ in
       jobs = holo-nixpkgs:.*:holo-nixpkgs
       inputs = holo-nixpkgs
     </githubstatus>
+
+    <githubstatus>
+      context = Hydra
+      jobs = holo-envoy:.*:holo-envoy
+      inputs = holo-envoy
+    </githubstatus>
   '';
 
   services.nginx = {

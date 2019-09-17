@@ -1,7 +1,8 @@
 { stdenv, fetchFromGitHub, npmToNix, nodejs }:
 
 stdenv.mkDerivation rec {
-  name = "hclient";
+  name = "hclient-${version}";
+  version = "0.2.8";
 
   src = fetchFromGitHub {
     owner = "Holo-Host";
@@ -19,15 +20,10 @@ stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    node_modules/typescript/bin/tsc -d
+    npm run build
   '';
 
   installPhase = ''
-    mkdir $out
-    mv * $out
-  '';
-
-  fixupPhase = ''
-    patchShebangs $out
+    mv dist $out
   '';
 }

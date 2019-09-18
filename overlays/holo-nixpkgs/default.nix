@@ -123,6 +123,8 @@ in
 
   holofuel-app = callPackage ./holofuel-app {};
 
+  holofuel-demo-configure = callPackage ./holofuel-demo-configure {};
+
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {

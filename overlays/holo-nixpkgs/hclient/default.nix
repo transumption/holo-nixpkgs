@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, npmToNix, nodejs }:
+{ stdenv, fetchFromGitHub, nodejs, npmToNix, utillinux }:
 
 stdenv.mkDerivation rec {
   name = "hclient-${version}";
@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     sha256 = "1w1sljpblf9bj66wagscn7drjdzz9lby7d0y39ai91xq9mlg67xy";
   };
 
-  nativeBuildInputs = [ nodejs ];
+  nativeBuildInputs = [ nodejs utillinux ];
 
   preConfigure = ''
     cp -r ${npmToNix { inherit src; }} node_modules
@@ -20,7 +20,9 @@ stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    npm run build
+    #node_modules/typescript/bin/tsc -d
+    #npm run build
+    node_modules/parcel/bin/cli.js build ./src/index.ts --global hClient -o hClient.js
   '';
 
   installPhase = ''

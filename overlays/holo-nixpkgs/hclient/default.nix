@@ -20,9 +20,8 @@ stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    #node_modules/typescript/bin/tsc -d
-    #npm run build
-    node_modules/parcel/bin/cli.js build ./src/index.ts --global hClient -o hClient.js
+    #node_modules/parcel/bin/cli.js build ./src/index.ts --global hClient -o hClient.js
+    npm run build # builds hclient-0.2.8.browser.min.js
   '';
 
   installPhase = ''

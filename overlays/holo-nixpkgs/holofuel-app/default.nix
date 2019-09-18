@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    ln -fs ${hclient}/hClient.js js/
+    ln -fs ${hclient}/hclient-${hclient.version}.browser.min.js js/hClient.js
     node node_modules/webpack/bin/webpack.js
   '';
 

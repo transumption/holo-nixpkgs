@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# 
+# Configure the persistent HoloFuel demonstration
+# 
+
 # HOLOFUEL_APP_UI_PATH is an environment variable that contains the target UI directory
 
 EMAIL=example@example.com
@@ -20,6 +24,12 @@ if [ "$(whoami)" != "root" ]; then
   exit 1
 fi
 
+#  
+# 1) Derive Holo, Zerotier, etc. identity keypairs
+# 
+# TODO: Derive these from seed entropy in holo.json configuration, in early systemd services
+# 
+
 KEY=/var/lib/holochain-conductor/holoportos-key
 
 if ! PUBKEY=$( cat ${KEY}.pub ); then
@@ -31,16 +41,24 @@ if ! PUBKEY=$( cat ${KEY}.pub ); then
 fi
 echo "Host Agent ID:        ${PUBKEY}"
 
-# OK, we're root, and we've got an Agent ID key.  Lets wait 'til holochain-conductor is up
+# 
+# 2) Start Holochain Conductor
+# 
+# We're root, and we've got an Agent ID keys derived.  Lets wait 'til holochain-conductor is up.
+# 
 echo -n "Holochain Conductor:  "
 if ! systemctl is-active holochain-conductor.service; then
     echo "HoloFuel Demo configuration need holochain-conductor.service to be active."
     exit 1
 fi
 
-# But, we have to wait 'til Envoy connects.  The service runs, but we need to see "All connections
+# 
+# 3) Wait for Holo Envoy to connect to Holochain Conductor
+# 
+# We have to wait 'til Envoy connects.  The service runs, but we need to see "All connections
 # established!", indicating that it has begun communicating with the Holochain conductor (just since
 # the last boot)
+# 
 echo -n "Awaiting holo-envoy..."
 while ! journalctl -u holo-envoy.service -b | grep "All connections established!"; do
     sleep 5
@@ -48,8 +66,12 @@ while ! journalctl -u holo-envoy.service -b | grep "All connections established!
 done
 echo "Running"
 
-# Envoy is up and running.  Let's Get Ready to Rumble!
-
+# 
+# 4) Register as Holo Provider and Host
+# 
+# Envoy is up and running.  Let's Get Ready to Rumble!  Begin by registering for hApp Hosting, and
+# also as a Provider, so we can host HoloFuel.
+# 
 echo -n "Register as Provider and Host... "
 if holo provider register ${EMAIL} \
   && holo host   register ${EMAIL}; then
@@ -59,6 +81,12 @@ else
     exit 1
 fi
 
+# 
+# 5) Prepare to Provision HoloFuel by Making it Available in hApp Store
+# 
+# TODO: Install these from source derivations, instead of downloading them; requires HoloFuel to be
+# available as a Nix derivation, which requires it to be a Public repo.
+# 
 echo -n "The 'holofuel' hApp... "
 if ! holo happ create holofuel ${HOLOFUEL_DNA_FILE} ${HOLOFUEL_DNA_HASH}; then
     echo "Failed to create holoful hApp"
@@ -71,6 +99,9 @@ holo happ list
 HOLOFUEL_HAPPSTORE_HASH=QmT9sisxtTXKGinCjcxp5nd1JhnbZDPru4sYJYXNSpM8U4
 HOLOFUEL_HAPPPROVI_HASH=QmYF8vySWg1UEmDP2zLHBbCg5VZgMe1KcmDAgTiFNmmspJ
 
+# 
+# 6) Provision HoloFuel
+# 
 echo -n "Provider registering..."
 if ! holo provider register-app ${HOLOFUEL_HAPPSTORE_HASH} ${HOLOFUEL_DEMO_SITE}; then
     echo "Failed to provision holoful hApp"
@@ -78,12 +109,19 @@ if ! holo provider register-app ${HOLOFUEL_HAPPSTORE_HASH} ${HOLOFUEL_DEMO_SITE}
 fi
 echo "Successfully provisioning 'holofuel' hApp"
 
+# 
+# 7) Enable Hosting of HoloFuel
+# 
 echo -n "Enabling Hosting...    "
 if ! holo host enable ${HOLOFUEL_HAPPPROVI_HASH}; then
     echo "Failed to enable Hosting of the holoful hApp"
     exit 1
 fi
 echo "Successful"
+
+# 
+# 8) Install the HoloFuel hApp in Preparation for Hosting it
+# 
 
 # TODO: install holo-envoy as a non-root user, w/ home dir...
 HOLOENVOY_HOME=/var/lib/holo-envoy
@@ -102,6 +140,9 @@ fi
 echo "Successfully installed 'holofuel'; Available DNAs: "
 holo admin dna
 
+# 
+# 8a) Also Install HoloFuel's ServiceLogger
+# 
 echo -n "Create ServiceLogger..."
 if ! holo admin init QmT9sisxtTXKGinCjcxp5nd1JhnbZDPru4sYJYXNSpM8U4 --service-logger servicelogger; then
     echo "Failed to init holoful hApp "
@@ -113,8 +154,13 @@ holo admin instance
 echo "Done; Available interfaces: "
 holo admin interface
 
-# Finally, link the HoloFuel UI (provided by an environment variable) from the envoy UI dir,
-# at the hApp provider's hash
+# 
+# 9) Install the HoloFuel UI
+#
+# 
+# Finally, link the HoloFuel UI (provided by an environment variable) from the envoy UI dir, at the
+# hApp provider's hash
+# 
 ln -fs ${HOLOFUEL_APP_UI_PATH} ${HOLOENVOY_UIS_DIR}/${HOLOFUEL_HAPPPROVI_HASH}
 
 echo "HoloFuel UI activated: http://${HOLOFUEL_HAPPPROVI_HASH}.${PUBKEY}.holohost.net"

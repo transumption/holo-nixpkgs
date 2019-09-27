@@ -4,9 +4,10 @@
 # Configure the persistent HoloFuel demonstration
 # 
 
+HOLO_CONF_DIR=/var/lib
+
 # HOLOFUEL_APP_UI_PATH is an environment variable that contains the target UI directory
 
-EMAIL=example@example.com
 HOLOFUEL_DNA_FILE=https://holo-host.github.io/holofuel/releases/download/0.9.7-alpha1/holofuel.dna.json 
 HOLOFUEL_DNA_HASH=QmcqAKFLP6WrjWghWVzrgnoa72EWu211C7Fu2F1FwRMU1k
 
@@ -22,6 +23,45 @@ PATH=@path@:$PATH
 if [ "$(whoami)" != "root" ]; then
   echo "HoloFuel Demo configuration requires root."
   exit 1
+fi
+
+# 
+# 0) Create a Deterministic Holo Configuration
+# 
+# The Holo Admin password will be chosen at runtime, and displayed to the person running this
+# script.  It will be unique to this demo instance.
+#
+# TODO: generate password from /etc/machineid, so it is deterministic per-install
+#
+
+password-from-machine-id() {
+    # Take the hex /etc/machine-id, convert to base-6 dice rolls on single lines, generate a
+    # password like "some-words", break output into single-line words at whitespace, and collect it
+    # from the last word output.
+    echo "ibase=16; obase=6; $( tr '[a-z]' '[A-Z]' < /etc/machine-id )" | bc \
+	| sed 's/./&\n/g' \
+	| diceware --num 2 --no-caps -d - -r realdice \
+	| tr -s '[[:space:]]' '\n' \
+        | tail -1
+}
+
+EMAIL=perry.kundert+holofuel-demo@holo.host
+PASSWORD=$( password-from-machine-id )
+echo "Holo Admin Password:  ${PASSWORD} (derived from /etc/machine-id: $( cat /etc/machine-id ))"
+echo
+
+# If no configuration exists, create a new one w/ seed entropy using /etc/machine-id
+# and the deterministic password
+echo "Holo Configuration:   ${HOLO_CONF_DIR}/holo.json"
+if ! cat ${HOLO_CONF_DIR}/holo.json 2>/dev/null \
+   && ! holo-configure \
+     --name	"HoloFuel Demo" \
+     --email	"${EMAIL}" \
+     --password	"${PASSWORD}" \
+     --from	"/etc/machine-id" \
+	| tee ${HOLO_CONF_DIR}/holo.json; then
+    echo "Failed to locate/generate Holo configuration"
+    exit 1
 fi
 
 #  

@@ -33,6 +33,7 @@ in
   imports = [ ../. ];
 
   environment.systemPackages = [
+    pkgs.holo-configure
     pkgs.holo-init
     pkgs.holo-keygen
     pkgs.holofuel-demo-configure

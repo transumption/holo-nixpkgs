@@ -52,8 +52,8 @@ echo
 
 # If no configuration exists, generate a new one w/ seed entropy using /etc/machine-id
 # and the deterministic password
-echo "Holo Configuration:   ${HOLO_CONF_DIR}/holo.json"
-if ! cat ${HOLO_CONF_DIR}/holo.json 2>/dev/null \
+echo "Holo Configuration:   ${HOLO_CONF_DIR}/holo-config.json"
+if ! cat ${HOLO_CONF_DIR}/holo-config.json 2>/dev/null \
    && ! holo-config-generate \
      --email "${EMAIL}" \
      --password "${PASSWORD}" \

@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, nodejs, npmToNix, utillinux, nodejs-12_x }:
+{ stdenv, fetchFromGitHub, nodejs-12_x, npmToNix, utillinux }:
 
 stdenv.mkDerivation rec {
   name = "hclient-${version}";
@@ -20,8 +20,7 @@ stdenv.mkDerivation rec {
   '';
 
   buildPhase = ''
-    #node_modules/parcel/bin/cli.js build ./src/index.ts --global hClient -o hClient.js
-    npm run build # builds hclient-0.2.8.browser.min.js
+    npm run build # builds hclient-<version>.browser.min.js
   '';
 
   installPhase = ''

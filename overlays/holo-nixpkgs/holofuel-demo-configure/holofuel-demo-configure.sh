@@ -18,11 +18,9 @@ HOLOCHAIN_DNA_DIR=/var/lib/holo-envoy/.holochain/holo/dnas
 set -euo pipefail
 shopt -s extglob nullglob
 
-PATH=@path@:$PATH
-
 if [ "$(whoami)" != "root" ]; then
-  echo "HoloFuel Demo configuration requires root."
-  exit 1
+    echo "HoloFuel Demo configuration requires root."
+    exit 1
 fi
 
 # 
@@ -72,11 +70,11 @@ fi
 KEY=/var/lib/holochain-conductor/holoportos-key
 
 if ! PUBKEY=$( cat ${KEY}.pub ); then
-  echo "HoloFuel Demo runng holo-init (eg. generate agent key) first."
-  systemctl stop holochain-conductor.service # stop, for memory and b/c it requires key to run
-  holo-init -v ${KEY} || ( echo "HoloFuel Demo failed to initialize Agent key"; exit 1 )
-  systemctl start holochain-conductor.service
-  PUBKEY=$( cat ${KEY}.pub )
+    echo "HoloFuel Demo runng holo-init (eg. generate agent key) first."
+    systemctl stop holochain-conductor.service # stop, for memory and b/c it requires key to run
+    holo-init -v ${KEY} || ( echo "HoloFuel Demo failed to initialize Agent key"; exit 1 )
+    systemctl start holochain-conductor.service
+    PUBKEY=$( cat ${KEY}.pub )
 fi
 echo "Host Agent ID:        ${PUBKEY}"
 

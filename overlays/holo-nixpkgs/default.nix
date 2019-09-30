@@ -131,9 +131,8 @@ in
   # 
 
   # - Base Holo Configuration and Initialization
-  holo-configure = callPackage ./holo-configure {};
+  holo-config = callPackage ./holo-config {};
 
-  # TODO: Use the holo-configure generated seed to derive all keypairs
   holo-keygen = callPackage ./holo-keygen {
     stdenv = stdenvNoCC;
   };

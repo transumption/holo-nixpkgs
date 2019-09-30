@@ -50,16 +50,15 @@ PASSWORD=$( password-from-machine-id )
 echo "Holo Admin Password:  ${PASSWORD} (derived from /etc/machine-id: $( cat /etc/machine-id ))"
 echo
 
-# If no configuration exists, create a new one w/ seed entropy using /etc/machine-id
+# If no configuration exists, generate a new one w/ seed entropy using /etc/machine-id
 # and the deterministic password
 echo "Holo Configuration:   ${HOLO_CONF_DIR}/holo.json"
 if ! cat ${HOLO_CONF_DIR}/holo.json 2>/dev/null \
-   && ! holo-configure \
-     --name	"HoloFuel Demo" \
-     --email	"${EMAIL}" \
-     --password	"${PASSWORD}" \
-     --from	"/etc/machine-id" \
-	| tee ${HOLO_CONF_DIR}/holo.json; then
+   && ! holo-config-generate \
+     --email "${EMAIL}" \
+     --password "${PASSWORD}" \
+     --seed-from "/etc/machine-id" \
+	| tee ${HOLO_CONF_DIR}/holo-config.json; then
     echo "Failed to locate/generate Holo configuration"
     exit 1
 fi

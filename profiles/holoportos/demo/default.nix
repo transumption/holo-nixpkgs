@@ -32,7 +32,12 @@ in
 {
   imports = [ ../. ];
 
-  environment.systemPackages = [ pkgs.holo-init pkgs.holo-keygen ];
+  environment.systemPackages = [
+    pkgs.holo-config
+    pkgs.holo-init
+    pkgs.holo-keygen
+    pkgs.holofuel-demo-configure
+  ];
 
   networking.firewall.allowedTCPPorts = [ 1111 2222 3333 8800 8880 8888 48080 ];
 

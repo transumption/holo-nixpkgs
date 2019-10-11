@@ -15,8 +15,6 @@ in
     {
       hostName = "localhost";
       maxJobs = config.nix.maxJobs;
-      sshKey = "/var/lib/hydra/queue-runner/.ssh/id_ed25519";
-      sshUser = "root";
       supportedFeatures = [
         "benchmark"
         "big-parallel"

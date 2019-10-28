@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   wasabiBucket = "cache.holo.host";
@@ -84,6 +84,21 @@ in
       forceSSL = true;
       globalRedirect = "hydra.holo.host";
       serverName = "holoportbuild.holo.host";
+    };
+
+    virtualHosts.quickstart = {
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.holo-config-generate-web;
+      serverName = "quickstart.holo.host";
+      extraConfig = ''
+        types {
+          application/javascript js;
+          application/wasm wasm;
+          text/css css;
+          text/html html;
+        }
+      '';
     };
   };
 

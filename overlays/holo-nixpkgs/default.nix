@@ -18,6 +18,13 @@ let
     sha256 = "0jrh5ghisaqdd0vldbywags20m2cxpkbbk5jjjmwaw0gr8nhsafv";
   };
 
+  holo-config = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "holo-config";
+    rev = "a7fae5926f2c8b6bb26111863873dc3ca55b2b6c";
+    sha256 = "1lcvnb93ayb593xgyd8ylwaldmh1s2vp28g7ydgmh598y81ljp57";
+  };
+
   holo-envoy = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "envoy";
@@ -50,6 +57,12 @@ in
 {
   inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
   inherit (callPackage gitignore {}) gitignoreSource;
+
+  inherit (callPackage holo-config {})
+    holo-config-derive
+    holo-config-generate-cli
+    holo-config-generate-web;
+
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
 

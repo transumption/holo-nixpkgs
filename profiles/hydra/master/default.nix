@@ -100,6 +100,20 @@ in
         }
       '';
     };
+
+    virtualHosts.hpstatus = {
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.hp-status-host-web;
+      serverName = "hpstatus.holo.host";
+      extraConfig = ''
+        types {
+          application/javascript js;
+          text/css css;
+          text/html html;
+        }
+      '';
+    };
   };
 
   systemd.tmpfiles.rules = [

@@ -25,6 +25,13 @@ let
     sha256 = "1lcvnb93ayb593xgyd8ylwaldmh1s2vp28g7ydgmh598y81ljp57";
   };
 
+  hpstatus = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "hpstatus";
+    rev = "a7fae5926f2c8b6bb26111863873dc3ca55b2b6c";
+    sha256 = "1lcvnb93ayb593xgyd8ylwaldmh1s2vp28g7ydgmh598y81ljp57";
+  };
+
   holo-envoy = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "envoy";
@@ -62,6 +69,9 @@ in
     holo-config-derive
     holo-config-generate-cli
     holo-config-generate-web;
+
+  inherit (callPackage hpstatus {}) 
+    hp-status-host-web;
 
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;

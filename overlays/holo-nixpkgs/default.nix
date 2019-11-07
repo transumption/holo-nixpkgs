@@ -173,6 +173,11 @@ in
     };
   };
 
+  hpos-admin = callPackage ./hpos-admin {
+    stdenv = stdenvNoCC;
+    python3 = python3.withPackages (ps: [ ps.flask ps.gevent ]);
+  };
+
   holoportos-install = callPackage ./holoportos-install {};
 
   holoportos-led-daemon = callPackage ./holoportos-led-daemon {};

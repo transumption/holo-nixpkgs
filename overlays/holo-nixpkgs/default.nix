@@ -70,9 +70,7 @@ in
     holo-config-generate-cli
     holo-config-generate-web;
 
-  inherit (callPackage hpstatus {}) 
-    hp-status-host-web;
-
+  inherit hpstatus;
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
 

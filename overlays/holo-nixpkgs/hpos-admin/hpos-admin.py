@@ -35,6 +35,7 @@ def put_config():
         with open(get_state_path() + '.tmp', 'w') as f:
             f.write(json.dumps(state, indent=2))
             os.rename(f.name, get_state_path())
+        subprocess.Popen(['sudo', 'nixos-rebuild', 'switch'])
         return '', 200
     else:
         return '', 409

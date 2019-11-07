@@ -104,7 +104,7 @@ in
     virtualHosts.hpstatus = {
       enableACME = true;
       forceSSL = true;
-      root = pkgs.hp-status-host-web;
+      root = pkgs.hpstatus;
       serverName = "hpstatus.holo.host";
     };
   };

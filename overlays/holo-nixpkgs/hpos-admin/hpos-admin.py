@@ -1,4 +1,6 @@
+from base64 import b64encode
 from flask import Flask, jsonify, request
+from hashlib import sha512
 import json
 import os
 import subprocess
@@ -17,15 +19,22 @@ def get_config():
     return jsonify(get_state_data()['v1']['config'])
 
 
-# TODO: handle x-hpos-admin-cas header
+def cas_hash(data):
+    dump = json.dumps(data, separators=(',', ':'), sort_keys=True)
+    return b64encode(sha512(dump.encode()).digest())
+
+
 @app.route('/v1/config', methods=['PUT'])
 def put_config():
     state = get_state_data()
-    state['v1']['config'] = request.get_json(force=True)
-    with open(STATE_PATH + '.tmp', 'w') as f:
-        f.write(json.dumps(state, indent=2))
-        os.rename(f.name, STATE_PATH)
-    return ("", 200)
+    if request.headers['x-hpos-admin-cas'] == cas_hash(state['v1']['config']):
+        state['v1']['config'] = request.get_json(force=True)
+        with open(STATE_PATH + '.tmp', 'w') as f:
+            f.write(json.dumps(state, indent=2))
+            os.rename(f.name, STATE_PATH)
+        return '', 200
+    else:
+        return '', 409
 
 
 def zerotier_info():
@@ -44,7 +53,7 @@ def status():
 @app.route('/v1/upgrade', methods=['POST'])
 def upgrade():
     subprocess.Popen(['sudo', 'nixos-rebuild', '--upgrade', 'switch'])
-    return ("", 200)
+    return '', 200
 
 
 if __name__ == '__main__':

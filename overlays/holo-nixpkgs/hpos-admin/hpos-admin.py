@@ -5,12 +5,15 @@ import json
 import os
 import subprocess
 
-STATE_PATH = 'hpos-state.json'
 app = Flask(__name__)
 
 
+def get_state_path():
+    return os.getenv('HPOS_STATE_PATH')
+
+
 def get_state_data():
-    with open(STATE_PATH, 'r') as f:
+    with open(get_state_path(), 'r') as f:
         return json.loads(f.read())
 
 
@@ -29,9 +32,9 @@ def put_config():
     state = get_state_data()
     if request.headers['x-hpos-admin-cas'] == cas_hash(state['v1']['config']):
         state['v1']['config'] = request.get_json(force=True)
-        with open(STATE_PATH + '.tmp', 'w') as f:
+        with open(get_state_path() + '.tmp', 'w') as f:
             f.write(json.dumps(state, indent=2))
-            os.rename(f.name, STATE_PATH)
+            os.rename(f.name, get_state_path())
         return '', 200
     else:
         return '', 409

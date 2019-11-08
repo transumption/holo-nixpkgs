@@ -21,8 +21,8 @@ let
   holo-config = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "holo-config";
-    rev = "a7fae5926f2c8b6bb26111863873dc3ca55b2b6c";
-    sha256 = "1lcvnb93ayb593xgyd8ylwaldmh1s2vp28g7ydgmh598y81ljp57";
+    rev = "bdb23a5f748ca77875e26103a92dbe95c27ee2c8";
+    sha256 = "0if7j38pxb1vll9g326ra27d0fnkflclbmg3spjdmyyhb779xgiz";
   };
 
   holo-envoy = fetchFromGitHub {
@@ -59,9 +59,9 @@ in
   inherit (callPackage gitignore {}) gitignoreSource;
 
   inherit (callPackage holo-config {})
-    holo-config-derive
-    holo-config-generate-cli
-    holo-config-generate-web;
+    hpos-state-derive-keystore
+    hpos-state-gen-cli
+    hpos-state-gen-web;
 
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
@@ -129,6 +129,7 @@ in
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 
+  inherit (callPackage holo-admin {}) holo-admin;
   inherit (callPackage holo-envoy {}) holo-envoy;
   inherit (holochainRust) holochain-cli holochain-conductor;
 

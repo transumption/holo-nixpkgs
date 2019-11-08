@@ -20,7 +20,7 @@ let
 
   holo-config = fetchFromGitHub {
     owner = "Holo-Host";
-    repo = "holo-config";
+    repo = "hpos-state";
     rev = "bdb23a5f748ca77875e26103a92dbe95c27ee2c8";
     sha256 = "0if7j38pxb1vll9g326ra27d0fnkflclbmg3spjdmyyhb779xgiz";
   };

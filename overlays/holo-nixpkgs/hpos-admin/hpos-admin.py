@@ -4,15 +4,14 @@ from hashlib import sha512
 import json
 import logging
 import os
-from datetime import datetime
 
-from gevent import Greenlet, sleep, subprocess
+from gevent import Greenlet, subprocess
 from gevent.event import Event
-from gevent.subprocess import Popen, PIPE
+from gevent.subprocess import Popen
 
-log = logging.getLogger(__name__)
 
 app = Flask(__name__)
+log = logging.getLogger(__name__)
 
 
 def get_state_path():
@@ -20,7 +19,7 @@ def get_state_path():
 
 
 def get_state_data():
-    with open(get_state_path(), 'r', encoding='utf-8') as f:
+    with open(get_state_path(), 'r') as f:
         return json.loads(f.read())
 
 
@@ -34,15 +33,12 @@ def get_config():
     config = get_state_data()['v1']['config']
     return jsonify(config), 200, {'x-hpos-admin-cas': cas_hash(config)}
 
-# APIs that require a nixos-rebuild after mutating HPOS state may trigger it using rebuild.go().
-# This is a gevent-compatible Greenlet scheduler, that ensures only one invocation runs at a time.
-
 
 class Runner(Greenlet):
-    """Performs a command (which is/returns a list) on demand from multiple parties, but only once at a
+    """
+    Performs a command (which is/returns a list) on demand from multiple parties, but only once at a
     time.  In other words, when we detect that we're supposed to start the command, we'll loop
     around and wait 'til anyone else calls (or has already called) self.go().
-
     """
 
     def __init__(self, command, *args, **kwds):
@@ -123,14 +119,9 @@ def put_config():
 
 
 def zerotier_info():
-    proc = Popen(
-        ['sudo', 'zerotier-cli', '-j', 'info'],
-        stdout=PIPE, stderr=PIPE
-    )
-    stdout, stderr = proc.communicate()
-    assert not proc.returncode, \
-        f"Failed to obtain ZeroTier info: {stderr.decode('utf-8')}"
-    return json.loads(stdout.decode('utf-8'))
+    proc = subprocess.run(['sudo', 'zerotier-cli', '-j', 'info'],
+                          capture_output=True, check=True)
+    return json.loads(proc.stdout)
 
 
 @app.route('/v1/status', methods=['GET'])
@@ -147,6 +138,5 @@ def upgrade():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.WARNING)
     from gevent.pywsgi import WSGIServer
     WSGIServer(('::1', 5000), app).serve_forever()

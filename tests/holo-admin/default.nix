@@ -4,6 +4,7 @@ makeTest {
   name = "holo-admin";
 
   machine = {
+    environment.systemPackages = with pkgs; [ hpos-state-gen-cli ];
     imports = [ (import ../../profiles/holoportos/demo) ];
     virtualisation.memorySize = 2048;
   };
@@ -14,7 +15,7 @@ makeTest {
     $machine->succeed(
 	"hpos-state-gen-cli --email a@b.ca --password password > /var/lib/holochain-conductor/holo"
     );
-    $machine->systemctl("start holo-envoy.service");
+    $machine->systemctl("start hpos-admin.service");
     $machine->waitForUnit("holo-admin.service");
     $machine->waitForOpenPort("5000");
     $machine->shutdown;

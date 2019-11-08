@@ -18,7 +18,7 @@ let
     sha256 = "0jrh5ghisaqdd0vldbywags20m2cxpkbbk5jjjmwaw0gr8nhsafv";
   };
 
-  holo-config = fetchFromGitHub {
+  hpos-state = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hpos-state";
     rev = "bdb23a5f748ca77875e26103a92dbe95c27ee2c8";
@@ -58,7 +58,7 @@ in
   inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
   inherit (callPackage gitignore {}) gitignoreSource;
 
-  inherit (callPackage holo-config {})
+  inherit (callPackage hpos-state {})
     hpos-state-derive-keystore
     hpos-state-gen-cli
     hpos-state-gen-web;
@@ -129,7 +129,6 @@ in
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 
-  inherit (callPackage holo-admin {}) holo-admin;
   inherit (callPackage holo-envoy {}) holo-envoy;
   inherit (holochainRust) holochain-cli holochain-conductor;
 

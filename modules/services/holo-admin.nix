@@ -3,15 +3,15 @@
 with lib;
 
 let
-  cfg = config.services.holo-admin;
+  cfg = config.services.hpos-admin;
 in
 
 {
-  options.services.holo-admin = {
-    enable = mkEnableOption "Holo Admin";
+  options.services.hpos-admin = {
+    enable = mkEnableOption "HPOS Admin";
 
     package = mkOption {
-      default = pkgs.holo-admin;
+      default = pkgs.hpos-admin;
       type = types.package;
     };
   };
@@ -24,14 +24,12 @@ in
       hpos-state-gen-cli # for testing
     ];
     systemd.services.holo-admin = {
+      environment.HPOS_STATE_PATH = "/tmp/hpos-state.json";
       after = [ "network.target" ];
-      path = [ config.services.holochain-conductor.package ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        ExecStart = "${pkgs.python3}/bin/python3 ${cfg.package}/holo-admin.py";
-        KillMode = "process";
-        Restart = "always";
+        ExecStart = "${cfg.package}/bin/hpos-admin";
       };
     };
   };

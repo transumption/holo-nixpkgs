@@ -1,7 +1,7 @@
 { lib, makeTest }:
 
 makeTest {
-  name = "holo-admin";
+  name = "hpos-admin";
 
   machine = {
     environment.systemPackages = with pkgs; [ hpos-state-gen-cli ];

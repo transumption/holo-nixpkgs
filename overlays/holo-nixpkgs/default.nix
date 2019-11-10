@@ -28,8 +28,8 @@ let
   hpstatus = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hpstatus";
-    rev = "a7fae5926f2c8b6bb26111863873dc3ca55b2b6c";
-    sha256 = "1lcvnb93ayb593xgyd8ylwaldmh1s2vp28g7ydgmh598y81ljp57";
+    rev = "005435217305f76f3d51722f462f310a2baeab11";
+    sha256 = "1gszq98xdvq515g2kaxan886p4cgmwgqmb0g7b9a66m5087p3jg4";
   };
 
   holo-envoy = fetchFromGitHub {

@@ -160,7 +160,7 @@ in
   holo-nixpkgs-tests = recurseIntoAttrs (import ../../tests {
     inherit pkgs;
   });
- 
+
   holoportos = recurseIntoAttrs {
     profile = tryDefault <nixos-config> ../../profiles/holoportos;
 
@@ -198,6 +198,11 @@ in
   });
 
   n3h = callPackage ./n3h {};
+
+  uiPackages = recurseIntoAttrs {
+    hp-admin = callPackage ./ui-packages/hp-admin {};
+    holofuel-ui = callPackage ./ui-packages/holofuel-ui {};
+  };
 
   rust = previous.rust // {
     packages = previous.rust.packages // {

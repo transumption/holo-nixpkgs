@@ -194,6 +194,11 @@ in
     python3 = python3.withPackages (ps: [ ps.flask ps.gevent ]);
   };
 
+  hpos-init = callPackage ./hpos-init {
+    stdenv = stdenvNoCC;
+    python3 = python3.withPackages (ps: [ ps.magic-wormhole ]);
+  };
+
   hpstatus = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hpstatus";

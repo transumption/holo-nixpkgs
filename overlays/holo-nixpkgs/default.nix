@@ -175,7 +175,7 @@ in
 
   hpos-admin = callPackage ./hpos-admin {
     stdenv = stdenvNoCC;
-    python3 = python3.withPackages (ps: [ ps.flask ps.gevent ps.schema ]);
+    python3 = python3.withPackages (ps: [ ps.flask ps.gevent ]);
   };
 
   holoportos-install = callPackage ./holoportos-install {};

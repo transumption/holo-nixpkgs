@@ -100,6 +100,13 @@ in
         }
       '';
     };
+
+    virtualHosts.holofuel-ui = {
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.holofuel-ui;
+      serverName = "holofuel-demo.holohost.net";
+    };
   };
 
   systemd.tmpfiles.rules = [

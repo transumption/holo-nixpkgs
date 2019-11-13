@@ -101,7 +101,7 @@ in
       '';
     };
 
-    virtualHosts.holofuel-ui = {
+    virtualHosts.holofuel-demo = {
       enableACME = true;
       forceSSL = true;
       root = pkgs.holofuel-ui;

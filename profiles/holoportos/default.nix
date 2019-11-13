@@ -45,6 +45,8 @@ in
       addresses = true;
     };
   };
+
+  services.holo-router-agent.enable = true;
  
   services.mingetty.autologinUser = "root";
 

@@ -41,6 +41,13 @@ let
 
   holochainRust = callPackage holochain-rust {};
 
+  hp-admin = fetchFromGitHub {
+    owner = "holo-host";
+    repo = "hp-admin";
+    rev = "4ae0f0cc28e199a5d8f4d23f2aa508aae2cf5111";
+    sha256 = "1abna46da9av059kfy10ls0fa6ph8vhh75rh8cv3mvi96m2n06zd";
+  };
+
   nixpkgs-mozilla = fetchTarball {
     url = "https://github.com/mozilla/nixpkgs-mozilla/archive/dea7b9908e150a08541680462fe9540f39f2bceb.tar.gz";
     sha256 = "0kvwbnwxbqhc3c3hn121c897m89d9wy02s8xcnrvqk9c96fj83qw";
@@ -62,6 +69,10 @@ in
     holo-config-derive
     holo-config-generate-cli
     holo-config-generate-web;
+
+  inherit (callPackage hp-admin {})
+    hp-admin-ui
+    holofuel-ui;
 
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
@@ -198,11 +209,6 @@ in
   });
 
   n3h = callPackage ./n3h {};
-
-  uiPackages = recurseIntoAttrs {
-    hp-admin = callPackage ./ui-packages/hp-admin {};
-    holofuel-ui = callPackage ./ui-packages/holofuel-ui {};
-  };
 
   rust = previous.rust // {
     packages = previous.rust.packages // {

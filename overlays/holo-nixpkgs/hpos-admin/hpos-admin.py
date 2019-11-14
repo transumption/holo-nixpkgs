@@ -10,7 +10,7 @@ import os
 app = Flask(__name__)
 log = logging.getLogger(__name__)
 rebuild_queue = queue.PriorityQueue()
-lock = lock.Semaphore(1)
+state_lock = lock.Semaphore()
 
 
 def rebuild_worker():
@@ -52,7 +52,7 @@ def replace_file_contents(path, data):
 
 @app.route('/v1/config', methods=['PUT'])
 def put_config():
-    with lock: # Ensure no race condition in checking state CAS hash, to replacing state
+    with state_lock:
         state = get_state_data()
         if request.headers.get('x-hpos-admin-cas') != cas_hash(state['v1']['config']):
             return '', 409
@@ -87,7 +87,7 @@ def unix_socket(path):
     if os.path.exists(path):
         os.remove(path)
     sock.bind(path)
-    sock.listen(1)
+    sock.listen()
     return sock
 
 

@@ -1,6 +1,6 @@
 from base64 import b64encode
 from flask import Flask, jsonify, request
-from gevent import subprocess, pywsgi, queue, spawn, lock
+from gevent import subprocess, pywsgi, queue, socket, spawn, lock
 from hashlib import sha512
 from tempfile import mkstemp
 import json
@@ -82,6 +82,15 @@ def upgrade():
     return '', 200
 
 
+def unix_socket(path):
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    if os.path.exists(path):
+        os.remove(path)
+    sock.bind(path)
+    sock.listen(1)
+    return sock
+
+
 if __name__ == '__main__':
     spawn(rebuild_worker)
-    pywsgi.WSGIServer(('::1', 5000), app).serve_forever()
+    pywsgi.WSGIServer(unix_socket('/run/hpos-admin.sock'), app).serve_forever()

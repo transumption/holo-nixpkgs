@@ -107,7 +107,14 @@ in
       root = pkgs.holofuel-app;
       serverName = "holofuel-demo.holohost.net";
     };
-  };
+    
+    virtualHosts.hpstatus = {
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.hpstatus;
+      serverName = "hpstatus.holo.host";
+
+    };
 
   systemd.tmpfiles.rules = [
     "d /var/cache/hydra           0755 hydra hydra -  -"

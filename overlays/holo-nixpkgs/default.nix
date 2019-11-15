@@ -25,6 +25,13 @@ let
     sha256 = "1lcvnb93ayb593xgyd8ylwaldmh1s2vp28g7ydgmh598y81ljp57";
   };
 
+  hpstatus = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "hpstatus";
+    rev = "005435217305f76f3d51722f462f310a2baeab11";
+    sha256 = "1gszq98xdvq515g2kaxan886p4cgmwgqmb0g7b9a66m5087p3jg4";
+  };
+
   holo-envoy = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "envoy";
@@ -73,6 +80,8 @@ in
   inherit (callPackage hp-admin {})
     hp-admin-ui
     holofuel-ui;
+
+  inherit hpstatus;
 
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;

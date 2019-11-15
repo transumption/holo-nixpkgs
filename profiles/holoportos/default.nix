@@ -23,6 +23,7 @@ in
 
   environment.systemPackages = [
     (holoport-hardware-test.override { inherit target; })
+    udevil
   ];
 
   networking.firewall.allowedTCPPorts = [ 443 ];
@@ -45,6 +46,8 @@ in
       addresses = true;
     };
   };
+
+  services.devmon.enable = true;
 
   services.holo-auth-client.enable = true;
 

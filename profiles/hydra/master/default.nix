@@ -104,7 +104,7 @@ in
     virtualHosts.holofuel-demo = {
       enableACME = true;
       forceSSL = true;
-      root = pkgs.holofuel-ui;
+      root = pkgs.holofuel-app;
       serverName = "holofuel-demo.holohost.net";
     };
   };

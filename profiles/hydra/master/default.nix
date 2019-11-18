@@ -107,6 +107,13 @@ in
       root = pkgs.hpstatus;
       serverName = "hpstatus.holo.host";
     };
+
+    virtualHosts.chaperone = {
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.chaperone;
+      serverName = "chaperone.holo.host";
+    };
   };
 
   systemd.tmpfiles.rules = [

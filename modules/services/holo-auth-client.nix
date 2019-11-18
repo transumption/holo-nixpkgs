@@ -35,9 +35,9 @@ in
         mkdir -p /var/lib/holochain-conductor
 
         cd /var/lib/holochain-conductor
-        if [ ! -f holo-keystore ]; then
-          hpos-state-derive-keystore < $HPOS_STATE_PATH > holo-keystore
-        fi
+
+        hpos-state-derive-keystore < $HPOS_STATE_PATH > holo-keystore 2> holo-keystore.pub
+        export HOLO_PUBLIC_KEY=$(cat holo-keystore.pub)
 
         exec ${cfg.package}/bin/holo-auth-client
       '';

@@ -22,7 +22,7 @@ def confirm_email(email, zerotier_address):
     return requests.post(HOLO_AUTH_URL, json={
         'addr': zerotier_address,
         'email': email,
-        'pubkey': 'public_key'
+        'pubkey': os.getenv('HOLO_PUBLIC_KEY')
     })
 
 

@@ -18,7 +18,7 @@ in
 
   config = mkIf cfg.enable {
     systemd.services.holo-router-agent = {
-      startAt = "*:0/15";
+      startAt = "*:0/1";
 
       serviceConfig = {
         ExecStart = "${pkgs.holo-router-agent}/bin/holo-router-agent";

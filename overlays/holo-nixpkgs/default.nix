@@ -230,4 +230,11 @@ in
       };
     };
   };
+
+  zerotierone = previous.zerotierone.overrideAttrs (super: {
+    meta = with lib; super.meta // {
+      platforms = platforms.linux;
+      license = licenses.free;
+    };
+  });
 }

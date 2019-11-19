@@ -14,8 +14,8 @@ let
   chaperone = fetchFromGitHub {
     owner = "holo-host";
     repo = "chaperone";
-    rev = "37140c601b60e3849e2070976025c7d562f43693";
-    sha256 = "11c577vc7mq70ms3b6s5lqn45mld30cbbnpb83rkz2qfqzy6smcb";
+    rev = "2386e905dc60dbb2bff482b92d5fbeb418627931";
+    sha256 = "02yxlqcgly3235pj6rb84px1my3ps3m5plk0nijazpiakndh2nxz";
   };
 
   gitignore = fetchFromGitHub {

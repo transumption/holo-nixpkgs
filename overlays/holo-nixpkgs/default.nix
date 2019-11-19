@@ -70,9 +70,9 @@ in
 
 {
   inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
+  inherit (callPackage chaperone {}) chaperone;
   inherit (callPackage gitignore {}) gitignoreSource;
 
-  inherit (callPackage chaperone {}) chaperone;
 
   inherit (callPackage holo-config {})
     holo-config-derive

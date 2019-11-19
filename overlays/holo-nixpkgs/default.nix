@@ -28,8 +28,8 @@ let
   holo-config = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "holo-config";
-    rev = "a7fae5926f2c8b6bb26111863873dc3ca55b2b6c";
-    sha256 = "1lcvnb93ayb593xgyd8ylwaldmh1s2vp28g7ydgmh598y81ljp57";
+    rev = "22e5e1cae19afbe6791cc294533ad9764b77f58a";
+    sha256 = "1l8cjrjhh4ycljv1d9v7v12lssyi5mwbba97kyysm3sac8ybihyq";
   };
 
   hpstatus = fetchFromGitHub {
@@ -70,9 +70,9 @@ in
 
 {
   inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
+  inherit (callPackage chaperone {}) chaperone;
   inherit (callPackage gitignore {}) gitignoreSource;
 
-  inherit (callPackage chaperone {}) chaperone;
 
   inherit (callPackage holo-config {})
     holo-config-derive
@@ -239,4 +239,11 @@ in
       };
     };
   };
+
+  zerotierone = previous.zerotierone.overrideAttrs (super: {
+    meta = with lib; super.meta // {
+      platforms = platforms.linux;
+      license = licenses.free;
+    };
+  });
 }

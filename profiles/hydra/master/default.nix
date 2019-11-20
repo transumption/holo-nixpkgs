@@ -87,18 +87,18 @@ in
       serverName = "chaperone.holotest.dev";
     };
 
-    virtualHosts.hydra-legacy = {
-      enableACME = true;
-      forceSSL = true;
-      globalRedirect = "hydra.holo.host";
-      serverName = "holoportbuild.holo.host";
-    };
-
     virtualHosts.hpstatus = {
       enableACME = true;
       forceSSL = true;
       root = pkgs.hpstatus;
       serverName = "hpstatus.holo.host";
+    };
+
+    virtualHosts.hydra-legacy = {
+      enableACME = true;
+      forceSSL = true;
+      globalRedirect = "hydra.holo.host";
+      serverName = "holoportbuild.holo.host";
     };
 
     virtualHosts.quickstart = {

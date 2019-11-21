@@ -74,7 +74,7 @@ in
 
     <githubstatus>
       context = Hydra
-      jobs = hpadmin:.*:hp-admin
+      jobs = hp-admin:.*:hp-admin
       inputs = hp-admin
     </githubstatus>
   '';

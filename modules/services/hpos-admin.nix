@@ -17,9 +17,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      hpos-state-gen-cli # for testing
-    ];
     systemd.services.hpos-admin = {
       environment.HPOS_STATE_PATH = "/etc/hpos-state.json";
       after = [ "network.target" ];

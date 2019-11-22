@@ -16,9 +16,6 @@ in
     };
   };
 
-  # TODO: enable 'sudo nixos-rebuild ...' and 'sudo zerotier-cli -j info`
-  # TODO: make "after" the systemd phase that locates the hpos-state.json file
-  # TODO: set the HPOS_STATE_PATH environment variable
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       hpos-state-gen-cli # for testing
@@ -30,6 +27,7 @@ in
 
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/hpos-admin";
+        User = "root"; # TODO: limit scope
       };
     };
   };

@@ -6,14 +6,12 @@ makeTest {
   machine = {
     environment.systemPackages = with pkgs; [ hpos-state-gen-cli ];
     imports = [ (import ../../profiles/holoportos/demo) ];
-    virtualisation.memorySize = 2048;
   };
 
   testScript = ''
     startAll;
-    # TODO: Create deterministic config somewhere == HPOS_STATE_PATH
     $machine->succeed(
-	"hpos-state-gen-cli --email a@b.ca --password password > /tmp/hpos-state.json"
+      "hpos-state-gen-cli --email test@holo.host --password : --seed-from ${./seed.txt} > /etc/hpos-state.json"
     );
     $machine->systemctl("start hpos-admin.service");
     $machine->waitForUnit("hpos-admin.service");

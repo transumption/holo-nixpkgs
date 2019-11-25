@@ -90,7 +90,7 @@ in
       enableACME = true;
       forceSSL = true;
       root = pkgs.holofuel-app;
-      serverName = "holofuel-demo.holohost.net";
+      serverName = "holofuel-demo.holo.host";
     };
 
     virtualHosts.hpstatus = {

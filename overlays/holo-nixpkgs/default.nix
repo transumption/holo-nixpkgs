@@ -32,6 +32,13 @@ let
     sha256 = "0648bmv33cmb53ppn3ph44v52yx19qd6nnjskgmkyk05xmgd391y";
   };
 
+  holo-router = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "holo-router";
+    rev = "66b2dd874997b1f5739ab15244b14cb58f303444";
+    sha256 = "0ap3ij1ig6qwd7b4f0xlmgx5221ysdpy7ig2wgcqrh5djylzgzrm";
+  };
+
   holochain-rust = fetchFromGitHub {
     owner = "holochain";
     repo = "holochain-rust";
@@ -79,6 +86,10 @@ in
   inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
   inherit (callPackage chaperone {}) chaperone;
   inherit (callPackage gitignore {}) gitignoreSource;
+
+  inherit (callPackage holo-router {})
+    holo-router-agent
+    holo-router-gateway;
 
   inherit (callPackage hpos-state {})
     hpos-state-derive-keystore
@@ -154,6 +165,8 @@ in
   };
 
   aurora-led = callPackage ./aurora-led {};
+
+  dnscrypt-proxy2 = callPackage ./dnscrypt-proxy2 {};
 
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 

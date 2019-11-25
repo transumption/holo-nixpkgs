@@ -25,6 +25,13 @@ let
     sha256 = "0648bmv33cmb53ppn3ph44v52yx19qd6nnjskgmkyk05xmgd391y";
   };
 
+  holo-router = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "holo-router";
+    rev = "7ff48fb73cff1a093898ec783e54d049b3990a9c";
+    sha256 = "1mk566ns2nxs20bj6d77mb85l0w8y80prlnxvxijsqpxng65b0b3";
+  };
+
   holochain-rust = fetchFromGitHub {
     owner = "holochain";
     repo = "holochain-rust";
@@ -64,6 +71,10 @@ in
 {
   inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
   inherit (callPackage gitignore {}) gitignoreSource;
+
+  inherit (callPackage holo-router {})
+    holo-router-agent
+    holo-router-gateway;
 
   inherit (callPackage hpos-state {})
     hpos-state-derive-keystore
@@ -151,8 +162,6 @@ in
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {
     linux = linux_latest;
   };
-
-  holo-router-gateway = callPackage ./holo-router-gateway {};
 
   holo-auth-client = callPackage ./holo-auth-client {
     stdenv = stdenvNoCC;

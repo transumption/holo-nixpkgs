@@ -79,6 +79,12 @@ in
     # First HoloPort/HoloPort+ batch points to Hydra-based Nix channel on
     # holoportbuild.holo.host. This has to be left here forever for reverse-
     # compatibility reasons.
+    virtualHosts.hydra-legacy = {
+      enableACME = true;
+      forceSSL = true;
+      globalRedirect = "hydra.holo.host";
+      serverName = "holoportbuild.holo.host";
+    };
 
     virtualHosts.chaperone = {
       enableACME = true;
@@ -92,13 +98,6 @@ in
       forceSSL = true;
       root = pkgs.hpstatus;
       serverName = "hpstatus.holo.host";
-    };
-
-    virtualHosts.hydra-legacy = {
-      enableACME = true;
-      forceSSL = true;
-      globalRedirect = "hydra.holo.host";
-      serverName = "holoportbuild.holo.host";
     };
 
     virtualHosts.quickstart = {

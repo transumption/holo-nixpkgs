@@ -20,26 +20,28 @@ in
     systemd.services.holo-auth-client = {
       after = [ "network.target" "zerotierone.service" ];
 
-      path = [
-        pkgs.hpos-init
-        pkgs.hpos-state-derive-keystore
-        pkgs.utillinux
-        pkgs.zerotierone
+      path = with pkgs; [
+        hpos-init
+        hpos-state-derive-keystore
+        jq
+        utillinux
+        zerotierone
       ];
 
       wantedBy = [ "multi-user.target" ];
 
       script = ''
-        export HPOS_STATE_PATH=$(hpos-init)
+        if [ "$(zerotier-cli -j listnetworks | jq -r .[0].status)" = "ACCESS_DENIED" ]; then
+          export HPOS_STATE_PATH=$(hpos-init)
 
-        mkdir -p /var/lib/holochain-conductor
+          mkdir -p /var/lib/holochain-conductor
+          cd /var/lib/holochain-conductor
 
-        cd /var/lib/holochain-conductor
+          hpos-state-derive-keystore < $HPOS_STATE_PATH > holo-keystore 2> holo-keystore.pub
+          export HOLO_PUBLIC_KEY=$(cat holo-keystore.pub)
 
-        hpos-state-derive-keystore < $HPOS_STATE_PATH > holo-keystore 2> holo-keystore.pub
-        export HOLO_PUBLIC_KEY=$(cat holo-keystore.pub)
-
-        exec ${cfg.package}/bin/holo-auth-client
+          exec ${cfg.package}/bin/holo-auth-client
+        fi
       '';
 
       serviceConfig.User = "root";

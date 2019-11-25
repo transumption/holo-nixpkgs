@@ -90,7 +90,7 @@ in
       enableACME = true;
       forceSSL = true;
       root = pkgs.chaperone;
-      serverName = "chaperone.holotest.dev";
+      serverName = "chaperone.holo.host";
     };
 
     virtualHosts.hpstatus = {

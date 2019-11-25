@@ -11,25 +11,18 @@ let
     sha256 = "1rcwpaj64fwz1mwvh9ir04a30ssg35ni41ijv9bq942pskagf1gl";
   };
 
+  chaperone = fetchFromGitHub {
+    owner = "holo-host";
+    repo = "chaperone";
+    rev = "2386e905dc60dbb2bff482b92d5fbeb418627931";
+    sha256 = "02yxlqcgly3235pj6rb84px1my3ps3m5plk0nijazpiakndh2nxz";
+  };
+
   gitignore = fetchFromGitHub {
     owner = "hercules-ci";
     repo = "gitignore";
     rev = "f9e996052b5af4032fe6150bba4a6fe4f7b9d698";
     sha256 = "0jrh5ghisaqdd0vldbywags20m2cxpkbbk5jjjmwaw0gr8nhsafv";
-  };
-
-  holo-config = fetchFromGitHub {
-    owner = "Holo-Host";
-    repo = "holo-config";
-    rev = "22e5e1cae19afbe6791cc294533ad9764b77f58a";
-    sha256 = "1l8cjrjhh4ycljv1d9v7v12lssyi5mwbba97kyysm3sac8ybihyq";
-  };
-
-  hpstatus = fetchFromGitHub {
-    owner = "Holo-Host";
-    repo = "hpstatus";
-    rev = "005435217305f76f3d51722f462f310a2baeab11";
-    sha256 = "1gszq98xdvq515g2kaxan886p4cgmwgqmb0g7b9a66m5087p3jg4";
   };
 
   holo-envoy = fetchFromGitHub {
@@ -55,6 +48,20 @@ let
     sha256 = "1abna46da9av059kfy10ls0fa6ph8vhh75rh8cv3mvi96m2n06zd";
   };
 
+  hpos-state = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "hpos-state";
+    rev = "bdb23a5f748ca77875e26103a92dbe95c27ee2c8";
+    sha256 = "0if7j38pxb1vll9g326ra27d0fnkflclbmg3spjdmyyhb779xgiz";
+  };
+
+  hpstatus = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "hpstatus";
+    rev = "005435217305f76f3d51722f462f310a2baeab11";
+    sha256 = "1gszq98xdvq515g2kaxan886p4cgmwgqmb0g7b9a66m5087p3jg4";
+  };
+
   nixpkgs-mozilla = fetchTarball {
     url = "https://github.com/mozilla/nixpkgs-mozilla/archive/dea7b9908e150a08541680462fe9540f39f2bceb.tar.gz";
     sha256 = "0kvwbnwxbqhc3c3hn121c897m89d9wy02s8xcnrvqk9c96fj83qw";
@@ -70,18 +77,24 @@ in
 
 {
   inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
+  inherit (callPackage chaperone {}) chaperone;
   inherit (callPackage gitignore {}) gitignoreSource;
 
-  inherit (callPackage holo-config {})
-    holo-config-derive
-    holo-config-generate-cli
-    holo-config-generate-web;
+  inherit (callPackage hpos-state {})
+    hpos-state-derive-keystore
+    hpos-state-gen-cli
+    hpos-state-gen-web;
+
+  inherit (callPackage hp-admin {})
+    hp-admin-ui
+    holofuel-ui;
 
   inherit (callPackage hp-admin {})
     hp-admin-ui
     holofuel-ui;
 
   inherit hpstatus;
+
   inherit (callPackage npm-to-nix {}) npmToNix;
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
 
@@ -153,7 +166,9 @@ in
 
   hclient = callPackage ./hclient {};
 
-  holofuel-app = callPackage ./holofuel-app {};
+  holofuel-app = callPackage ./holofuel-app {
+    nodejs = nodejs-12_x;
+  };
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 
@@ -190,6 +205,11 @@ in
     virtualbox = (buildHoloPortOS ../../profiles/hardware/virtualbox) // {
       meta.platforms = [ "x86_64-linux" ];
     };
+  };
+
+  hpos-admin = callPackage ./hpos-admin {
+    stdenv = stdenvNoCC;
+    python3 = python3.withPackages (ps: [ ps.flask ps.gevent ]);
   };
 
   holoportos-install = callPackage ./holoportos-install {};

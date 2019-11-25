@@ -49,7 +49,7 @@ let
   holochainRust = callPackage holochain-rust {};
 
   hp-admin = fetchFromGitHub {
-    owner = "holo-host";
+    owner = "Holo-Host";
     repo = "hp-admin";
     rev = "4ae0f0cc28e199a5d8f4d23f2aa508aae2cf5111";
     sha256 = "1abna46da9av059kfy10ls0fa6ph8vhh75rh8cv3mvi96m2n06zd";

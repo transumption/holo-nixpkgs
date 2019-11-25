@@ -5,7 +5,7 @@ makeTest {
 
   machine = {
     environment.systemPackages = [ hpos-state-gen-cli ];
-    imports = [ (import ../../profiles/holoportos/demo) ];
+    imports = [ (import ../../profiles/holoportos) ];
   };
 
   testScript = ''

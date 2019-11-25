@@ -86,6 +86,13 @@ in
       serverName = "holoportbuild.holo.host";
     };
 
+    virtualHosts.chaperone = {
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.chaperone;
+      serverName = "chaperone.holo.host";
+    };
+
     virtualHosts.holofuel-demo = {
       enableACME = true;
       forceSSL = true;
@@ -103,7 +110,7 @@ in
     virtualHosts.quickstart = {
       enableACME = true;
       forceSSL = true;
-      root = pkgs.holo-config-generate-web;
+      root = pkgs.hpos-state-gen-web;
       serverName = "quickstart.holo.host";
       extraConfig = ''
         types {
@@ -113,7 +120,7 @@ in
           text/html html;
         }
       '';
-    };    
+    };
   };
 
   systemd.tmpfiles.rules = [

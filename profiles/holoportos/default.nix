@@ -53,6 +53,8 @@ in
 
   services.holo-router-agent.enable = true;
  
+  services.hpos-admin.enable = true;
+
   services.mingetty.autologinUser = "root";
 
   services.openssh.enable = true;

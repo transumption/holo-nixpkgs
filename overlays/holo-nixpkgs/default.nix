@@ -216,6 +216,11 @@ in
     python3 = python3.withPackages (ps: [ ps.flask ps.gevent ]);
   };
 
+  hpos-admin-client = callPackage ./hpos-admin-client {
+    stdenv = stdenvNoCC;
+    python3 = python3.withPackages (ps: [ ps.click ps.requests ]);
+  };
+
   hpos-init = callPackage ./hpos-init {
     stdenv = stdenvNoCC;
     python3 = python3.withPackages (ps: [ ps.magic-wormhole ]);

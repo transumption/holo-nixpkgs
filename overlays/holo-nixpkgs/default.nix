@@ -89,10 +89,6 @@ in
     hp-admin-ui
     holofuel-ui;
 
-  inherit (callPackage hp-admin {})
-    hp-admin-ui
-    holofuel-ui;
-
   inherit hpstatus;
 
   inherit (callPackage npm-to-nix {}) npmToNix;

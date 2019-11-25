@@ -86,6 +86,20 @@ in
       serverName = "holoportbuild.holo.host";
     };
 
+    virtualHosts.holofuel-demo = {
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.holofuel-app;
+      serverName = "holofuel-demo.holohost.net";
+    };
+
+    virtualHosts.hpstatus = {
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.hpstatus;
+      serverName = "hpstatus.holo.host";
+    };
+
     virtualHosts.quickstart = {
       enableACME = true;
       forceSSL = true;
@@ -99,22 +113,8 @@ in
           text/html html;
         }
       '';
-    };
-
-    virtualHosts.holofuel-demo = {
-      enableACME = true;
-      forceSSL = true;
-      root = pkgs.holofuel-app;
-      serverName = "holofuel-demo.holohost.net";
-    };
-    
-    virtualHosts.hpstatus = {
-      enableACME = true;
-      forceSSL = true;
-      root = pkgs.hpstatus;
-      serverName = "hpstatus.holo.host";
-
-    };
+    };    
+  };
 
   systemd.tmpfiles.rules = [
     "d /var/cache/hydra           0755 hydra hydra -  -"

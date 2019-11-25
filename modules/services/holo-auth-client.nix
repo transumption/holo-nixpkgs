@@ -31,7 +31,17 @@ in
       wantedBy = [ "multi-user.target" ];
 
       script = ''
-        if [ "$(zerotier-cli -j listnetworks | jq -r .[0].status)" = "ACCESS_DENIED" ]; then
+        zerotier_status() {
+          zerotier-cli -j listnetworks | jq -r .[0].status
+        }
+
+        sleep 10
+
+        while [ "$(zerotier_status)" = "REQUESTING_CONFIGURATION" ]; do
+          sleep 1
+        done
+
+        if [ "$(zerotier_status)" = "ACCESS_DENIED" ]; then
           export HPOS_STATE_PATH=$(hpos-init)
 
           mkdir -p /var/lib/holochain-conductor

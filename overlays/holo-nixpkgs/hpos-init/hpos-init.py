@@ -24,8 +24,6 @@ def wormhole_reverse_send():
     w = wormhole.create(WORMHOLE_APPID, WORMHOLE_RELAY_URL, reactor)
     w.allocate_code()
 
-    time.sleep(10)
-
     code = yield w.get_code()
     subprocess.run(['wall', "wormhole send --code {} --text - < hpos-state.json".format(code)])
 

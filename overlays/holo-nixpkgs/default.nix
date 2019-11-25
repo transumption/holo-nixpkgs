@@ -82,8 +82,8 @@ in
     holofuel-ui;
 
   inherit hpstatus;
-    inherit (callPackage npm-to-nix {}) npmToNix;
-    inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
+  inherit (callPackage npm-to-nix {}) npmToNix;
+  inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
 
   buildDNA = makeOverridable (callPackage ./build-dna {
     inherit (llvmPackages_8) lld;

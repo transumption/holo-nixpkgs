@@ -11,6 +11,13 @@ let
     sha256 = "1rcwpaj64fwz1mwvh9ir04a30ssg35ni41ijv9bq942pskagf1gl";
   };
 
+  chaperone = fetchFromGitHub {
+    owner = "holo-host";
+    repo = "chaperone";
+    rev = "2386e905dc60dbb2bff482b92d5fbeb418627931";
+    sha256 = "02yxlqcgly3235pj6rb84px1my3ps3m5plk0nijazpiakndh2nxz";
+  };
+
   gitignore = fetchFromGitHub {
     owner = "hercules-ci";
     repo = "gitignore";
@@ -41,6 +48,13 @@ let
 
   holochainRust = callPackage holochain-rust {};
 
+  hp-admin = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "hp-admin";
+    rev = "4ae0f0cc28e199a5d8f4d23f2aa508aae2cf5111";
+    sha256 = "1abna46da9av059kfy10ls0fa6ph8vhh75rh8cv3mvi96m2n06zd";
+  };
+
   hpos-state = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hpos-state";
@@ -66,11 +80,17 @@ in
     buildRustPackage
     cargoToNix;
 
+  inherit (callPackage chaperone {}) chaperone;
+
   inherit (callPackage gitignore {}) gitignoreSource;
 
   inherit (callPackage holo-router {})
     holo-router-agent
     holo-router-gateway;
+
+  inherit (callPackage hp-admin {})
+    hp-admin-ui
+    holofuel-ui;
 
   inherit (callPackage hpos-state {})
     hpos-state-derive-keystore
@@ -151,7 +171,9 @@ in
 
   hclient = callPackage ./hclient {};
 
-  holofuel-app = callPackage ./holofuel-app {};
+  holofuel-app = callPackage ./holofuel-app {
+    nodejs = nodejs-12_x;
+  };
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 

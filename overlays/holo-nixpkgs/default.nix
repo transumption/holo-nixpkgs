@@ -62,13 +62,6 @@ let
     sha256 = "0if7j38pxb1vll9g326ra27d0fnkflclbmg3spjdmyyhb779xgiz";
   };
 
-  hpstatus = fetchFromGitHub {
-    owner = "Holo-Host";
-    repo = "hpstatus";
-    rev = "005435217305f76f3d51722f462f310a2baeab11";
-    sha256 = "1gszq98xdvq515g2kaxan886p4cgmwgqmb0g7b9a66m5087p3jg4";
-  };
-
   nixpkgs-mozilla = fetchTarball {
     url = "https://github.com/mozilla/nixpkgs-mozilla/archive/dea7b9908e150a08541680462fe9540f39f2bceb.tar.gz";
     sha256 = "0kvwbnwxbqhc3c3hn121c897m89d9wy02s8xcnrvqk9c96fj83qw";
@@ -83,26 +76,29 @@ let
 in
 
 {
-  inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
+  inherit (callPackage cargo-to-nix {})
+    buildRustPackage
+    cargoToNix;
+
   inherit (callPackage chaperone {}) chaperone;
+
   inherit (callPackage gitignore {}) gitignoreSource;
 
   inherit (callPackage holo-router {})
     holo-router-agent
     holo-router-gateway;
 
+  inherit (callPackage hp-admin {})
+    hp-admin-ui
+    holofuel-ui;
+
   inherit (callPackage hpos-state {})
     hpos-state-derive-keystore
     hpos-state-gen-cli
     hpos-state-gen-web;
 
-  inherit (callPackage hp-admin {})
-    hp-admin-ui
-    holofuel-ui;
-
-  inherit hpstatus;
-
   inherit (callPackage npm-to-nix {}) npmToNix;
+
   inherit (callPackage "${nixpkgs-mozilla}/package-set.nix" {}) rustChannelOf;
 
   buildDNA = makeOverridable (callPackage ./build-dna {
@@ -190,11 +186,6 @@ in
     python3 = python3.withPackages (ps: [ ps.requests ]);
   };
 
-  holo-init = callPackage ./holo-init {
-    stdenv = stdenvNoCC;
-    python3 = python3.withPackages (ps: [ ps.requests ps.retry ]);
-  };
-
   # TODO: upstream to holochain-cli
   holo-keygen = callPackage ./holo-keygen {
     stdenv = stdenvNoCC;
@@ -216,14 +207,26 @@ in
     };
   };
 
+  holoportos-install = callPackage ./holoportos-install {};
+
+  holoportos-led-daemon = callPackage ./holoportos-led-daemon {};
+
   hpos-admin = callPackage ./hpos-admin {
     stdenv = stdenvNoCC;
     python3 = python3.withPackages (ps: [ ps.flask ps.gevent ]);
   };
 
-  holoportos-install = callPackage ./holoportos-install {};
+  hpos-init = callPackage ./hpos-init {
+    stdenv = stdenvNoCC;
+    python3 = python3.withPackages (ps: [ ps.magic-wormhole ]);
+  };
 
-  holoportos-led-daemon = callPackage ./holoportos-led-daemon {};
+  hpstatus = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "hpstatus";
+    rev = "005435217305f76f3d51722f462f310a2baeab11";
+    sha256 = "1gszq98xdvq515g2kaxan886p4cgmwgqmb0g7b9a66m5087p3jg4";
+  };
 
   hydra = previous.hydra.overrideAttrs (super: {
     doCheck = false;

@@ -44,7 +44,7 @@ def put_config(ctx, k, v):
     res = request(ctx, 'PUT', '/v1/config',
                   headers={'x-hpos-admin-cas': cas_hash1},
                   json=config)
-    print(res, file=sys.stderr)
+    assert res.status_code == requests.codes.ok
 
 
 @cli.command(help='Get HoloPortOS status data')

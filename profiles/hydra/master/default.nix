@@ -86,6 +86,20 @@ in
       serverName = "holoportbuild.holo.host";
     };
 
+    virtualHosts.chaperone = {
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.chaperone;
+      serverName = "chaperone.holo.host";
+    };
+
+    virtualHosts.hpstatus = {
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.hpstatus;
+      serverName = "hpstatus.holo.host";
+    };
+
     virtualHosts.quickstart = {
       enableACME = true;
       forceSSL = true;
@@ -99,13 +113,6 @@ in
           text/html html;
         }
       '';
-    };
-
-    virtualHosts.hpstatus = {
-      enableACME = true;
-      forceSSL = true;
-      root = pkgs.hpstatus;
-      serverName = "hpstatus.holo.host";
     };
   };
 

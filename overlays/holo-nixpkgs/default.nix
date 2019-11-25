@@ -11,6 +11,13 @@ let
     sha256 = "1rcwpaj64fwz1mwvh9ir04a30ssg35ni41ijv9bq942pskagf1gl";
   };
 
+  chaperone = fetchFromGitHub {
+    owner = "holo-host";
+    repo = "chaperone";
+    rev = "2386e905dc60dbb2bff482b92d5fbeb418627931";
+    sha256 = "02yxlqcgly3235pj6rb84px1my3ps3m5plk0nijazpiakndh2nxz";
+  };
+
   gitignore = fetchFromGitHub {
     owner = "hercules-ci";
     repo = "gitignore";
@@ -63,6 +70,7 @@ in
 
 {
   inherit (callPackage cargo-to-nix {}) buildRustPackage cargoToNix;
+  inherit (callPackage chaperone {}) chaperone;
   inherit (callPackage gitignore {}) gitignoreSource;
 
   inherit (callPackage hpos-state {})
@@ -168,7 +176,7 @@ in
   holo-nixpkgs-tests = recurseIntoAttrs (import ../../tests {
     inherit pkgs;
   });
- 
+
   holoportos = recurseIntoAttrs {
     profile = tryDefault <nixos-config> ../../profiles/holoportos;
 

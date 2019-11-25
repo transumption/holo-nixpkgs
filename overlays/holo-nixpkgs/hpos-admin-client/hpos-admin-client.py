@@ -3,7 +3,6 @@ from hashlib import sha512
 import click
 import json
 import requests
-import sys
 
 
 @click.group()

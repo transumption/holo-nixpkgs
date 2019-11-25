@@ -5,12 +5,12 @@
   "enableemail": false,
   "hidden": false,
   "inputs": {
-    "holo-envoy": {
+    "hp-admin": {
       "emailresponsible": false,
       "type": "git",
       "value": "https://github.com/Holo-Host/hp-admin.git develop"
     },
-    "holo-envoy-pull-requests": {
+    "hp-admin-pull-requests": {
       "emailresponsible": false,
       "type": "githubpulls",
       "value": "Holo-Host hp-admin"

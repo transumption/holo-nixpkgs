@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, nodejs-12_x, npmToNix }:
+{ stdenv, fetchFromGitHub, nodejs, npmToNix }:
 
 stdenv.mkDerivation rec {
   name = "holofuel-app";
@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     sha256 = "128xrz0a37y73rmhsilws8nsi3d01m2gmy3fz8z4wrhx3gx5xh7n";
   };
 
-  nativeBuildInputs = [ nodejs-12_x ];
+  nativeBuildInputs = [ nodejs ];
 
   preConfigure = ''
     cp -r ${npmToNix { inherit src; }} node_modules

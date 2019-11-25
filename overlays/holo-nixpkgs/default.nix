@@ -154,7 +154,9 @@ in
 
   hclient = callPackage ./hclient {};
 
-  holofuel-app = callPackage ./holofuel-app {};
+  holofuel-app = callPackage ./holofuel-app {
+    nodejs = nodejs-12_x;
+  };
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 

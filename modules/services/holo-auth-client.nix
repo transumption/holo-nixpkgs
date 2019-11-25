@@ -44,7 +44,10 @@ in
         fi
       '';
 
-      serviceConfig.User = "root";
+      serviceConfig = {
+        Type = "oneshot";
+        User = "root";
+      };
     };
   };
 }

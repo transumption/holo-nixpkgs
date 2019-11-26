@@ -18,6 +18,11 @@
     StrictHostKeyChecking accept-new
   '';
 
+  system.holoportos.autoUpgrade = {
+    enable = true;
+    dates = "*:0/10";
+  };
+
   time.timeZone = "UTC";
 
   # Anyone in this list is in a position to poison binary cache.

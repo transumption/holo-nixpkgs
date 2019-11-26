@@ -1,11 +1,20 @@
-{ lib, gitignoreSource, runCommand, substituteAll, aurora-led, bash, coreutils
-, e2fsprogs, parted, ubootBananaPim64 }:
+{ lib
+, gitignoreSource
+, runCommand
+, substituteAll
+, aurora-led
+, bash
+, coreutils
+, e2fsprogs
+, parted
+, ubootBananaPim64
+}:
 
 { auroraLedDevice, channelUrl, target }:
 
 let
   mkConfiguration = profile: substituteAll {
-    src = ./configuration.nix;
+    src = ./configuration.nix.in;
     inherit profile;
   };
 

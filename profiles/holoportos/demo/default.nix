@@ -32,7 +32,7 @@ in
 {
   imports = [ ../. ];
 
-  environment.systemPackages = [ pkgs.holo-keygen ];
+  environment.systemPackages = [ ];
 
   networking.firewall.allowedTCPPorts = [ 1111 2222 3333 8800 8880 8888 48080 ];
 

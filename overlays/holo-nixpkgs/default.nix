@@ -46,8 +46,6 @@ let
     sha256 = "1bjkl623r0y2ybibnxma2j1mp8rhr3zwav96f9jq34f2vqyw0vj8";
   };
 
-  holochainRust = callPackage holochain-rust {};
-
   hp-admin = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hp-admin";
@@ -184,7 +182,12 @@ in
   extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
 
   inherit (callPackage holo-envoy {}) holo-envoy;
-  inherit (holochainRust) holochain-cli holochain-conductor;
+
+  inherit (callPackage holochain-rust {})
+    holochain-cli
+    holochain-conductor
+    sim2h-server
+    ;
 
   hclient = callPackage ./hclient {};
 

@@ -273,8 +273,6 @@ in
     }
   );
 
-  n3h = callPackage ./n3h {};
-
   nodejs = nodejs-12_x;
 
   rust = previous.rust // {

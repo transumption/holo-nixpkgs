@@ -8,7 +8,6 @@
 , holochain-cli
 , jq
 , lld
-, n3h
 , nodejs
 , python2
 , which
@@ -70,7 +69,6 @@ rustPlatform.buildRustPackage (
       holochainRust.holochain-conductor
       jq
       lld
-      n3h
       nodejs
       python2
       which

@@ -190,9 +190,7 @@ in
 
   hclient = callPackage ./hclient {};
 
-  holofuel-app = callPackage ./holofuel-app {
-    nodejs = nodejs-12_x;
-  };
+  holofuel-app = callPackage ./holofuel-app {};
 
   holoport-hardware-test = callPackage ./holoport-hardware-test {};
 
@@ -276,6 +274,8 @@ in
   );
 
   n3h = callPackage ./n3h {};
+
+  nodejs = nodejs-12_x;
 
   rust = previous.rust // {
     packages = previous.rust.packages // {

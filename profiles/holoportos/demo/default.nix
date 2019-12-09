@@ -45,7 +45,7 @@ in
         {
           id = "host-agent";
           name = "Host Agent";
-          keystore_file = "${conductorHome}/holo";
+          keystore_file = "${conductorHome}/holo-keystore";
           public_address = "@public_key@";
         }
       ];

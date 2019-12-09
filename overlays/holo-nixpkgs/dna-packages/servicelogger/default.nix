@@ -2,11 +2,13 @@
 
 let
   src = fetchFromGitHub {
-    owner = "holo-host";
+    owner = "Holo-Host";
     repo = "servicelogger";
-    rev = "18c3c7b4b0d0a307c239c1aa1d9e2d8ba49566a5";
-    sha256 = "0bb8i1rh943hhw4w0qz7gkhhjaw995b0n1j1bp4i4s31pr5nw2m7";
+    rev = "5b96b9e507a6000b99f2e2473722e94412901990";
+    sha256 = "1if37bwlv32zdqxs0s6zb7bnymw4x6594aj694bhilbkkadg2wxj";
   };
 in
 
-(callPackage src {}).servicelogger
+(callPackage src {}).servicelogger.overrideAttrs (super: {
+  doCheck = false;
+})

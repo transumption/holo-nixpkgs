@@ -20,7 +20,7 @@ in
   virtualisation = {
     diskSize = 2048;
     graphics = false;
-    memorySize = 3072;
+    memorySize = 2048;
     useBootLoader = false;
   };
 }

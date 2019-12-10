@@ -23,9 +23,7 @@ in
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        ExecStart = "${pkgs.nodejs}/bin/node ${cfg.package}/lib/index.js";
-        KillMode = "process";
-        Restart = "always";
+        ExecStart = "${pkgs.nodejs-12_x}/bin/node ${cfg.package}/lib/index.js";
       };
     };
   };

@@ -7,19 +7,15 @@ let
   cfg = blcfg.generic-extlinux-compatible;
 
   dtbDirOpt = if cfg.dtbDir == null
-    then ""
-    else "-b ${cfg.dtbDir}";
+  then ""
+  else "-b ${cfg.dtbDir}";
 
   timeout = if blcfg.timeout == null
-    then -1
-    else blcfg.timeout;
+  then -1
+  else blcfg.timeout;
 in
 
 {
-  disabledModules = [
-    "system/boot/loader/generic-extlinux-compatible"
-  ];
-
   options = {
     boot.loader.generic-extlinux-compatible = {
       enable = mkOption {
@@ -46,10 +42,10 @@ in
 
       dtbDir = mkOption {
         default = null;
-	description = ''
-	  Custom DTB source, if any.
-	'';
-	type = types.nullOr types.path;
+        description = ''
+          Custom DTB source, if any.
+        '';
+        type = types.nullOr types.path;
       };
     };
   };

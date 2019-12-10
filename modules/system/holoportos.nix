@@ -3,21 +3,16 @@
 with lib;
 
 {
-  options.system.holoportos = {
-    network = mkOption {
-      default = "live";
-      type = types.enum [ "dev" "test" "live" ];
-    };
+  imports = [
+    (
+      mkRemovedOptionModule [ "system" "holoportos" "network" ]
+        "Holo ZeroTier networks were merged together as of 2019-11-11."
+    )
+  ];
 
+  options.system.holoportos = {
     target = mkOption {
       default = "generic";
-      type = types.enum [
-        "generic"
-        "holoport"
-        "holoport-nano"
-        "holoport-plus"
-        "virtualbox"
-      ];
     };
   };
 }

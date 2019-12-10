@@ -1,0 +1,12 @@
+diff --git a/src/root/static/css/hydra.css b/src/root/static/css/hydra.css
+index 7e462f0b..ae71489c 100644
+--- a/src/root/static/css/hydra.css
++++ b/src/root/static/css/hydra.css
+@@ -13,6 +13,7 @@ div.skip-topbar {
+ .logo {
+     margin-top: -10px;
+     height: 25px;
++    vertical-align: bottom;
+ }
+ 
+ th {

@@ -6,12 +6,6 @@ let
   cfg = config.services.holochain-conductor;
 
   inherit (config.users.users.holochain-conductor) home;
-
-  json = pkgs.writeText "dnscrypt-proxy.json" (builtins.toJSON cfg.config);
-
-  toml = pkgs.runCommand "dnscrypt-proxy.toml" {} ''
-    ${pkgs.remarshal}/bin/json2toml < ${json} > $out
-  '';
 in
 
 {
@@ -40,23 +34,21 @@ in
       path = with pkgs; [
         holochain-cli
         holochain-conductor
-        n3h
       ];
 
       preStart = ''
-        mkdir -p ${home}/n3h
-        cat ${toml} > ${home}/config.toml
-        sed -i s/@public_key@/$(cat ${home}/holoportos-key.pub)/ ${home}/config.toml
+        cat ${pkgs.writeTOML cfg.config} > ${home}/conductor-config.toml
+        sed -i s/@public_key@/$(cat ${home}/holo-keystore.pub)/ ${home}/conductor-config.toml
       '';
-    
+
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/holochain -c ${home}/config.toml";
+        ExecStart = "${cfg.package}/bin/holochain -c ${home}/conductor-config.toml";
         KillMode = "process";
         Restart = "always";
         User = "holochain-conductor";
       };
     };
-    
+
     users.users.holochain-conductor = {
       createHome = true;
       home = "/var/lib/holochain-conductor";

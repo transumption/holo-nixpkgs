@@ -1,28 +1,30 @@
-## Leverage binary cache
+## Branch protection rules
 
-On NixOS, add the following to `/etc/nixos/configuration.nix` and rebuild:
+`develop` requires signed commits, passing CI and pull request with at least
+one review. Administrators may waive some of restrictions for individual pull
+requests.
 
-```nix
-{
-  nix.binaryCaches = [
-    "https://cache.holo.host"
-  ];
+`staging` bears the same restrictions as `develop`, plus administrators must no
+longer waive any restrictions.
 
-  nix.binaryCachePublicKeys = [
-    "cache.holo.host-1:lNXIXtJgS9Iuw4Cu6X0HINLu9sTfcjEntnrgwMQIMcE="
-  ];
-}
-```
+`master` requires signed commits, passing CI and pull request with at least two
+reviews, both of which must be made against the most recent tip of the branch.
+If any, code owner reviews are mandatory. Change request reviews can't be
+dismissed. Administrators must not waive any restrictions.
 
-Otherwise, add `https://cache.holo.host` to `substituters` and
-`cache.holo.host-1:lNXIXtJgS9Iuw4Cu6X0HINLu9sTfcjEntnrgwMQIMcE=` to
-`trusted-public-keys` in `/etc/nix/nix.conf`.
+## Commit message style guide
+
+See: https://nixos.org/nixpkgs/manual/#submitting-changes-making-patches
+
+## Formatting
+
+Use `find . -name \*.nix -exec nixpkgs-fmt {} +` inside `nix-shell`.
 
 ## Iterate on overlay packages
 
 First, enter `nix-shell`. This sets up reproducible development environment.
 
-Then, add a new package to `overlays/overlay/default.nix` in alphabetical order:
+Then, add a new package to `overlays/holo-nixpkgs/default.nix` in alphabetical order:
 
 ```nix
 {
@@ -30,18 +32,22 @@ Then, add a new package to `overlays/overlay/default.nix` in alphabetical order:
 }
 ```
 
-Write the derivation in `overlays/overlay/foo/default.nix`.
+Write the derivation in `overlays/holo-nixpkgs/foo/default.nix`.
 
 To test if it builds, run `nix-build -A foo`.
 
 ## Iterate on NixOS modules/profiles
 
-To test HoloPortOS in a VM for a generic target, enter `nix-shell`, run
-`holoportos-build-vm` and then execute `result/bin/run-holoport-vm`.
+First, enter `nix-shell`.
 
-To test HoloPortOS in a VM for a custom target, enter `nix-shell`, run
-`holoportos-build-vm <target>` and then execute `result/bin/run-holoport-vm`.
-For example, try `demo`.
+To test HoloPortOS in a VM for a generic target, run `holoportos-shell`. First
+argument can optionally specify a custom target: for example, to test
+[`profiles/holoportos/demo`](profiles/holoportos/demo/default.nix) profile,
+you'd run `holoportos-shell demo`.
 
-To rebuild HoloPortOS on the current system, enter `nix-shell` and then run
-`holoportos-switch`. This is useful for testing hardware support.
+If you want to build a VM without entering it, use `holoportos-build-vm`
+instead of `holoportos-shell`. It similarly supports an optional target
+argument.
+
+To rebuild HoloPortOS directly on the current system, enter `nix-shell` and
+then run `holoportos-switch`. This is useful for testing hardware support.

@@ -41,15 +41,15 @@ in
           sleep 1
         done
 
+        export HPOS_STATE_PATH=$(hpos-init)
+
+        mkdir -p /var/lib/holochain-conductor
+        cd /var/lib/holochain-conductor
+
+        hpos-state-derive-keystore < $HPOS_STATE_PATH > holo-keystore 2> holo-keystore.pub
+        export HOLO_PUBLIC_KEY=$(cat holo-keystore.pub)
+
         if [ "$(zerotier_status)" = "ACCESS_DENIED" ]; then
-          export HPOS_STATE_PATH=$(hpos-init)
-
-          mkdir -p /var/lib/holochain-conductor
-          cd /var/lib/holochain-conductor
-
-          hpos-state-derive-keystore < $HPOS_STATE_PATH > holo-keystore 2> holo-keystore.pub
-          export HOLO_PUBLIC_KEY=$(cat holo-keystore.pub)
-
           exec ${cfg.package}/bin/holo-auth-client
         fi
       '';

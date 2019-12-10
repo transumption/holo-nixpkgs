@@ -35,11 +35,9 @@ in
       path = with pkgs; [
         holochain-cli
         holochain-conductor
-        n3h
       ];
 
       preStart = ''
-        mkdir -p ${cfg.config.network.n3h_persistence_path}
         cat ${pkgs.writeTOML cfg.config} > ${home}/conductor-config.toml
         sed -i s/@public_key@/$(cat ${home}/holo-keystore.pub)/ ${home}/conductor-config.toml
       '';

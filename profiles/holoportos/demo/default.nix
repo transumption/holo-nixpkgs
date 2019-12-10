@@ -54,8 +54,6 @@ in
       instances = map instanceConfig dnas;
       network = {
         bootstrap_nodes = [];
-        n3h_persistence_path = "${conductorHome}/.n3h";
-        type = "n3h";
       };
       persistence_dir = conductorHome;
       signing_service_uri = "http://localhost:8888";

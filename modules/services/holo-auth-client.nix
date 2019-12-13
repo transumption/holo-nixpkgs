@@ -68,5 +68,10 @@ in
       after = [ "holo-auth-client.service" ];
       requires = [ "holo-auth-client.service" ];
     };
+
+    systemd.services.hp-admin-crypto-server = {
+      after = [ "holo-auth-client.service" ];
+      requires = [ "holo-auth-client.service" ];
+    };
   };
 }

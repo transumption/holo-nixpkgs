@@ -74,7 +74,7 @@ in
 
   services.devmon.enable = true;
 
-  services.holo-auth-client.enable = true;
+  services.holo-auth-client.enable = lib.mkDefault true;
 
   services.holo-router-agent.enable = true;
 

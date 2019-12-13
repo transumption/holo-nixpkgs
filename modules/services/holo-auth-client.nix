@@ -18,7 +18,7 @@ in
 
   config = mkIf cfg.enable {
     systemd.services.holo-auth-client = {
-      after = [ "network.target" "zerotierone.service" ];
+      after = [ "network.target" "systemd-logind.service" "zerotierone.service" ];
 
       path = with pkgs; [
         hpos-init
@@ -34,8 +34,6 @@ in
         zerotier_status() {
           zerotier-cli -j listnetworks | jq -r .[0].status
         }
-
-        sleep 10
 
         while [ "$(zerotier_status)" = "REQUESTING_CONFIGURATION" ]; do
           sleep 1

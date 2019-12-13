@@ -14,8 +14,6 @@ with pkgs;
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  networking.hostName = "holoportos";
-
   security.sudo.wheelNeedsPassword = false;
 
   services.dnscrypt-proxy2 = {

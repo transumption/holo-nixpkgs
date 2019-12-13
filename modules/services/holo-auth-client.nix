@@ -58,5 +58,10 @@ in
         User = "root";
       };
     };
+
+    systemd.services.holo-router-agent = {
+      after = [ "holo-auth-client.service" ];
+      requires = [ "holo-auth-client.service" ];
+    };
   };
 }

@@ -53,6 +53,7 @@ in
       '';
 
       serviceConfig = {
+        RemainAfterExit = true;
         Type = "oneshot";
         User = "root";
       };

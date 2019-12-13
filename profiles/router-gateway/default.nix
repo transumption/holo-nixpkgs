@@ -12,7 +12,7 @@ with pkgs;
 
   environment.systemPackages = [ pkgs.holo-router-gateway ];
 
-  networking.firewall.allowedTCPPorts = [ 443 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   networking.hostName = "holoportos";
 
@@ -29,6 +29,15 @@ with pkgs;
   services.holo-router-gateway.enable = true;
 
   services.mingetty.autologinUser = "root";
+
+  services.nginx = {
+    enable = true;
+    virtualHosts.default = {
+      extraConfig = ''
+        return 301 https://$host$request_uri;
+      '';
+    };
+  };
 
   users.users.root.openssh.authorizedKeys.keys = lib.mkForce [
     # Sam Rose

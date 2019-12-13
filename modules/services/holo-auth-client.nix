@@ -59,6 +59,11 @@ in
       };
     };
 
+    systemd.services.holochain-conductor = {
+      after = [ "holo-auth-client.service" ];
+      requires = [ "holo-auth-client.service" ];
+    };
+
     systemd.services.holo-router-agent = {
       after = [ "holo-auth-client.service" ];
       requires = [ "holo-auth-client.service" ];

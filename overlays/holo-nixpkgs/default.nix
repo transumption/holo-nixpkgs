@@ -211,7 +211,7 @@ in
     profile = tryDefault <nixos-config> ../../profiles/holoportos;
 
     qemu = (buildHoloPortOS ../../profiles/hardware/qemu) // {
-      meta.platforms = [ "aarch64-linux" "x86_64-linux" ];
+      meta.platforms = [ "x86_64-linux" ];
     };
 
     virtualbox = (buildHoloPortOS ../../profiles/hardware/virtualbox) // {

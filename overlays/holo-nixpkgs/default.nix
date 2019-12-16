@@ -199,6 +199,8 @@ in
     python3 = python3.withPackages (ps: [ ps.requests ]);
   };
 
+  holo-cli = callPackage ./holo-cli {};
+
   holo-nixpkgs-tests = recurseIntoAttrs (
     import ../../tests {
       inherit pkgs;

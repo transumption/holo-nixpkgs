@@ -1,8 +1,8 @@
 diff --git a/nixos/lib/make-ext4-fs.nix b/nixos/lib/make-ext4-fs.nix
-index 47c6374c81a..2d5948424c1 100644
+index 932adcd9796..d5a995c2a6e 100644
 --- a/nixos/lib/make-ext4-fs.nix
 +++ b/nixos/lib/make-ext4-fs.nix
-@@ -67,7 +67,6 @@ pkgs.stdenv.mkDerivation {
+@@ -82,7 +82,6 @@ pkgs.stdenv.mkDerivation {
          size=$(( blocks - ''${free##*:} + fudge ))
  
          echo "Resizing from $blocks blocks to $size blocks. (~ $((size*blocksize/1024/1024))MiB)"

@@ -76,7 +76,7 @@ in
 
   services.holo-auth-client.enable = lib.mkDefault true;
 
-  services.holo-router-agent.enable = true;
+  services.holo-router-agent.enable = lib.mkDefault true;
 
   services.hp-admin-crypto-server.enable = true;
 
@@ -199,7 +199,7 @@ in
   };
 
   system.holoportos.autoUpgrade = {
-    enable = true;
+    enable = lib.mkDefault true;
     dates = "*:0/10";
   };
 

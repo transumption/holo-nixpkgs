@@ -4,7 +4,7 @@ makeTest {
   name = "holochain-conductor";
 
   machine = {
-    imports = [ (import ../../profiles/holoportos) ];
+    imports = [ (import ../../profiles/holoportos/sandbox) ];
 
     environment.systemPackages = [
       holo-cli
@@ -12,15 +12,6 @@ makeTest {
       hpos-state-derive-keystore
       jq
     ];
-
-    services.holo-auth-client.enable = false;
-
-    services.holochain-conductor.config.network = {
-      type = "sim2h";
-      sim2h_url = "wss://localhost:9000";
-    };
-
-    services.sim2h-server.enable = true;
 
     virtualisation.memorySize = 3072;
   };

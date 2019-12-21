@@ -201,11 +201,11 @@ in
 
   holo-cli = callPackage ./holo-cli {};
 
-  holo-nixpkgs-tests = recurseIntoAttrs (
-    import ../../tests {
-      inherit pkgs;
-    }
-  );
+  holo-nixpkgs = recurseIntoAttrs {
+    tests = recurseIntoAttrs (
+      import ../../tests { inherit pkgs; }
+    );
+  };
 
   holoportos = recurseIntoAttrs {
     profile = tryDefault <nixos-config> ../../profiles/holoportos;

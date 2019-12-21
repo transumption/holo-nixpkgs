@@ -202,6 +202,8 @@ in
   holo-cli = callPackage ./holo-cli {};
 
   holo-nixpkgs = recurseIntoAttrs {
+    path = gitignoreSource ../..;
+
     tests = recurseIntoAttrs (
       import ../../tests { inherit pkgs; }
     );

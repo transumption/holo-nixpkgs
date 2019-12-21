@@ -272,6 +272,8 @@ in
     }
   );
 
+  magic-wormhole-mailbox-server = python3Packages.callPackage ./magic-wormhole-mailbox-server {};
+
   nodejs = nodejs-12_x;
 
   rust = previous.rust // {

@@ -136,6 +136,9 @@ in
     in
       head (attrVals imageNames system);
 
+  mkBuildMatrix = scope:
+    lib.mapAttrs (_: pkgs: scope { inherit pkgs; });
+
   mkJobsets = callPackage ./mk-jobsets {};
 
   singletonDir = path:

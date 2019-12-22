@@ -136,6 +136,8 @@ in
     in
       head (attrVals imageNames system);
 
+  mkJobsets = callPackage ./mk-jobsets {};
+
   singletonDir = path:
     let
       drv = lib.toDerivation path;

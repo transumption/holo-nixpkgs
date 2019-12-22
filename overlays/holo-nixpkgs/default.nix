@@ -141,6 +141,22 @@ in
 
   mkJobsets = callPackage ./mk-jobsets {};
 
+  mkRelease = src: platforms:
+    let
+      buildMatrix = mkBuildMatrix (import src) platforms;
+    in
+    {
+      aggregate = releaseTools.channel {
+        name = "aggregate";
+        inherit src;
+
+        constituents = with lib;
+          concatMap (collect isDerivation) (attrValues buildMatrix);
+      };
+
+      platforms = buildMatrix;
+    };
+
   singletonDir = path:
     let
       drv = lib.toDerivation path;

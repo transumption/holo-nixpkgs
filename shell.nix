@@ -13,7 +13,8 @@ mkShell {
     hpos-shell() {
       $(nix-build -I nixos-config=${root}/profiles/holoportos/$1 \
         --attr holoportos.qemu \
-        --no-out-link)/bin/run-holoportos-vm
+        --no-out-link \
+        --show-trace)/bin/run-holoportos-vm
     }
 
     hpos-switch() {

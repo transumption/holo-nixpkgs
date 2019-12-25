@@ -1,4 +1,4 @@
-{ lib, gitignoreSource, rustPlatform, makeWrapper, pkgconfig, aurora-led, openssl }:
+{ lib, gitignoreSource, rustPlatform, makeWrapper, pkgconfig, aorura-cli, openssl }:
 
 rustPlatform.buildRustPackage {
   name = "hpos-led-daemon";
@@ -11,7 +11,7 @@ rustPlatform.buildRustPackage {
 
   postInstall = ''
     wrapProgram $out/bin/hpos-led-daemon \
-      --prefix PATH : ${lib.makeBinPath [ aurora-led ]}
+      --prefix PATH : ${lib.makeBinPath [ aorura-cli ]}
   '';
 
   meta.platforms = lib.platforms.linux;

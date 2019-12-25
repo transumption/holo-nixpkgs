@@ -10,8 +10,8 @@ use std::time::Duration;
 
 use getopts::Options;
 
-fn aurora_led(args: &[&str]) {
-    Command::new("aurora-led").args(args).status().ok();
+fn aorura_cli(args: &[&str]) {
+    Command::new("aorura-cli").args(args).status().ok();
 }
 
 const THERMAL_ZONE: &str = "/sys/class/thermal/thermal_zone0/temp";
@@ -61,12 +61,12 @@ fn main() {
 
         match get_temp() {
             79000...98999 => {
-                aurora_led(&["--device", &device, "--mode", "flash", "--color", "yellow"]);
+                aorura_cli(&["--path", &device, "--state", "flash:yellow"]);
                 is_aurora = false;
                 continue;
             }
             99000...i64::MAX => {
-                aurora_led(&["--device", &device, "--mode", "flash", "--color", "red"]);
+                aorura_cli(&["--path", &device, "--state", "flash:red"]);
                 is_aurora = false;
                 continue;
             }
@@ -74,13 +74,13 @@ fn main() {
         }
 
         if !is_online(&operstate) {
-            aurora_led(&["--device", &device, "--mode", "flash", "--color", "purple"]);
+            aorura_cli(&["--path", &device, "--state", "flash:purple"]);
             is_aurora = false;
             continue;
         }
 
         if !is_aurora {
-            aurora_led(&["--device", &device, "--mode", "aurora"]);
+            aorura_cli(&["--path", &device, "--state", "aurora"]);
             is_aurora = true;
         }
     }

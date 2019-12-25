@@ -4,6 +4,13 @@ with final;
 with lib;
 
 let
+  aorura = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "aorura";
+    rev = "f7ab351174422d9bd8ca836783eeeda083c24865";
+    sha256 = "0idjh18q844j1f2fl666gyzlas6v82fi7gq5knbj2bxdi8nd2cvc";
+  };
+
   cargo-to-nix = fetchFromGitHub {
     owner = "transumption-unstable";
     repo = "cargo-to-nix";
@@ -81,6 +88,8 @@ let
 in
 
 {
+  inherit (callPackage aorura {}) aorura-cli;
+
   inherit (callPackage cargo-to-nix {})
     buildRustPackage
     cargoToNix
@@ -190,8 +199,6 @@ in
   dnaPackages = recurseIntoAttrs (
     import ./dna-packages final previous
   );
-
-  aurora-led = callPackage ./aurora-led {};
 
   dnscrypt-proxy2 = callPackage ./dnscrypt-proxy2 {};
 

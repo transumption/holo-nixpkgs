@@ -45,7 +45,7 @@ in
       serviceConfig = {
         Type = "oneshot";
         User = "holoport-led-daemon";
-        ExecStop = "${pkgs.aorura-cli}/bin/aorura-cli --path ${cfg.device} --state flash:blue";
+        ExecStop = "${pkgs.aorura-cli}/bin/aorura-cli ${cfg.device} --set flash:blue";
         RemainAfterExit = "yes";
       };
     };

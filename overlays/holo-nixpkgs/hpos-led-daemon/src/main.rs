@@ -61,12 +61,12 @@ fn main() {
 
         match get_temp() {
             79000...98999 => {
-                aorura_cli(&["--path", &device, "--state", "flash:yellow"]);
+                aorura_cli(&[&device, "--set", "flash:yellow"]);
                 is_aurora = false;
                 continue;
             }
             99000...i64::MAX => {
-                aorura_cli(&["--path", &device, "--state", "flash:red"]);
+                aorura_cli(&[&device, "--set", "flash:red"]);
                 is_aurora = false;
                 continue;
             }
@@ -74,13 +74,13 @@ fn main() {
         }
 
         if !is_online(&operstate) {
-            aorura_cli(&["--path", &device, "--state", "flash:purple"]);
+            aorura_cli(&[&device, "--set", "flash:purple"]);
             is_aurora = false;
             continue;
         }
 
         if !is_aurora {
-            aorura_cli(&["--path", &device, "--state", "aurora"]);
+            aorura_cli(&[&device, "--set", "aurora"]);
             is_aurora = true;
         }
     }

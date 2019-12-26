@@ -7,8 +7,8 @@ let
   aorura = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "aorura";
-    rev = "f7ab351174422d9bd8ca836783eeeda083c24865";
-    sha256 = "0idjh18q844j1f2fl666gyzlas6v82fi7gq5knbj2bxdi8nd2cvc";
+    rev = "2aef90935d6e965cf6ec02208f84e4b6f43221bd";
+    sha256 = "00d9c6f0hh553hgmw01lp5639kbqqyqsz66jz35pz8xahmyk5wmw";
   };
 
   cargo-to-nix = fetchFromGitHub {
@@ -88,7 +88,10 @@ let
 in
 
 {
-  inherit (callPackage aorura {}) aorura-cli;
+  inherit (callPackage aorura {})
+    aorura-cli
+    aorura-emu
+    ;
 
   inherit (callPackage cargo-to-nix {})
     buildRustPackage

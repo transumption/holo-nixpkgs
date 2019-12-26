@@ -5,6 +5,7 @@
 
   imports = [
     ./boot/generic-extlinux-compatible.nix
+    ./services/aorura-emu.nix
     ./services/dnscrypt-proxy2.nix
     ./services/holo-auth-client.nix
     ./services/holo-envoy.nix

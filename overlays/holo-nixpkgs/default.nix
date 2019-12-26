@@ -269,7 +269,9 @@ in
     python3 = python3.withPackages (ps: [ ps.magic-wormhole ]);
   };
 
-  hpos-led-daemon = callPackage ./hpos-led-daemon {};
+  hpos-led-manager = callPackage ./hpos-led-manager {
+    inherit (rust.packages.nightly) rustPlatform;
+  };
 
   hpstatus = fetchFromGitHub {
     owner = "Holo-Host";

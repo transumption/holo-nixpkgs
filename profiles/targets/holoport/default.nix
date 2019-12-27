@@ -1,6 +1,6 @@
 {
   imports = [
-    ../../logical/hpos/holoport
-    ../../physical/hpos
+    ../../logical/hpos
+    ../../physical/hpos/holoport
   ];
 }

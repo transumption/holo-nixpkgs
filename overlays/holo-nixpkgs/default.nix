@@ -215,8 +215,6 @@ in
 
   hclient = callPackage ./hclient {};
 
-  holofuel-app = callPackage ./holofuel-app {};
-
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {
     linux = linux_latest;
   };

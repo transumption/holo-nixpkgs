@@ -29,4 +29,3 @@ stdenv.mkDerivation rec {
     patchShebangs $out
   '';
 }
-

@@ -154,17 +154,17 @@ in
     let
       buildMatrix = mkBuildMatrix (import src) platforms;
     in
-    {
-      aggregate = releaseTools.channel {
-        name = "aggregate";
-        inherit src;
+      {
+        aggregate = releaseTools.channel {
+          name = "aggregate";
+          inherit src;
 
-        constituents = with lib;
-          concatMap (collect isDerivation) (attrValues buildMatrix);
+          constituents = with lib;
+            concatMap (collect isDerivation) (attrValues buildMatrix);
+        };
+
+        platforms = buildMatrix;
       };
-
-      platforms = buildMatrix;
-    };
 
   singletonDir = path:
     let

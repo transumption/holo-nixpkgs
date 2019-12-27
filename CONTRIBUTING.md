@@ -1,14 +1,3 @@
-## Branch protection rules
-
-`develop` requires signed commits, passing CI and pull request with at least
-one review. Code owners may waive some of restrictions for individual pull
-requests in special circumstances.
-
-`master` requires signed commits, passing CI and pull request with at least two
-reviews, both of which must be made against the most recent tip of the branch.
-If any, code owner reviews are mandatory. Change request reviews can't be
-dismissed. Administrators or code owners must not waive any restrictions.
-
 ## Commit message style guide
 
 See: https://nixos.org/nixpkgs/manual/#submitting-changes-making-patches

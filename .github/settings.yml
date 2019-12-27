@@ -33,7 +33,7 @@ branches:
         strict: true
         contexts:
           - Hydra
-      enforce_admins: true
+      enforce_admins: false
       restrictions:
         users: []
         teams: []

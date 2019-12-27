@@ -41,8 +41,6 @@ in
   boot.loader.grub.splashImage = ./splash.png;
   boot.loader.timeout = 1;
 
-  documentation.enable = false;
-
   environment.noXlibs = true;
 
   environment.systemPackages = [ udevil ];

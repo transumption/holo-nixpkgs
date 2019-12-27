@@ -213,8 +213,6 @@ in
     sim2h-server
     ;
 
-  hclient = callPackage ./hclient {};
-
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {
     linux = linux_latest;
   };

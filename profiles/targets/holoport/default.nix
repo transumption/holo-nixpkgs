@@ -1,8 +1,6 @@
 {
   imports = [
-    ../../hardware/holoport
-    ../../holoportos
+    ../../logical/hpos/holoport
+    ../../physical/hpos
   ];
-
-  services.hpos-led-manager.enable = true;
 }

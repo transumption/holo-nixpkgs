@@ -24,9 +24,5 @@
 
   boot.loader.grub.enable = false;
 
-  services.hpos-led-manager = {
-    devicePath = "/dev/ttyS2";
-  };
-
-  system.holoportos.target = "holoport-nano";
+  services.hpos-led-manager.devicePath = "/dev/ttyS2";
 }

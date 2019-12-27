@@ -219,8 +219,6 @@ in
 
   holofuel-app = callPackage ./holofuel-app {};
 
-  holoport-hardware-test = callPackage ./holoport-hardware-test {};
-
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {
     linux = linux_latest;
   };

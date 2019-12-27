@@ -244,8 +244,6 @@ in
     };
   };
 
-  holoportos-install = callPackage ./holoportos-install {};
-
   hpos-admin = callPackage ./hpos-admin {
     stdenv = stdenvNoCC;
     python3 = python3.withPackages (ps: [ ps.flask ps.gevent ]);

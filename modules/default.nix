@@ -19,6 +19,5 @@
     ./services/sim2h-server.nix
     ./system/holoportos.nix
     ./system/holoportos/auto-upgrade.nix
-    ./system/holoportos/install.nix
   ];
 }

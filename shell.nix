@@ -11,10 +11,8 @@ mkShell {
 
   shellHook = ''
     hpos-shell() {
-      $(nix-build -I nixos-config=${root}/profiles/holoportos/$1 \
-        --attr holoportos.qemu \
-        --no-out-link \
-        --show-trace)/bin/run-holoportos-vm
+      drv=$(nix-build --attr hpos.qemu --no-out-link --show-trace)
+      [ -z "$drv" ] || "$drv/bin/run-hpos-vm"
     }
 
     hpos-switch() {

@@ -3,8 +3,6 @@
 with pkgs;
 
 let
-  inherit (config.system.holoportos) target;
-
   conductorHome = config.users.users.holochain-conductor.home;
 
   dnas = with dnaPackages; [
@@ -51,7 +49,7 @@ in
 
   networking.firewall.allowedTCPPorts = [ 443 ];
 
-  networking.hostName = lib.mkOverride 1100 "holoportos";
+  networking.hostName = lib.mkOverride 1100 "hpos";
 
   nix.gc = {
     automatic = true;

@@ -8,9 +8,5 @@
     devices = [ "/dev/sda" ];
   };
 
-  services.hpos-led-manager = {
-    devicePath = "/dev/ttyUSB0";
-  };
-
-  system.holoportos.target = "holoport";
+  services.hpos-led-manager.devicePath = "/dev/ttyUSB0";
 }

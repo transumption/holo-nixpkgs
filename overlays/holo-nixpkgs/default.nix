@@ -130,9 +130,6 @@ in
     }
   );
 
-  buildHoloPortOS = hardware:
-    buildImage [ holoportos.profile hardware ];
-
   buildImage = imports:
     let
       system = nixos {
@@ -157,17 +154,17 @@ in
     let
       buildMatrix = mkBuildMatrix (import src) platforms;
     in
-    {
-      aggregate = releaseTools.channel {
-        name = "aggregate";
-        inherit src;
+      {
+        aggregate = releaseTools.channel {
+          name = "aggregate";
+          inherit src;
 
-        constituents = with lib;
-          concatMap (collect isDerivation) (attrValues buildMatrix);
+          constituents = with lib;
+            concatMap (collect isDerivation) (attrValues buildMatrix);
+        };
+
+        platforms = buildMatrix;
       };
-
-      platforms = buildMatrix;
-    };
 
   singletonDir = path:
     let
@@ -228,23 +225,25 @@ in
     path = gitignoreSource ../..;
 
     tests = recurseIntoAttrs (
-      import ../../tests { inherit pkgs; }
+      import "${holo-nixpkgs.path}/tests" { inherit pkgs; }
     );
   };
 
-  holoportos = recurseIntoAttrs {
-    profile = tryDefault <nixos-config> ../../profiles/holoportos;
+  hpos = recurseIntoAttrs {
+    buildImage = imports:
+      buildImage (imports ++ [ hpos.logical ]);
 
-    qemu = (buildHoloPortOS ../../profiles/hardware/qemu) // {
+    logical = "${holo-nixpkgs.path}/profiles/logical/hpos";
+    physical = "${holo-nixpkgs.path}/profiles/physical/hpos";
+
+    qemu = (hpos.buildImage [ "${hpos.physical}/vm/qemu" ]) // {
       meta.platforms = [ "x86_64-linux" ];
     };
 
-    virtualbox = (buildHoloPortOS ../../profiles/hardware/virtualbox) // {
+    virtualbox = (hpos.buildImage [ "${hpos.physical}/vm/virtualbox" ]) // {
       meta.platforms = [ "x86_64-linux" ];
     };
   };
-
-  holoportos-install = callPackage ./holoportos-install {};
 
   hpos-admin = callPackage ./hpos-admin {
     stdenv = stdenvNoCC;

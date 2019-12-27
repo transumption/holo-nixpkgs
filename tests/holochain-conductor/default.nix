@@ -1,10 +1,10 @@
-{ lib, makeTest, holo-cli, hpos-state-gen-cli, hpos-state-derive-keystore, jq }:
+{ lib, makeTest, holo-cli, hpos, hpos-state-gen-cli, hpos-state-derive-keystore, jq }:
 
 makeTest {
   name = "holochain-conductor";
 
   machine = {
-    imports = [ (import ../../profiles/holoportos/sandbox) ];
+    imports = [ (import "${hpos.logical}/sandbox") ];
 
     environment.systemPackages = [
       holo-cli

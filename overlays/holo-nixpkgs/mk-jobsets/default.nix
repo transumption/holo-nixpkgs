@@ -29,8 +29,7 @@ let
   };
 
   jobsets =
-    lib.mapAttrs pullRequestToJobset (lib.importJSON pullRequests) //
-    lib.genAttrs branches branchToJobset;
+    lib.mapAttrs pullRequestToJobset (lib.importJSON pullRequests) // lib.genAttrs branches branchToJobset;
 in
 
 {

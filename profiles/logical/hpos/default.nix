@@ -43,8 +43,6 @@ in
 
   environment.noXlibs = true;
 
-  environment.systemPackages = [ udevil ];
-
   networking.firewall.allowedTCPPorts = [ 443 ];
 
   networking.hostName = lib.mkOverride 1100 "hpos";
@@ -65,8 +63,6 @@ in
       addresses = true;
     };
   };
-
-  services.devmon.enable = true;
 
   services.holo-auth-client.enable = lib.mkDefault true;
 

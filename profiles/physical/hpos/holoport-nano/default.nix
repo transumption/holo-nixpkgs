@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../. ];
+  imports = [
+    ../.
+    ../automount.nix
+  ];
 
   boot.extraModulePackages = with config.boot.kernelPackages; [
     sun50i-a64-gpadc-iio

@@ -1,3 +1,5 @@
+{ lib, ... }:
+
 {
   imports = [
     ./services/aorura-emu.nix
@@ -12,7 +14,9 @@
     ./services/hpos-led-manager.nix
     ./services/magic-wormhole-mailbox-server.nix
     ./services/sim2h-server.nix
-    ./system/holoportos.nix
     ./system/holoportos/auto-upgrade.nix
   ];
+
+  # Compat shim, to be removed along with /profiles/targets:
+  options.system.holoportos.network = lib.mkOption {};
 }

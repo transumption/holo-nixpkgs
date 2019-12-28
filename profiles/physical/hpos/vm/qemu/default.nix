@@ -1,5 +1,12 @@
+{ pkgs, ... }:
+
 let
   nixpkgs = import ../../../../../nixpkgs/source.nix;
+
+  channel = pkgs.releaseTools.channel {
+    name = "holo-nixpkgs";
+    src = pkgs.holo-nixpkgs.path;
+  };
 in
 
 {
@@ -7,6 +14,8 @@ in
     ../.
     "${nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix"
   ];
+
+  system.defaultChannel = "file://${channel}/tarballs/nixexprs.tar.xz";
 
   virtualisation = {
     diskSize = 3072;

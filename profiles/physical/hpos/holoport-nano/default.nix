@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../. ];
+  imports = [
+    ../.
+    ../automount.nix
+  ];
 
   boot.extraModulePackages = with config.boot.kernelPackages; [
     sun50i-a64-gpadc-iio
@@ -23,6 +26,8 @@
   };
 
   boot.loader.grub.enable = false;
+
+  hardware.deviceTree.package = pkgs.holoport-nano-dtb;
 
   services.hpos-led-manager.devicePath = "/dev/ttyS2";
 }

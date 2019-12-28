@@ -1,7 +1,10 @@
 { lib, ... }:
 
 {
-  imports = [ ../. ];
+  imports = [
+    ../.
+    ../automount.nix
+  ];
 
   boot.loader.grub = {
     enable = lib.mkDefault true;
@@ -9,6 +12,4 @@
   };
 
   services.hpos-led-manager.devicePath = "/dev/ttyUSB0";
-
-  system.holoportos.target = "holoport-plus";
 }

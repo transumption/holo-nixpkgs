@@ -41,11 +41,7 @@ in
   boot.loader.grub.splashImage = ./splash.png;
   boot.loader.timeout = 1;
 
-  documentation.enable = false;
-
   environment.noXlibs = true;
-
-  environment.systemPackages = [ udevil ];
 
   networking.firewall.allowedTCPPorts = [ 443 ];
 
@@ -68,8 +64,6 @@ in
     };
   };
 
-  services.devmon.enable = true;
-
   services.holo-auth-client.enable = lib.mkDefault true;
 
   services.holo-router-agent.enable = lib.mkDefault true;
@@ -79,8 +73,6 @@ in
   services.hpos-admin.enable = true;
 
   services.mingetty.autologinUser = "root";
-
-  services.openssh.enable = true;
 
   services.nginx = {
     enable = true;
@@ -200,8 +192,6 @@ in
   };
 
   system.stateVersion = "19.09";
-
-  users.mutableUsers = false;
 
   users.users.holo.isNormalUser = true;
 

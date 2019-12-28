@@ -18,9 +18,6 @@
 
   services.nginx = {
     enable = true;
-    recommendedOptimisation = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
     virtualHosts.hydra = {
       enableACME = true;
       forceSSL = true;

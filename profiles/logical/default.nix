@@ -1,3 +1,5 @@
 {
   imports = [ ../. ];
+
+  users.mutableUsers = false;
 }

@@ -193,8 +193,6 @@ in
 
   system.stateVersion = "19.09";
 
-  users.mutableUsers = false;
-
   users.users.holo.isNormalUser = true;
 
   users.users.root.hashedPassword = "*";

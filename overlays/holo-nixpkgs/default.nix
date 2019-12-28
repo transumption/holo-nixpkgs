@@ -200,8 +200,6 @@ in
     import ./dna-packages final previous
   );
 
-  extlinux-conf-builder = callPackage ./extlinux-conf-builder {};
-
   inherit (callPackage holo-envoy {}) holo-envoy;
 
   inherit (callPackage holochain-rust {})

@@ -27,5 +27,7 @@
 
   boot.loader.grub.enable = false;
 
+  hardware.deviceTree.package = pkgs.holoport-nano-dtb;
+
   services.hpos-led-manager.devicePath = "/dev/ttyS2";
 }

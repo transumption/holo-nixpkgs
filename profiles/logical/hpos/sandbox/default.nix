@@ -14,5 +14,5 @@
 
   services.zerotierone.enable = false;
 
-  system.holoportos.autoUpgrade.enable = false;
+  system.holo-nixpkgs.autoUpgrade.enable = false;
 }

@@ -186,7 +186,7 @@ in
     };
   };
 
-  system.holoportos.autoUpgrade = {
+  system.holo-nixpkgs.autoUpgrade = {
     enable = lib.mkDefault true;
     dates = "*:0/10";
   };

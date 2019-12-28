@@ -18,7 +18,7 @@
     StrictHostKeyChecking accept-new
   '';
 
-  system.holoportos.autoUpgrade = {
+  system.holo-nixpkgs.autoUpgrade = {
     enable = true;
     dates = "*:0/10";
   };

@@ -74,8 +74,6 @@ in
 
   services.mingetty.autologinUser = "root";
 
-  services.openssh.enable = true;
-
   services.nginx = {
     enable = true;
 

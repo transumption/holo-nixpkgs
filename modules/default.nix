@@ -5,7 +5,6 @@
     ./services/aorura-emu.nix
     ./services/dnscrypt-proxy2.nix
     ./services/holo-auth-client.nix
-    ./services/holo-envoy.nix
     ./services/holo-router-agent.nix
     ./services/holo-router-gateway.nix
     ./services/holochain-conductor.nix

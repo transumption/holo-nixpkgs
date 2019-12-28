@@ -68,12 +68,6 @@ in
 
     <githubstatus>
       context = Hydra
-      jobs = holo-envoy:.*:holo-envoy
-      inputs = holo-envoy
-    </githubstatus>
-
-    <githubstatus>
-      context = Hydra
       jobs = hp-admin:.*:hp-admin
       inputs = hp-admin
     </githubstatus>

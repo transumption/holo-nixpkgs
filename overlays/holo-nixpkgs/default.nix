@@ -32,13 +32,6 @@ let
     sha256 = "0jrh5ghisaqdd0vldbywags20m2cxpkbbk5jjjmwaw0gr8nhsafv";
   };
 
-  holo-envoy = fetchFromGitHub {
-    owner = "Holo-Host";
-    repo = "envoy";
-    rev = "52b0b34907474ef39f123c855ed6caae89b63396";
-    sha256 = "0648bmv33cmb53ppn3ph44v52yx19qd6nnjskgmkyk05xmgd391y";
-  };
-
   holo-router = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "holo-router";
@@ -199,8 +192,6 @@ in
   dnaPackages = recurseIntoAttrs (
     import ./dna-packages final previous
   );
-
-  inherit (callPackage holo-envoy {}) holo-envoy;
 
   inherit (callPackage holochain-rust {})
     holochain-cli

@@ -138,14 +138,12 @@ in
     in
       head (attrVals imageNames system);
 
-  mkBuildMatrix = scope:
-    lib.mapAttrs (_: pkgs: scope { inherit pkgs; });
-
   mkJobsets = callPackage ./mk-jobsets {};
 
   mkRelease = src: platforms:
     let
-      buildMatrix = mkBuildMatrix (import src) platforms;
+      buildMatrix =
+        lib.mapAttrs (_: pkgs: import src { inherit pkgs; }) platforms;
     in
       {
         aggregate = releaseTools.channel {
@@ -158,15 +156,6 @@ in
 
         platforms = buildMatrix;
       };
-
-  singletonDir = path:
-    let
-      drv = lib.toDerivation path;
-    in
-      runCommand "singleton" {} ''
-        mkdir $out
-        ln -s ${path} $out/${drv.name}
-      '';
 
   tryDefault = x: default:
     let
@@ -199,8 +188,17 @@ in
     sim2h-server
     ;
 
-  holoport-nano-dtb = callPackage ./holoport-nano-dtb {
-    linux = linux_latest;
+  holo = recurseIntoAttrs {
+    buildProfile = profile: buildImage [
+      "${holo-nixpkgs.path}/profiles/logical/holo/${profile}"
+      "${pkgs.path}/nixos/modules/virtualisation/qemu-vm.nix"
+    ];
+
+    hydra-master = holo.buildProfile "hydra/master";
+    hydra-minion = holo.buildProfile "hydra/minion";
+    router-gateway = holo.buildProfile "router-gateway";
+    sim2h = holo.buildProfile "sim2h";
+    wormhole-relay = holo.buildProfile "wormhole-relay";
   };
 
   holo-auth-client = callPackage ./holo-auth-client {
@@ -216,6 +214,10 @@ in
     tests = recurseIntoAttrs (
       import "${holo-nixpkgs.path}/tests" { inherit pkgs; }
     );
+  };
+
+  holoport-nano-dtb = callPackage ./holoport-nano-dtb {
+    linux = linux_latest;
   };
 
   hpos = recurseIntoAttrs {

@@ -1,7 +1,11 @@
 { lib, ... }:
 
 {
-  imports = [ ../. ];
+  imports = [
+    ../.
+    ../binary-cache.nix
+    ../self-aware.nix
+  ];
 
   time.timeZone = "UTC";
 

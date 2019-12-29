@@ -6,9 +6,7 @@ let
 in
 
 {
-  imports = [
-    ../.
-  ];
+  imports = [ ../. ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 

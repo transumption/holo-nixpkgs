@@ -3,7 +3,6 @@
 {
   imports = [
     ../.
-    ../self-aware.nix
   ];
 
   nix.gc = {

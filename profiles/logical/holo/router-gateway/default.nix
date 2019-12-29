@@ -5,9 +5,7 @@ with pkgs;
 {
   imports = [
     ../.
-    ../binary-cache.nix
-    ../self-aware.nix
-    ../zerotier.nix
+    ../../zerotier.nix
   ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];

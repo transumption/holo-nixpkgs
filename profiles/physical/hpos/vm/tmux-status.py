@@ -1,3 +1,4 @@
+from pathlib import Path
 import json
 import sys
 
@@ -21,8 +22,15 @@ def aorura_state_indicator(state):
         return aorura_color_indicator(state['static'])
 
 
+WORMHOLE_CODE_PATH = Path('/run/hpos-init/wormhole-code.txt')
+
+
 def tmux_status(aorura_state):
-    return aorura_state_indicator(aorura_state)
+    status = [aorura_state_indicator(aorura_state)]
+    if WORMHOLE_CODE_PATH.is_file():
+        status.insert(0, 'Wormhole code: ' + WORMHOLE_CODE_PATH.read_text())
+    return ' '.join(status)
+
 
 def main():
     sys.stdout.write(tmux_status(json.load(sys.stdin)))

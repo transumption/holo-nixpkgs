@@ -15,6 +15,7 @@ stdenvNoCC.mkDerivation {
     ./ext4-no-resize2fs.diff
     ./rust-aarch64-musl-cross.diff
     ./rust-home.diff
+    ./virtualbox-image-no-audio-mouse-usb.diff
   ];
 
   phases = [ "unpackPhase" "patchPhase" "installPhase" ];

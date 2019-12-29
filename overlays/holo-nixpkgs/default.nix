@@ -157,15 +157,6 @@ in
         platforms = buildMatrix;
       };
 
-  singletonDir = path:
-    let
-      drv = lib.toDerivation path;
-    in
-      runCommand "singleton" {} ''
-        mkdir $out
-        ln -s ${path} $out/${drv.name}
-      '';
-
   tryDefault = x: default:
     let
       eval = builtins.tryEval x;

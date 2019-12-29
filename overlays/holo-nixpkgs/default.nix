@@ -209,13 +209,11 @@ in
 
   holo-cli = callPackage ./holo-cli {};
 
-  holo-nixpkgs = recurseIntoAttrs {
-    path = gitignoreSource ../..;
+  holo-nixpkgs.path = gitignoreSource ../..;
 
-    tests = recurseIntoAttrs (
-      import "${holo-nixpkgs.path}/tests" { inherit pkgs; }
-    );
-  };
+  holo-nixpkgs-tests = recurseIntoAttrs (
+    import "${holo-nixpkgs.path}/tests" { inherit pkgs; }
+  );
 
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {
     linux = linux_latest;

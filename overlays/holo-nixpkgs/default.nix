@@ -138,14 +138,12 @@ in
     in
       head (attrVals imageNames system);
 
-  mkBuildMatrix = scope:
-    lib.mapAttrs (_: pkgs: scope { inherit pkgs; });
-
   mkJobsets = callPackage ./mk-jobsets {};
 
   mkRelease = src: platforms:
     let
-      buildMatrix = mkBuildMatrix (import src) platforms;
+      buildMatrix =
+        lib.mapAttrs (_: pkgs: import src { inherit pkgs; }) platforms;
     in
       {
         aggregate = releaseTools.channel {

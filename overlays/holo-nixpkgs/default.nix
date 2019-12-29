@@ -60,11 +60,11 @@ let
     sha256 = "0ssxra8i7kx7bp6mjs6rmi24qj3jf6zrqp4kz5x0sbqxah23742p";
   };
 
-  hpos-state = fetchFromGitHub {
+  hpos-config = fetchFromGitHub {
     owner = "Holo-Host";
-    repo = "hpos-state";
-    rev = "62009eeb1fe9be9bb455d3a763acb31a71cf7679";
-    sha256 = "0n8kb0ph3kvyjmqs8jxpg5s82al650cdf0fsp0c8ai2q00ig8gjl";
+    repo = "hpos-config";
+    rev = "a64da0d9bc0ef87bc358fcdad6323b424cf4971b";
+    sha256 = "1059lfr2vnacq3aghmir007vgql4za197xx2qlm732vhb6svgpma";
   };
 
   nixpkgs-mozilla = fetchTarball {
@@ -107,10 +107,11 @@ in
 
   inherit (callPackage hp-admin-crypto {}) hp-admin-crypto-server;
 
-  inherit (callPackage hpos-state {})
-    hpos-state-derive-keystore
-    hpos-state-gen-cli
-    hpos-state-gen-web
+  inherit (callPackage hpos-config {})
+    hpos-config-gen-cli
+    hpos-config-gen-web
+    hpos-config-into-base36-id
+    hpos-config-into-keystore
     ;
 
   inherit (callPackage npm-to-nix {}) npmToNix;

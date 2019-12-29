@@ -19,7 +19,7 @@ let
   };
 
   chaperone = fetchFromGitHub {
-    owner = "holo-host";
+    owner = "Holo-Host";
     repo = "chaperone";
     rev = "2386e905dc60dbb2bff482b92d5fbeb418627931";
     sha256 = "02yxlqcgly3235pj6rb84px1my3ps3m5plk0nijazpiakndh2nxz";

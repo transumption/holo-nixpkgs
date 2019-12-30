@@ -23,12 +23,12 @@ let
     sha256 = "0wf7133cam8s3m6hww5fk29343z2a0xf2qv764radx5pcr02lhs0";
   };
 
-  hylo-holo-dnas = fetchFromGitHub {
-    owner = "holochain";
-    repo = "hylo-holo-dnas";
-    rev = "b1d07d4669a7c0e317de2cf0034960fc094e19b1";
-    sha256 = "1hn1x16a7lxrp879vxg8imd5l7kkvg1pdqb9fr1v2jjcfdx7j943";
-  };
+  holo-communities-dna = fetchFromGitHub {
+    owner = "Holo-Host";
+    repo = "holo-communities-dna";
+    rev = "97fde88d03e5c5d702545e01d67046bf64cbbace";
+    sha256 = "0127gawjkh36kgnnmb2lv26q5x5hczlky4wlv46sjc05x21cnyli";
+   };
 
   servicelogger = fetchFromGitHub {
     owner = "Holo-Host";
@@ -43,7 +43,7 @@ in
 
   inherit (callPackage holo-hosting-app {}) holo-hosting-app;
 
-  inherit (callPackage hylo-holo-dnas {}) hylo-holo-dnas;
+  inherit (callPackage holo-communities-dna {}) holo-communities-dna;
 
   inherit (callPackage servicelogger {}) servicelogger;
 

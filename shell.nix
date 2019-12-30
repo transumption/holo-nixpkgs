@@ -10,6 +10,10 @@ mkShell {
   buildInputs = [ nixpkgs-fmt ];
 
   shellHook = ''
+    holo-nixpkgs-fmt() {
+      find ${root} -name \*.nix -exec nixpkgs-fmt {} +
+    }
+
     hpos-shell() {
       drv=$(nix-build --attr hpos.qemu --no-out-link --show-trace)
       [ -z "$drv" ] || "$drv/bin/run-hpos-vm"

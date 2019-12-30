@@ -72,6 +72,8 @@ in
 
   services.hpos-admin.enable = true;
 
+  services.hpos-init.enable = lib.mkDefault true;
+
   services.mingetty.autologinUser = "root";
 
   services.nginx = {

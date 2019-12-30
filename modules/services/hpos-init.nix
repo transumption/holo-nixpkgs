@@ -22,7 +22,8 @@ in
 
   config = mkIf cfg.enable {
     systemd.services.hpos-init = {
-      after = [ "network.target" ];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
       environment.HPOS_CONFIG_PATH = cfg.configPath;
 

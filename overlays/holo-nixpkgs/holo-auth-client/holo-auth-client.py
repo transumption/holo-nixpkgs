@@ -7,7 +7,7 @@ import subprocess
 import time
 
 
-HOLO_AUTH_URL = "https://authorizer.holohost.net/v1/auth"
+HOLO_AUTH_URL = "https://holoport-authorizer.holo.host/v1/auth"
 
 
 @lru_cache()

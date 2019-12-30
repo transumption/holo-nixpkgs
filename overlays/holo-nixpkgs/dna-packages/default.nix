@@ -26,8 +26,8 @@ let
   holo-communities-dna = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "holo-communities-dna";
-    rev = "97fde88d03e5c5d702545e01d67046bf64cbbace";
-    sha256 = "0127gawjkh36kgnnmb2lv26q5x5hczlky4wlv46sjc05x21cnyli";
+    rev = "53f204094e35f21bdd5009ed43cc16b093560737";
+    sha256 = "0jyjj1762d905ysgkhg3p062vp9rmx552nb87z6n4vb11lm3hhh6";
    };
 
   servicelogger = fetchFromGitHub {

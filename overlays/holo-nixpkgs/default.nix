@@ -283,8 +283,8 @@ in
         rustc = (
           rustChannelOf {
             channel = "nightly";
-            date = "2019-07-14";
-            sha256 = "1llbwkjkjis6rv0rbznwwl0j6bf80j38xgwsd4ilcf0qps4cvjsx";
+            date = "2019-11-16";
+            sha256 = "17l8mll020zc0c629cypl5hhga4hns1nrafr7a62bhsp4hg9vswd";
           }
         ).rust.override {
           targets = [

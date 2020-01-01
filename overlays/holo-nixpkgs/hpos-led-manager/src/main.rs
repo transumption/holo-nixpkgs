@@ -55,7 +55,7 @@ fn main() -> Fallible<()> {
 
         let state = match (online, hpos_config_found) {
             (false, _) => State::Flash(Color::Purple),
-            (true, false) => State::Flash(Color::Orange),
+            (true, false) => State::Static(Color::Blue),
             _ => State::Aurora,
         };
 

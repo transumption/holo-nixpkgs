@@ -37,6 +37,7 @@ fn main() -> Fallible<()> {
 
     let mut led = Led::open(&args.flag_device)?;
 
+    let mut state_prev: State = Default::default();
     let state_path = args.flag_state;
     let state_temp_path = state_path.with_extension("tmp");
 
@@ -58,7 +59,10 @@ fn main() -> Fallible<()> {
             _ => State::Aurora,
         };
 
-        led.set(state)?;
+        if state != state_prev {
+            led.set(state)?;
+            state_prev = state;
+        }
 
         fs::write(&state_temp_path, serde_json::to_vec(&state)?)?;
         fs::rename(&state_temp_path, &state_path)?;

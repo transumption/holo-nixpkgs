@@ -1,9 +1,16 @@
 from functools import lru_cache
 from glob import glob
 from twisted.internet import reactor
-from twisted.internet.defer import inlineCallbacks
+from twisted.internet.defer import ensureDeferred
+from wormhole.errors import WormholeError
 import hpos_seed
+import logging
 import os
+import sys
+import time
+
+
+log = logging.getLogger(__name__)
 
 
 @lru_cache()
@@ -36,12 +43,28 @@ def on_wormhole_code(wormhole_code):
         f.write(wormhole_code)
 
 
-@inlineCallbacks
-def resolve_config_path():
+async def receive_config():
+    backoff_exp = 1
+    while True:
+        try:
+            return await hpos_seed.receive(on_wormhole_code, reactor)
+        except WormholeError as e:
+            pass
+        finally:
+            if os.path.exists(wormhole_code_path()):
+                os.remove(wormhole_code_path())
+        backoff = 2 ** backoff_exp
+        backoff_exp += 1
+        (exc_type, _, _) = sys.exc_info()
+        log.warning("receive failed with %s, retrying in %d seconds",
+                    exc_type, backoff)
+        time.sleep(backoff)
+
+
+async def resolve_config_path():
     paths = glob(state_config_path()) + glob('/media/*/hpos-config.json')
     if paths == []:
-        config = yield hpos_seed.receive(on_wormhole_code, reactor)
-        os.remove(wormhole_code_path())
+        config = await receive_config()
         with open(state_config_path(), 'wb') as f:
             f.write(config)
         return state_config_path()
@@ -49,18 +72,17 @@ def resolve_config_path():
         return paths[0]
 
 
-@inlineCallbacks
-def hpos_init():
+async def hpos_init():
     try:
         if glob(runtime_config_path()) == []:
-            config_path = yield resolve_config_path()
+            config_path = await resolve_config_path()
             os.symlink(config_path, runtime_config_path())
     finally:
         reactor.callLater(0, reactor.stop)
 
 
 def main():
-    reactor.callLater(0, hpos_init)
+    ensureDeferred(hpos_init())
     reactor.run()
 
 

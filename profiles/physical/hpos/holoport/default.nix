@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
 {
   imports = [
@@ -8,7 +8,7 @@
 
   boot.loader.grub = {
     enable = lib.mkDefault true;
-    devices = [ config.fileSystems."/".device ];
+    devices = [ "/dev/sda" ];
   };
 
   services.hpos-led-manager.devicePath = "/dev/ttyUSB0";

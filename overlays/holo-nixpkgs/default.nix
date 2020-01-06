@@ -100,7 +100,6 @@ in
 
   inherit (callPackage hpos-config {})
     hpos-config-gen-cli
-    hpos-config-gen-web
     hpos-config-into-base36-id
     hpos-config-into-keystore
     ;

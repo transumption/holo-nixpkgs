@@ -251,13 +251,6 @@ in
     inherit (rust.packages.nightly) rustPlatform;
   };
 
-  hpstatus = fetchFromGitHub {
-    owner = "Holo-Host";
-    repo = "hpstatus";
-    rev = "562c637f7fa370633998efa319ae1225d7241537";
-    sha256 = "1wm744mavp7k9ajikzm3hg01byc58s9dfwsmy47j1mhzc0j0l2fr";
-  };
-
   hydra = previous.hydra.overrideAttrs (
     super: {
       doCheck = false;

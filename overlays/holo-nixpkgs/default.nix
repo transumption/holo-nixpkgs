@@ -32,13 +32,6 @@ let
     sha256 = "0j9fpm51wr0lb22g7qsilmasb4gi21yyqscdgp3szk9bb5q83alq";
   };
 
-  holochain-rust = fetchFromGitHub {
-    owner = "holochain";
-    repo = "holochain-rust";
-    rev = "e33624e0e3cb23158212590ee89d6aaa7ca86e2e";
-    sha256 = "1bjkl623r0y2ybibnxma2j1mp8rhr3zwav96f9jq34f2vqyw0vj8";
-  };
-
   hp-admin = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hp-admin";
@@ -162,7 +155,7 @@ in
 
   dnaHash = dna: builtins.readFile (
     runCommand "${dna.name}-hash" {} ''
-      ${holochain-cli}/bin/hc hash -p ${dna}/${dna.name}.dna.json \
+      ${holochain-rust}/bin/hc hash -p ${dna}/${dna.name}.dna.json \
         | tail -1 \
         | cut -d ' ' -f 3- \
         | tr -d '\n' > $out
@@ -172,12 +165,6 @@ in
   dnaPackages = recurseIntoAttrs (
     import ./dna-packages final previous
   );
-
-  inherit (callPackage holochain-rust {})
-    holochain-cli
-    holochain-conductor
-    sim2h-server
-    ;
 
   holo = recurseIntoAttrs {
     buildProfile = profile: buildImage [
@@ -204,6 +191,11 @@ in
   holo-nixpkgs-tests = recurseIntoAttrs (
     import "${holo-nixpkgs.path}/tests" { inherit pkgs; }
   );
+
+  holochain-rust = callPackage ./holochain-rust {
+    inherit (darwin.apple_sdk.frameworks) CoreServices Security;
+    inherit (rust.packages.nightly) rustPlatform;
+  };
 
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {
     linux = linux_latest;

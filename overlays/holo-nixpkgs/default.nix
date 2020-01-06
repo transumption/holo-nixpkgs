@@ -84,10 +84,9 @@ in
     holo-router-gateway
     ;
 
-  inherit (callPackage hp-admin {})
-    hp-admin-ui
-    holofuel-ui
-    ;
+  hp-admin-ui = runCommand "hp-admin-ui" {} ''
+    mkdir $out
+  '';
 
   inherit (callPackage hp-admin-crypto {}) hp-admin-crypto-server;
 

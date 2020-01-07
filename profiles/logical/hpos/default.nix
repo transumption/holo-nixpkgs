@@ -25,7 +25,7 @@ let
   dnas = with dnaPackages; [
     happ-store
     holo-hosting-app
-    hylo-holo-dnas
+    holo-communities-dna
     holofuel
     servicelogger
   ];
@@ -124,13 +124,6 @@ in
           extraConfig = ''
             internal;
             proxy_set_header X-Original-URI $request_uri;
-          '';
-        };
-
-        "/holofuel/" = {
-          alias = "${pkgs.holofuel-ui}/";
-          extraConfig = ''
-            limit_req zone=zone1 burst=30;
           '';
         };
 

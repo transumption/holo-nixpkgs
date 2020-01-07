@@ -17,24 +17,17 @@ in
     };
 
     package = mkOption {
-      default = pkgs.holochain-conductor;
+      default = pkgs.holochain-rust;
       type = types.package;
     };
   };
 
   config = mkIf (cfg.enable) {
-    environment.systemPackages = with pkgs; [
-      holochain-cli
-    ];
+    environment.systemPackages = [ cfg.package ];
 
     systemd.services.holochain-conductor = {
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
-
-      path = with pkgs; [
-        holochain-cli
-        holochain-conductor
-      ];
 
       preStart = ''
         cat ${pkgs.writeTOML cfg.config} > ${home}/conductor-config.toml

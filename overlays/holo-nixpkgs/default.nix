@@ -28,15 +28,8 @@ let
   holo-router = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "holo-router";
-    rev = "f6c5be74307b29689d1d2bb939c9c5ca44c6ca91";
-    sha256 = "0j9fpm51wr0lb22g7qsilmasb4gi21yyqscdgp3szk9bb5q83alq";
-  };
-
-  holochain-rust = fetchFromGitHub {
-    owner = "holochain";
-    repo = "holochain-rust";
-    rev = "e33624e0e3cb23158212590ee89d6aaa7ca86e2e";
-    sha256 = "1bjkl623r0y2ybibnxma2j1mp8rhr3zwav96f9jq34f2vqyw0vj8";
+    rev = "9390a905e31f05a7b9d17f8463a04096c507b712";
+    sha256 = "1yiknzb1k1l57ri60nmpfgg9q159f8dzb84ljmqd2b2qx8jg0zc7";
   };
 
   hp-admin = fetchFromGitHub {
@@ -56,8 +49,8 @@ let
   hpos-config = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hpos-config";
-    rev = "a64da0d9bc0ef87bc358fcdad6323b424cf4971b";
-    sha256 = "1059lfr2vnacq3aghmir007vgql4za197xx2qlm732vhb6svgpma";
+    rev = "eb256e2243e08546b078c106541671fb4d4aa61d";
+    sha256 = "0ldbvrda016aha0p55k1nzqb6636micc0x7xf2ffkqn96fz6d6ly";
   };
 
   nixpkgs-mozilla = fetchTarball {
@@ -91,10 +84,9 @@ in
     holo-router-gateway
     ;
 
-  inherit (callPackage hp-admin {})
-    hp-admin-ui
-    holofuel-ui
-    ;
+  hp-admin-ui = runCommand "hp-admin-ui" {} ''
+    mkdir $out
+  '';
 
   inherit (callPackage hp-admin-crypto {}) hp-admin-crypto-server;
 
@@ -162,7 +154,7 @@ in
 
   dnaHash = dna: builtins.readFile (
     runCommand "${dna.name}-hash" {} ''
-      ${holochain-cli}/bin/hc hash -p ${dna}/${dna.name}.dna.json \
+      ${holochain-rust}/bin/hc hash -p ${dna}/${dna.name}.dna.json \
         | tail -1 \
         | cut -d ' ' -f 3- \
         | tr -d '\n' > $out
@@ -172,12 +164,6 @@ in
   dnaPackages = recurseIntoAttrs (
     import ./dna-packages final previous
   );
-
-  inherit (callPackage holochain-rust {})
-    holochain-cli
-    holochain-conductor
-    sim2h-server
-    ;
 
   holo = recurseIntoAttrs {
     buildProfile = profile: buildImage [
@@ -204,6 +190,11 @@ in
   holo-nixpkgs-tests = recurseIntoAttrs (
     import "${holo-nixpkgs.path}/tests" { inherit pkgs; }
   );
+
+  holochain-rust = callPackage ./holochain-rust {
+    inherit (darwin.apple_sdk.frameworks) CoreServices Security;
+    inherit (rust.packages.nightly) rustPlatform;
+  };
 
   holoport-nano-dtb = callPackage ./holoport-nano-dtb {
     linux = linux_latest;
@@ -283,8 +274,8 @@ in
         rustc = (
           rustChannelOf {
             channel = "nightly";
-            date = "2019-07-14";
-            sha256 = "1llbwkjkjis6rv0rbznwwl0j6bf80j38xgwsd4ilcf0qps4cvjsx";
+            date = "2019-11-16";
+            sha256 = "17l8mll020zc0c629cypl5hhga4hns1nrafr7a62bhsp4hg9vswd";
           }
         ).rust.override {
           targets = [

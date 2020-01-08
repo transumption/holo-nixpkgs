@@ -28,8 +28,8 @@ let
   holo-router = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "holo-router";
-    rev = "9390a905e31f05a7b9d17f8463a04096c507b712";
-    sha256 = "1yiknzb1k1l57ri60nmpfgg9q159f8dzb84ljmqd2b2qx8jg0zc7";
+    rev = "9102fe834d400d1de8d819922d07b5f05a7b189a";
+    sha256 = "024ad97x5zn32mr9fcqssms13xmc7hvd5n322q84g585izf6shrs";
   };
 
   hp-admin = fetchFromGitHub {

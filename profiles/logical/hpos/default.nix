@@ -83,6 +83,8 @@ in
 
   services.holo-auth-client.enable = lib.mkDefault true;
 
+  services.holo-envoy.enable = true;
+
   services.holo-router-agent.enable = lib.mkDefault true;
 
   services.hp-admin-crypto-server.enable = true;
@@ -134,7 +136,7 @@ in
           '';
         };
 
-        "/v1/hosting/" = {
+        "/hosting/" = {
           proxyPass = "http://127.0.0.1:4656";
           proxyWebsockets = true;
         };

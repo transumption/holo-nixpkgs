@@ -6,8 +6,8 @@ let
   happ-store = fetchFromGitHub {
     owner = "holochain";
     repo = "happ-store";
-    rev = "11b4a43e4fe12c71e1efc3a19ccfab021bc8ede9";
-    sha256 = "07azyb4gspabh13h9cxwkpmlissqah88viy7m6dmq0sh0cdbir7k";
+    rev = "f9c5bb938376780b7e41d3234ff21baa6e04fb59";
+    sha256 = "174nhbbxcajdz8z27fhgs7r1py2ap69i8mkam2bn4pvh4skgabl4";
   };
 
   holofuel = fetchurl {

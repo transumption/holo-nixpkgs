@@ -22,6 +22,7 @@ in
       requires = [ "zerotierone.service" ];
       wantedBy = [ "multi-user.target" ];
 
+      environment.RUST_LOG = "info";
       path = with pkgs; [ jq zerotierone ];
       script = ''
         zerotier_status() {

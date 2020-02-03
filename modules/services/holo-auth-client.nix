@@ -22,8 +22,22 @@ in
       requires = [ "zerotierone.service" ];
       wantedBy = [ "multi-user.target" ];
 
+      path = with pkgs; [ jq zerotierone ];
+      script = ''
+        zerotier_status() {
+          zerotier-cli -j listnetworks | jq -r .[0].status
+        }
+
+        while [ "$(zerotier_status)" = "REQUESTING_CONFIGURATION" ]; do
+          sleep 1
+        done
+
+        if [ "$(zerotier_status)" = "ACCESS_DENIED" ]; then
+          exec ${cfg.package}/bin/holo-auth-client
+        fi
+      '';
+
       serviceConfig = {
-        ExecStart = "${cfg.package}/bin/holo-auth-client";
         RemainAfterExit = true;
         Type = "oneshot";
       };

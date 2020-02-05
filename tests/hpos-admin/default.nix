@@ -23,6 +23,8 @@ makeTest {
     };
 
     systemd.services.hpos-admin.environment.HPOS_CONFIG_PATH = "/etc/hpos-config.json";
+
+    users.users.nginx.extraGroups = [ "hpos-admin-users" ];
   };
 
   testScript = ''
@@ -36,7 +38,6 @@ makeTest {
     $machine->waitForUnit("hpos-admin.service");
     $machine->waitForFile("/run/hpos-admin.sock");
 
-    $machine->succeed("chown nginx:nginx /run/hpos-admin.sock");
     $machine->succeed("hpos-admin-client --url=http://localhost put-settings example KbFzEiWEmM1ogbJbee2fkrA1");
 
     my $expected_settings = "{" .

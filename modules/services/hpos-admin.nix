@@ -21,9 +21,9 @@ in
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
 
-      serviceConfig = {
-        ExecStart = "${cfg.package}/bin/hpos-admin";
-      };
+      serviceConfig.ExecStart = "${cfg.package}/bin/hpos-admin";
     };
+
+    users.groups.hpos-admin-users = {};
   };
 }

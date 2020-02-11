@@ -267,6 +267,10 @@ in
 
   magic-wormhole-mailbox-server = python3Packages.callPackage ./magic-wormhole-mailbox-server {};
 
+  nginx = previous.nginx.overrideAttrs (super: {
+    patches = super.patches ++ [ ./nginx/add-wasm-mime-type.patch ];
+  });
+
   nodejs = nodejs-12_x;
 
   rust = previous.rust // {

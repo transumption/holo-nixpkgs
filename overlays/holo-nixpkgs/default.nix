@@ -42,15 +42,15 @@ let
   hp-admin = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hp-admin";
-    rev = "ac8d51c008ecb1725cce856c3ac9cf54bed6fac9";
-    sha256 = "03idygs6z3zslmf8zx1dmm6flvn5w4x7arpjq596fw9p67xck9n6";
+    rev = "2203eda5d68164645a5b044bcc68d769fc150ebf";
+    sha256 = "1lwsvh4ldjg4vzh6l4xyyghga5599ksg9f0jappp2qvzm4sxh61r";
   };
 
   hp-admin-crypto = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hp-admin-crypto";
-    rev = "690e3dbc7a49ecd31ab622b576001d93ce3de1ae";
-    sha256 = "01ji3ybx46gyi5y99vrf72yman3azjwkdzhf79rsa81bsy2jb664";
+    rev = "321833b8711d4141de419fa3d1610165621569a5";
+    sha256 = "0pssizqpmyxjwzqgkrd3vdg3r30cvz4zwb23zf895rm7djhq52sn";
   };
 
   hpos-config = fetchFromGitHub {

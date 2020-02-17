@@ -21,7 +21,7 @@ def rebuild_worker():
 
 
 def rebuild(priority, args):
-    rebuild_queue.put((priority, ['sudo', 'nixos-rebuild', 'switch'] + args))
+    rebuild_queue.put((priority, ['nixos-rebuild', 'switch'] + args))
 
 
 def get_state_path():
@@ -38,7 +38,7 @@ def cas_hash(data):
     return b64encode(sha512(dump.encode()).digest()).decode()
 
 
-@app.route('/v1/config', methods=['GET'])
+@app.route('/config', methods=['GET'])
 def get_settings():
     return jsonify(get_state_data()['v1']['settings'])
 
@@ -50,7 +50,7 @@ def replace_file_contents(path, data):
     os.rename(tmp_path, path)
 
 
-@app.route('/v1/config', methods=['PUT'])
+@app.route('/config', methods=['PUT'])
 def put_settings():
     with state_lock:
         state = get_state_data()
@@ -63,19 +63,19 @@ def put_settings():
 
 
 def zerotier_info():
-    proc = subprocess.run(['sudo', 'zerotier-cli', '-j', 'info'],
+    proc = subprocess.run(['zerotier-cli', '-j', 'info'],
                           capture_output=True, check=True)
     return json.loads(proc.stdout)
 
 
-@app.route('/v1/status', methods=['GET'])
+@app.route('/status', methods=['GET'])
 def status():
     return jsonify({
         'zerotier': zerotier_info()
     })
 
 
-@app.route('/v1/upgrade', methods=['POST'])
+@app.route('/upgrade', methods=['POST'])
 def upgrade():
     rebuild(priority=1, args=['--upgrade'])
     return '', 200

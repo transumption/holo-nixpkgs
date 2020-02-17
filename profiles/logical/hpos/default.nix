@@ -107,6 +107,20 @@ in
           '';
         };
 
+        "~ ^/admin(?:/.*)?$" = {
+            extraConfig = ''
+              rewrite ^/admin.*$ / last;
+              return 404;
+            '';
+        };
+
+        "~ ^/holofuel(?:/.*)?$" = {
+            extraConfig = ''
+              rewrite ^/holofuel.*$ / last;
+              return 404;
+            '';
+        };
+
         "/api/v1/" = {
           proxyPass = "http://unix:/run/hpos-admin.sock:/";
           extraConfig = ''
@@ -115,19 +129,25 @@ in
         };
 
         "/api/v1/ws/" = {
-          proxyPass = "http://localhost:42233";
+          proxyPass = "http://127.0.0.1:42233";
           proxyWebsockets = true;
-        };
-
-        "/auth/" = {
-          proxyPass = "http://localhost:2884";
           extraConfig = ''
-            internal;
-            proxy_set_header X-Original-URI $request_uri;
+            auth_request /auth/;
           '';
         };
 
-        "/v1/hosting/" = {
+        "/auth/" = {
+          proxyPass = "http://127.0.0.1:2884";
+          extraConfig = ''
+            internal;
+            proxy_set_header X-Original-URI $request_uri;
+            proxy_set_header X-Original-Method $request_method;
+            proxy_pass_request_body off;
+            proxy_set_header Content-Length "";
+          '';
+        };
+
+        "/hosting/" = {
           proxyPass = "http://127.0.0.1:4656";
           proxyWebsockets = true;
         };

@@ -23,13 +23,6 @@ let
     sha256 = "18isckq31j30s0krmmhb3m75dip0rqfxnp3f4000mfni0si1jwjj";
   };
 
-  holo-communities-dna = fetchFromGitHub {
-    owner = "Holo-Host";
-    repo = "holo-communities-dna";
-    rev = "53f204094e35f21bdd5009ed43cc16b093560737";
-    sha256 = "0jyjj1762d905ysgkhg3p062vp9rmx552nb87z6n4vb11lm3hhh6";
-   };
-
   servicelogger = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "servicelogger";
@@ -42,8 +35,6 @@ in
   inherit (callPackage happ-store {}) happ-store;
 
   inherit (callPackage holo-hosting-app {}) holo-hosting-app;
-
-  inherit (callPackage holo-communities-dna {}) holo-communities-dna;
 
   inherit (callPackage servicelogger {}) servicelogger;
 

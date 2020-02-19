@@ -25,7 +25,6 @@ let
   dnas = with dnaPackages; [
     happ-store
     holo-hosting-app
-    holo-communities-dna
     holofuel
     servicelogger
   ];

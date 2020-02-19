@@ -41,7 +41,7 @@ let
     dna = drv.name;
     id = drv.name;
     storage = {
-      path = "${conductorHome}/${drv.name}";
+      path = "${conductorHome}/${drv.name}-${pkgs.dnaHash drv}";
       type = "file";
     };
   };

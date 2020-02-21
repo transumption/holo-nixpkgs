@@ -71,15 +71,6 @@ in
 
   security.sudo.wheelNeedsPassword = false;
 
-  services.avahi = {
-    enable = true;
-
-    publish = {
-      enable = true;
-      addresses = true;
-    };
-  };
-
   services.holo-auth-client.enable = lib.mkDefault true;
 
   services.holo-router-agent.enable = lib.mkDefault true;

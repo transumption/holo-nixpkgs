@@ -55,6 +55,5 @@ branches:
       enforce_admins: true
       restrictions:
         users:
-          - samrose
           - yegortimoshenko
         teams: []

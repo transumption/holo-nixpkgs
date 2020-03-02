@@ -25,7 +25,9 @@ def rebuild(priority, args):
 
 
 def get_state_path():
-    return os.getenv('HPOS_CONFIG_PATH')
+    hpos_config_file_symlink = os.getenv('HPOS_CONFIG_PATH')
+    hpos_config_file = os.path.realpath(hpos_config_file_symlink)
+    return hpos_config_file
 
 
 def get_state_data():

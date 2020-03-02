@@ -4,11 +4,9 @@ from gevent import subprocess, pywsgi, queue, socket, spawn, lock
 from hashlib import sha512
 from tempfile import mkstemp
 import json
-import logging
 import os
 
 app = Flask(__name__)
-log = logging.getLogger(__name__)
 rebuild_queue = queue.PriorityQueue()
 state_lock = lock.Semaphore()
 
@@ -56,7 +54,10 @@ def replace_file_contents(path, data):
 def put_settings():
     with state_lock:
         state = get_state_data()
-        if request.headers.get('x-hpos-admin-cas') != cas_hash(state['v1']['settings']):
+        expected_cas = cas_hash(state['v1']['settings'])
+        received_cas = request.headers.get('x-hpos-admin-cas')
+        if received_cas != expected_cas:
+            app.logger.warning('CAS mismatch: {} != {}'.format(received_cas, expected_cas))
             return '', 409
         state['v1']['settings'] = request.get_json(force=True)
         replace_file_contents(get_state_path(), json.dumps(state, indent=2))

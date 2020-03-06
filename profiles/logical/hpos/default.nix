@@ -167,6 +167,10 @@ in
         type = "sim2h";
         sim2h_url = "ws://public.sim2h.net:9000";
       };
+      logger = {
+        state_dump = false;
+        type = "info";
+      }
       persistence_dir = conductorHome;
       signing_service_uri = "http://localhost:9676";
       interfaces = [

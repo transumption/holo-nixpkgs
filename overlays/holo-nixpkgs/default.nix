@@ -56,8 +56,8 @@ let
   hpos-config = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hpos-config";
-    rev = "eb256e2243e08546b078c106541671fb4d4aa61d";
-    sha256 = "0ldbvrda016aha0p55k1nzqb6636micc0x7xf2ffkqn96fz6d6ly";
+    rev = "920bd38401edf0b5e81da489d5e519852d7b3218";
+    sha256 = "1sc4jhn4h0phxi1pn20c5wq7x8zs3d8dis9il7fdc5iiszki5413";
   };
 
   nixpkgs-mozilla = fetchTarball {
@@ -101,6 +101,7 @@ in
     hpos-config-gen-cli
     hpos-config-into-base36-id
     hpos-config-into-keystore
+    hpos-config-is-valid
     ;
 
   inherit (callPackage npm-to-nix {}) npmToNix;

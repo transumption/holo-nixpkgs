@@ -1,14 +1,14 @@
 from base64 import b64encode
 from flask import Flask, jsonify, request
 from gevent import subprocess, pywsgi, queue, socket, spawn, lock
+from gevent.subprocess import CalledProcessError
 from hashlib import sha512
 from tempfile import mkstemp
 import json
-import logging
 import os
+import subprocess
 
 app = Flask(__name__)
-log = logging.getLogger(__name__)
 rebuild_queue = queue.PriorityQueue()
 state_lock = lock.Semaphore()
 
@@ -21,11 +21,13 @@ def rebuild_worker():
 
 
 def rebuild(priority, args):
-    rebuild_queue.put((priority, ['sudo', 'nixos-rebuild', 'switch'] + args))
+    rebuild_queue.put((priority, ['nixos-rebuild', 'switch'] + args))
 
 
 def get_state_path():
-    return os.getenv('HPOS_CONFIG_PATH')
+    hpos_config_file_symlink = os.getenv('HPOS_CONFIG_PATH')
+    hpos_config_file = os.path.realpath(hpos_config_file_symlink)
+    return hpos_config_file
 
 
 def get_state_data():
@@ -38,7 +40,7 @@ def cas_hash(data):
     return b64encode(sha512(dump.encode()).digest()).decode()
 
 
-@app.route('/v1/config', methods=['GET'])
+@app.route('/config', methods=['GET'])
 def get_settings():
     return jsonify(get_state_data()['v1']['settings'])
 
@@ -50,32 +52,40 @@ def replace_file_contents(path, data):
     os.rename(tmp_path, path)
 
 
-@app.route('/v1/config', methods=['PUT'])
+@app.route('/config', methods=['PUT'])
 def put_settings():
     with state_lock:
         state = get_state_data()
-        if request.headers.get('x-hpos-admin-cas') != cas_hash(state['v1']['settings']):
+        expected_cas = cas_hash(state['v1']['settings'])
+        received_cas = request.headers.get('x-hpos-admin-cas')
+        if received_cas != expected_cas:
+            app.logger.warning('CAS mismatch: {} != {}'.format(received_cas, expected_cas))
             return '', 409
         state['v1']['settings'] = request.get_json(force=True)
-        replace_file_contents(get_state_path(), json.dumps(state, indent=2))
+        state_json = json.dumps(state, indent=2)
+        try:
+            subprocess.run(['hpos-config-is-valid'], check=True, input=state_json, text=True)
+        except CalledProcessError:
+            return '', 400
+        replace_file_contents(get_state_path(), state_json)
     rebuild(priority=5, args=[])
     return '', 200
 
 
 def zerotier_info():
-    proc = subprocess.run(['sudo', 'zerotier-cli', '-j', 'info'],
+    proc = subprocess.run(['zerotier-cli', '-j', 'info'],
                           capture_output=True, check=True)
     return json.loads(proc.stdout)
 
 
-@app.route('/v1/status', methods=['GET'])
+@app.route('/status', methods=['GET'])
 def status():
     return jsonify({
         'zerotier': zerotier_info()
     })
 
 
-@app.route('/v1/upgrade', methods=['POST'])
+@app.route('/upgrade', methods=['POST'])
 def upgrade():
     rebuild(priority=1, args=['--upgrade'])
     return '', 200

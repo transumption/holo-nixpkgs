@@ -16,6 +16,8 @@ collaborators: []
 teams:
   - name: central
     permission: push
+  - name: happy
+    permission: push
   - name: hydra
     permission: push
 
@@ -36,6 +38,7 @@ branches:
       enforce_admins: false
       restrictions:
         users:
+          - peeech
           - samrose
           - yegortimoshenko
         teams: []
@@ -55,6 +58,7 @@ branches:
       enforce_admins: true
       restrictions:
         users:
+          - peeech
           - samrose
           - yegortimoshenko
         teams: []

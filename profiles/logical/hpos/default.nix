@@ -25,7 +25,6 @@ let
   dnas = with dnaPackages; [
     happ-store
     holo-hosting-app
-    holo-communities-dna
     holofuel
     servicelogger
   ];
@@ -41,7 +40,7 @@ let
     dna = drv.name;
     id = drv.name;
     storage = {
-      path = "${conductorHome}/${drv.name}";
+      path = "${conductorHome}/${drv.name}-${pkgs.dnaHash drv}";
       type = "file";
     };
   };
@@ -72,15 +71,6 @@ in
 
   security.sudo.wheelNeedsPassword = false;
 
-  services.avahi = {
-    enable = true;
-
-    publish = {
-      enable = true;
-      addresses = true;
-    };
-  };
-
   services.holo-auth-client.enable = lib.mkDefault true;
 
   services.holo-router-agent.enable = lib.mkDefault true;
@@ -107,6 +97,20 @@ in
           '';
         };
 
+        "~ ^/admin(?:/.*)?$" = {
+            extraConfig = ''
+              rewrite ^/admin.*$ / last;
+              return 404;
+            '';
+        };
+
+        "~ ^/holofuel(?:/.*)?$" = {
+            extraConfig = ''
+              rewrite ^/holofuel.*$ / last;
+              return 404;
+            '';
+        };
+
         "/api/v1/" = {
           proxyPass = "http://unix:/run/hpos-admin.sock:/";
           extraConfig = ''
@@ -115,19 +119,25 @@ in
         };
 
         "/api/v1/ws/" = {
-          proxyPass = "http://localhost:42233";
+          proxyPass = "http://127.0.0.1:42233";
           proxyWebsockets = true;
-        };
-
-        "/auth/" = {
-          proxyPass = "http://localhost:2884";
           extraConfig = ''
-            internal;
-            proxy_set_header X-Original-URI $request_uri;
+            auth_request /auth/;
           '';
         };
 
-        "/v1/hosting/" = {
+        "/auth/" = {
+          proxyPass = "http://127.0.0.1:2884";
+          extraConfig = ''
+            internal;
+            proxy_set_header X-Original-URI $request_uri;
+            proxy_set_header X-Original-Method $request_method;
+            proxy_pass_request_body off;
+            proxy_set_header Content-Length "";
+          '';
+        };
+
+        "/hosting/" = {
           proxyPass = "http://127.0.0.1:4656";
           proxyWebsockets = true;
         };
@@ -156,6 +166,10 @@ in
       network = {
         type = "sim2h";
         sim2h_url = "ws://public.sim2h.net:9000";
+      };
+      logger = {
+        state_dump = false;
+        type = "info";
       };
       persistence_dir = conductorHome;
       signing_service_uri = "http://localhost:9676";
@@ -206,6 +220,8 @@ in
     lib.mkForce "${holo-router-acme}/bin/holo-router-acme";
 
   system.stateVersion = "19.09";
+
+  users.users.nginx.extraGroups = [ "hpos-admin-users" ];
 
   users.users.holo.isNormalUser = true;
 

@@ -42,22 +42,22 @@ let
   hp-admin = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hp-admin";
-    rev = "ac8d51c008ecb1725cce856c3ac9cf54bed6fac9";
-    sha256 = "03idygs6z3zslmf8zx1dmm6flvn5w4x7arpjq596fw9p67xck9n6";
+    rev = "995c2ec11283d26f87fc1a9307f754271719bfb8";
+    sha256 = "0gyrvrqbzgfb87skd2bv55jrmr9wz33ba82wq6flg967qrk1xx8i";
   };
 
   hp-admin-crypto = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hp-admin-crypto";
-    rev = "690e3dbc7a49ecd31ab622b576001d93ce3de1ae";
-    sha256 = "01ji3ybx46gyi5y99vrf72yman3azjwkdzhf79rsa81bsy2jb664";
+    rev = "321833b8711d4141de419fa3d1610165621569a5";
+    sha256 = "0pssizqpmyxjwzqgkrd3vdg3r30cvz4zwb23zf895rm7djhq52sn";
   };
 
   hpos-config = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "hpos-config";
-    rev = "eb256e2243e08546b078c106541671fb4d4aa61d";
-    sha256 = "0ldbvrda016aha0p55k1nzqb6636micc0x7xf2ffkqn96fz6d6ly";
+    rev = "920bd38401edf0b5e81da489d5e519852d7b3218";
+    sha256 = "1sc4jhn4h0phxi1pn20c5wq7x8zs3d8dis9il7fdc5iiszki5413";
   };
 
   nixpkgs-mozilla = fetchTarball {
@@ -101,6 +101,7 @@ in
     hpos-config-gen-cli
     hpos-config-into-base36-id
     hpos-config-into-keystore
+    hpos-config-is-valid
     ;
 
   inherit (callPackage npm-to-nix {}) npmToNix;
@@ -266,6 +267,12 @@ in
   );
 
   magic-wormhole-mailbox-server = python3Packages.callPackage ./magic-wormhole-mailbox-server {};
+
+  nginx = nginxStable;
+
+  nginxStable = (callPackage "${pkgs.path}/pkgs/servers/http/nginx/stable.nix" {}).overrideAttrs (super: {
+    patches = super.patches ++ [ ./nginx/add-wasm-mime-type.patch ];
+  });
 
   nodejs = nodejs-12_x;
 

@@ -25,6 +25,8 @@ let
     sha256 = "0jrh5ghisaqdd0vldbywags20m2cxpkbbk5jjjmwaw0gr8nhsafv";
   };
 
+  holo-envoy = gitignoreSource /home/matthew/projects/envoy;
+
   holo-auth = fetchFromGitHub {
     owner = "Holo-Host";
     repo = "holo-auth";
@@ -86,7 +88,12 @@ in
 
   inherit (callPackage gitignore {}) gitignoreSource;
 
+
   inherit (callPackage holo-auth {}) holo-auth-client;
+
+  inherit (callPackage holo-envoy {})
+    holo-envoy
+    ;
 
   inherit (callPackage holo-router {})
     holo-router-agent

@@ -1,10 +1,12 @@
 from base64 import b64encode
 from flask import Flask, jsonify, request
 from gevent import subprocess, pywsgi, queue, socket, spawn, lock
+from gevent.subprocess import CalledProcessError
 from hashlib import sha512
 from tempfile import mkstemp
 import json
 import os
+import subprocess
 
 app = Flask(__name__)
 rebuild_queue = queue.PriorityQueue()
@@ -60,7 +62,12 @@ def put_settings():
             app.logger.warning('CAS mismatch: {} != {}'.format(received_cas, expected_cas))
             return '', 409
         state['v1']['settings'] = request.get_json(force=True)
-        replace_file_contents(get_state_path(), json.dumps(state, indent=2))
+        state_json = json.dumps(state, indent=2)
+        try:
+            subprocess.run(['hpos-config-is-valid'], check=True, input=state_json, text=True)
+        except CalledProcessError:
+            return '', 400
+        replace_file_contents(get_state_path(), state_json)
     rebuild(priority=5, args=[])
     return '', 200
 

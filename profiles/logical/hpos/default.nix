@@ -41,7 +41,7 @@ let
     id = drv.name;
     storage = {
       path = "${conductorHome}/${drv.name}-${pkgs.dnaHash drv}";
-      type = "file";
+      type = "lmdb";
     };
   };
 in

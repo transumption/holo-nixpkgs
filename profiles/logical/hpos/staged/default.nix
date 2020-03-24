@@ -12,6 +12,8 @@ with pkgs;
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGakK6G+lvSpg3NKfuWNopUlI/Z2keLGBH09jeAVbslO"
     # PJ Klimek
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJwtG0yk6e0szjxk3LgtWnunOvoXUJIncQjzX5zDiKxY"
+    # Alastair Ong
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDVC8WfgtvzgCXqRxdUdJCG+PaLDZVXYeKKm5M6C/8mB"
     # Yegor Timoshenko
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHLGgzH3ROvo65cnvkXmuz7Qc9bPvU+L2SrafQh0bMrK"
     # Jamison Day

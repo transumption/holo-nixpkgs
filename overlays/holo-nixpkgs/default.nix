@@ -239,6 +239,10 @@ in
     inherit (rust.packages.nightly) rustPlatform;
   };
 
+  hpos-reset = writeShellScriptBin "hpos-reset" ''
+    rm -rf /var && reboot
+  '';
+
   hydra = previous.hydra.overrideAttrs (
     super: {
       doCheck = false;

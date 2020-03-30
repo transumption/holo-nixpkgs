@@ -59,6 +59,8 @@ in
 
   environment.noXlibs = true;
 
+  environment.systemPackages = [ hpos-reset ];
+
   networking.firewall.allowedTCPPorts = [ 443 ];
 
   networking.hostName = lib.mkOverride 1100 "hpos";

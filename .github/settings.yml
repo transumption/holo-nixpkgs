@@ -39,7 +39,6 @@ branches:
       restrictions:
         users:
           - peeech
-          - yegortimoshenko
         teams: []
   - name: master
     protection:
@@ -58,5 +57,4 @@ branches:
       restrictions:
         users:
           - peeech
-          - yegortimoshenko
         teams: []
